@@ -160,7 +160,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BHTuesday.cpp" />
-    <ClCompile Include="CBullet.cpp" />
+    <ClCompile Include="CProjectile.cpp" />
     <ClCompile Include="CButton.cpp" />
     <ClCompile Include="CControlledObject.cpp" />
     <ClCompile Include="CEnemy.cpp" />
@@ -169,7 +169,7 @@
     <ClCompile Include="CVector2.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CBullet.h" />
+    <ClInclude Include="CProjectile.h" />
     <ClInclude Include="CButton.h" />
     <ClInclude Include="CControlledObject.h" />
     <ClInclude Include="CEnemy.h" />

@@ -30,13 +30,13 @@
     <ClCompile Include="CControlledObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CBullet.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CGameManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CProjectile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,13 +56,13 @@
     <ClInclude Include="CControlledObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CBullet.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CGameManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CProjectile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

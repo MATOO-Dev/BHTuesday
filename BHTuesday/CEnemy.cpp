@@ -1,6 +1,6 @@
 #include "CEnemy.h"
 
-CEnemy::CEnemy(CVector2 startPosition, CPlayer* target, std::vector<CBullet>& EnemyBullets) :
+CEnemy::CEnemy(CVector2 startPosition, CPlayer* target, std::vector<CProjectile>& EnemyBullets) :
 	CControlledObject(startPosition, EnemyBullets),
 	targetPlayer(target)
 {}
@@ -23,7 +23,7 @@ void CEnemy::Render(SDL_Renderer& renderer) const
 
 void CEnemy::Shoot()
 {
-	mBullets.push_back(CBullet(mPosition, CVector2(targetPlayer->GetPosition(), mPosition).normalize() * 500));
+	mBullets.push_back(CProjectile(mPosition, CVector2(targetPlayer->GetPosition(), mPosition).normalize() * 500));
 }
 
 void CEnemy::Damage(float damage)

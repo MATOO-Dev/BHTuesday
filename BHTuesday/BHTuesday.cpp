@@ -5,7 +5,7 @@
 #include <vector>
 #include "CPlayer.h"
 #include "CEnemy.h"
-#include "CBullet.h"
+#include "CProjectile.h"
 #include "Defines.h"
 
 #define TICK_INTERVAL 16
@@ -18,8 +18,8 @@ int main(int argc, char* argv[])
 	static EGameState activeGameState = EGameState::Active;
 	static ETheme activeTheme = ETheme::Dark;
 	std::vector<CEnemy> Enemys;
-	std::vector<CBullet> EnemyBullets;
-	std::vector<CBullet> PlayerBullets;
+	std::vector<CProjectile> EnemyBullets;
+	std::vector<CProjectile> PlayerBullets;
 	static CPlayer* myPlayer = new CPlayer(CVector2(300, 875), PlayerBullets);
 
 	Enemys.push_back(CEnemy(CVector2(100, 100), myPlayer, EnemyBullets));

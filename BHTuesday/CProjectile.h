@@ -8,11 +8,11 @@ class CControlledObject;
 #include <iostream>
 #include <SDL.h>
 
-class CBullet
+class CProjectile
 {
 public:
-	CBullet(CVector2 startPosition, CVector2 velocity);
-	~CBullet();
+	CProjectile(CVector2 startPosition, CVector2 velocity);
+	~CProjectile();
 	void Update(float timeStep);
 	bool inBounds() const;
 	void Render(SDL_Renderer* Renderer) const;
@@ -25,25 +25,25 @@ private:
 	CVector2 mPosition;
 	CVector2 mVelocity;
 	int mDamage;
-	int mDiameter;
+	int mRadius;
 };
 
-inline void CBullet::SetPosition(CVector2 newPosition)
+inline void CProjectile::SetPosition(CVector2 newPosition)
 {
 	mPosition = newPosition;
 }
 
-inline CVector2 CBullet::GetPosition() const
+inline CVector2 CProjectile::GetPosition() const
 {
 	return mPosition;
 }
 
-inline void CBullet::SetVelocity(CVector2 newVelocity)
+inline void CProjectile::SetVelocity(CVector2 newVelocity)
 {
 	mVelocity = newVelocity;
 }
 
-inline CVector2 CBullet::GetVelocity() const
+inline CVector2 CProjectile::GetVelocity() const
 {
 	return mVelocity;
 }

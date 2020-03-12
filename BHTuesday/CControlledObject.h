@@ -1,16 +1,16 @@
 #pragma once
 
-class CBullet;
+class CProjectile;
 
 #include "CVector2.h"
-#include "CBullet.h"
+#include "CProjectile.h"
 #include <vector>
 
 
 class CControlledObject
 {
 public:
-	CControlledObject(CVector2 startPosition, std::vector<CBullet>& EnemyBullets);
+	CControlledObject(CVector2 startPosition, std::vector<CProjectile>& EnemyBullets);
 	~CControlledObject();
 	virtual void Update(float timeStep);
 	virtual void Render(SDL_Renderer& renderer) const = 0;
@@ -23,10 +23,11 @@ public:
 	virtual void Damage(float damage) = 0;
 	virtual void Kill() = 0;
 protected:
-	std::vector<CBullet>& mBullets;
+	std::vector<CProjectile>& mBullets;
 	CVector2 mPosition;
 	CVector2 mVelocity;
 	float mHealth;
+	int mRadius;
 };
 
 

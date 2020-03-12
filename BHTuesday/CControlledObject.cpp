@@ -1,6 +1,6 @@
 #include "CControlledObject.h"
 
-CControlledObject::CControlledObject(CVector2 startPosition, std::vector<CBullet>& EnemyBullets) :
+CControlledObject::CControlledObject(CVector2 startPosition, std::vector<CProjectile>& EnemyBullets) :
 	mPosition(startPosition),
 	mVelocity(0, 0),
 	mHealth(1),

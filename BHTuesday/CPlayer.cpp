@@ -1,6 +1,6 @@
 #include "CPlayer.h"
 
-CPlayer::CPlayer(CVector2 startPosition, std::vector<CBullet>& PlayerBullets) :
+CPlayer::CPlayer(CVector2 startPosition, std::vector<CProjectile>& PlayerBullets) :
 	CControlledObject(startPosition, PlayerBullets)
 {}
 
@@ -95,7 +95,7 @@ void CPlayer::Render(SDL_Renderer& renderer) const
 
 void CPlayer::Shoot()
 {
-	mBullets.push_back(CBullet(mPosition, CVector2(0, -500)));
+	mBullets.push_back(CProjectile(mPosition, CVector2(0, -500)));
 }
 
 void CPlayer::Damage(float damage)
