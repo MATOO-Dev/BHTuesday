@@ -14,17 +14,18 @@
 int main(int argc, char* argv[])
 {
 	//initialize variables
-	static CPlayer* myPlayer = new CPlayer(CVector2(300, 875));
 	static EControlStyle myControlStyle = EControlStyle::Keyboard;
 	static EGameState activeGameState = EGameState::Active;
 	static ETheme activeTheme = ETheme::Dark;
 	std::vector<CEnemy> Enemys;
 	std::vector<CBullet> EnemyBullets;
+	std::vector<CBullet> PlayerBullets;
+	static CPlayer* myPlayer = new CPlayer(CVector2(300, 875), PlayerBullets);
 
-	Enemys.push_back(CEnemy(CVector2(100, 100), myPlayer));
-	Enemys.push_back(CEnemy(CVector2(200, 100), myPlayer));
-	Enemys.push_back(CEnemy(CVector2(300, 100), myPlayer));
-	Enemys.push_back(CEnemy(CVector2(400, 100), myPlayer));
+	Enemys.push_back(CEnemy(CVector2(100, 100), myPlayer, EnemyBullets));
+	Enemys.push_back(CEnemy(CVector2(200, 100), myPlayer, EnemyBullets));
+	Enemys.push_back(CEnemy(CVector2(300, 100), myPlayer, EnemyBullets));
+	Enemys.push_back(CEnemy(CVector2(400, 100), myPlayer, EnemyBullets));
 
 	if (SDL_Init(SDL_INIT_VIDEO) == 0)
 	{
@@ -84,12 +85,25 @@ int main(int argc, char* argv[])
 						Enemys[i].Update((float)TICK_INTERVAL / 1000.f);
 						Enemys[i].Render(*Renderer);
 					}
+					for (int i = 0; i < EnemyBullets.size(); i++)
+					{
+						EnemyBullets[i].Update((float)TICK_INTERVAL / 1000.f); 
+						if (EnemyBullets[i].inBounds() == false)
+						{
+							EnemyBullets.erase(EnemyBullets.begin() + i);
+						}
+						EnemyBullets[i].Render(Renderer);
+					}
 					break;
 				case(EGameState::Paused):
 					myPlayer->Render(*Renderer);
 					for (int i = 0; i < Enemys.size(); i++)
 					{
 						Enemys[i].Render(*Renderer);
+					}
+					for (int i = 0; i < EnemyBullets.size(); i++)
+					{
+						EnemyBullets[i].Render(Renderer);
 					}
 					break;
 				case(EGameState::Settings):

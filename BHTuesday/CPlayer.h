@@ -9,7 +9,7 @@
 class CPlayer : public CControlledObject
 {
 public:
-	CPlayer(CVector2 startPosition);
+	CPlayer(CVector2 startPosition, std::vector<CBullet>& PlayerBullets);
 	~CPlayer();
 	void Update(float timeStep, EControlStyle& myControlStyle);
 	void Render(SDL_Renderer& renderer) const override;

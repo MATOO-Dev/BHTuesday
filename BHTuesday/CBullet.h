@@ -1,7 +1,10 @@
 #pragma once
 
+class CControlledObject;
+
 #include "CVector2.h"
 #include "Defines.h"
+#include "CControlledObject.h"
 #include <iostream>
 #include <SDL.h>
 

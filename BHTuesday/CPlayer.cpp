@@ -1,7 +1,7 @@
 #include "CPlayer.h"
 
-CPlayer::CPlayer(CVector2 startPosition) :
-	CControlledObject(startPosition)
+CPlayer::CPlayer(CVector2 startPosition, std::vector<CBullet>& PlayerBullets) :
+	CControlledObject(startPosition, PlayerBullets)
 {}
 
 CPlayer::~CPlayer()
@@ -104,7 +104,7 @@ void CPlayer::Damage(float damage)
 
 	if (mHealth < 0)
 	{
-
+		Kill();
 	}
 }
 
