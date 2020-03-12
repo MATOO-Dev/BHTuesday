@@ -15,6 +15,7 @@ public:
 	void Render(SDL_Renderer& renderer) const override;
 	void Shoot() override;
 	void Damage(float damage) override;
+	void Kill() override;
 private:
 	const float moveSpeed = 50;
 	const float dragMultiplier = 0.75;

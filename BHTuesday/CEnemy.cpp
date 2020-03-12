@@ -11,7 +11,9 @@ CEnemy::~CEnemy()
 void CEnemy::Update(float timeStep)
 {
 	CControlledObject::Update(timeStep);
+
 	Shoot();
+
 	for (int i = 0; i < mBullets.size(); i++)
 	{
 		mBullets[i].Update(timeStep);
@@ -41,4 +43,9 @@ void CEnemy::Shoot()
 void CEnemy::Damage(float damage)
 {
 	mHealth -= damage;
+}
+
+void CEnemy::Kill()
+{
+	std::cout << "enemy is kill";
 }

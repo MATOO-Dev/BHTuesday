@@ -2,7 +2,8 @@
 
 CControlledObject::CControlledObject(CVector2 startPosition) :
 	mPosition(startPosition),
-	mVelocity(0, 0)
+	mVelocity(0, 0),
+	mHealth(1)
 {}
 
 CControlledObject::~CControlledObject()

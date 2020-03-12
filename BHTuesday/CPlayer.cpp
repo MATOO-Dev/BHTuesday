@@ -81,7 +81,6 @@ void CPlayer::Update(float timeStep, EControlStyle& myControlStyle)
 			mBullets.erase(mBullets.begin() + i);
 		}
 	}
-
 }
 
 void CPlayer::Render(SDL_Renderer& renderer) const
@@ -102,4 +101,14 @@ void CPlayer::Shoot()
 void CPlayer::Damage(float damage)
 {
 	mHealth -= damage;
+
+	if (mHealth < 0)
+	{
+
+	}
+}
+
+void CPlayer::Kill()
+{
+	std::cout << "player is kill";
 }

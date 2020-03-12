@@ -11,6 +11,7 @@ public:
 	void Render(SDL_Renderer& renderer) const;
 	void Shoot() override;
 	void Damage(float damage) override;
+	void Kill()override;
 private:
 	CPlayer* targetPlayer;
 };

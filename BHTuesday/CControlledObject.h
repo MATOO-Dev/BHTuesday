@@ -18,6 +18,7 @@ public:
 	void AddVelocity(CVector2 addend);
 	virtual void Shoot() = 0;
 	virtual void Damage(float damage) = 0;
+	virtual void Kill() = 0;
 protected:
 	CVector2 mPosition;
 	CVector2 mVelocity;

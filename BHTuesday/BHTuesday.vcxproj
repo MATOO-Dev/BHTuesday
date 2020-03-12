@@ -161,18 +161,25 @@
   <ItemGroup>
     <ClCompile Include="BHTuesday.cpp" />
     <ClCompile Include="CBullet.cpp" />
+    <ClCompile Include="CButton.cpp" />
     <ClCompile Include="CControlledObject.cpp" />
     <ClCompile Include="CEnemy.cpp" />
+    <ClCompile Include="CGameManager.cpp" />
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CVector2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CBullet.h" />
+    <ClInclude Include="CButton.h" />
     <ClInclude Include="CControlledObject.h" />
     <ClInclude Include="CEnemy.h" />
+    <ClInclude Include="CGameManager.h" />
     <ClInclude Include="CPlayer.h" />
     <ClInclude Include="CVector2.h" />
     <ClInclude Include="Defines.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram2.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
