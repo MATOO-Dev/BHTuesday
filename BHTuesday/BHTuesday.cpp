@@ -87,7 +87,8 @@ int main(int argc, char* argv[])
 					}
 					for (int i = 0; i < EnemyBullets.size(); i++)
 					{
-						EnemyBullets[i].Update((float)TICK_INTERVAL / 1000.f); 
+						EnemyBullets[i].Update((float)TICK_INTERVAL / 1000.f);
+						EnemyBullets[i].Collision(*myPlayer);
 						if (EnemyBullets[i].inBounds() == false)
 						{
 							EnemyBullets.erase(EnemyBullets.begin() + i);

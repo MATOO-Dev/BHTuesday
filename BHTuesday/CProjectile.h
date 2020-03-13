@@ -20,7 +20,7 @@ public:
 	CVector2 GetPosition() const;
 	void SetVelocity(CVector2 newVelocity);
 	CVector2 GetVelocity() const;
-	void Collision(/*CControlledObject& targetObject*/);
+	void Collision(CControlledObject& targetObject);
 private:
 	CVector2 mPosition;
 	CVector2 mVelocity;

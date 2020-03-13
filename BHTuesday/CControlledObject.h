@@ -10,7 +10,7 @@ class CProjectile;
 class CControlledObject
 {
 public:
-	CControlledObject(CVector2 startPosition, std::vector<CProjectile>& EnemyBullets);
+	CControlledObject(CVector2 startPosition, std::vector<CProjectile>& EnemyBullets, int radius);
 	~CControlledObject();
 	virtual void Update(float timeStep);
 	virtual void Render(SDL_Renderer& renderer) const = 0;

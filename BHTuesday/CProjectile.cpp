@@ -38,7 +38,8 @@ void CProjectile::Render(SDL_Renderer* Renderer) const
 	SDL_RenderDrawLine(Renderer, mPosition.x + mRadius, mPosition.y - mRadius, mPosition.x - mRadius, mPosition.y + mRadius);
 }
 
-void CProjectile::Collision(/*CControlledObject& targetObject*/)
+void CProjectile::Collision(CControlledObject& targetObject)
 {
-	//targetObject.Damage(mDamage);
+	if(mPosition.GetDistance(targetObject.GetPosition()) < (mRadius + targetObject.GetRadius()))
+	targetObject.Damage(mDamage);
 }

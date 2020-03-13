@@ -1,7 +1,7 @@
 #include "CEnemy.h"
 
 CEnemy::CEnemy(CVector2 startPosition, CPlayer* target, std::vector<CProjectile>& EnemyBullets) :
-	CControlledObject(startPosition, EnemyBullets),
+	CControlledObject(startPosition, EnemyBullets, 5),
 	targetPlayer(target)
 {}
 
@@ -29,9 +29,11 @@ void CEnemy::Shoot()
 void CEnemy::Damage(float damage)
 {
 	mHealth -= damage;
+	if (mHealth < 0)
+		Kill();
 }
 
 void CEnemy::Kill()
 {
-	std::cout << "enemy is kill";
+	std::cout << "enemy is kill" << std::endl;
 }

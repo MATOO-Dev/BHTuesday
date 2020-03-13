@@ -1,7 +1,7 @@
 #include "CPlayer.h"
 
 CPlayer::CPlayer(CVector2 startPosition, std::vector<CProjectile>& PlayerBullets) :
-	CControlledObject(startPosition, PlayerBullets)
+	CControlledObject(startPosition, PlayerBullets, 5)
 {}
 
 CPlayer::~CPlayer()
@@ -110,5 +110,5 @@ void CPlayer::Damage(float damage)
 
 void CPlayer::Kill()
 {
-	std::cout << "player is kill";
+	std::cout << "player is kill" << std::endl;
 }
