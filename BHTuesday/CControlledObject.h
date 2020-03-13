@@ -19,6 +19,7 @@ public:
 	const CVector2& GetVelocity() const;
 	void SetVelocity(CVector2 newVelocity);
 	void AddVelocity(CVector2 addend);
+	int GetRadius() const;
 	virtual void Shoot() = 0;
 	virtual void Damage(float damage) = 0;
 	virtual void Kill() = 0;
@@ -54,4 +55,9 @@ inline void CControlledObject::SetVelocity(CVector2 newVelocity)
 inline void CControlledObject::AddVelocity(CVector2 addend)
 {
 	mVelocity = mVelocity + addend;
+}
+
+inline int CControlledObject::GetRadius() const
+{
+	return mRadius;
 }
