@@ -1,13 +1,16 @@
 #pragma once
+
+class CProjectile;
+
 #include "CVector2.h"
-#include "CBullet.h"
+#include "CProjectile.h"
 #include <vector>
 
 
 class CControlledObject
 {
 public:
-	CControlledObject(CVector2 startPosition);
+	CControlledObject(CVector2 startPosition, std::vector<CProjectile>& EnemyBullets, int radius);
 	~CControlledObject();
 	virtual void Update(float timeStep);
 	virtual void Render(SDL_Renderer& renderer) const = 0;
@@ -16,13 +19,16 @@ public:
 	const CVector2& GetVelocity() const;
 	void SetVelocity(CVector2 newVelocity);
 	void AddVelocity(CVector2 addend);
+	int GetRadius() const;
 	virtual void Shoot() = 0;
 	virtual void Damage(float damage) = 0;
+	virtual void Kill() = 0;
 protected:
+	std::vector<CProjectile>& mBullets;
 	CVector2 mPosition;
 	CVector2 mVelocity;
 	float mHealth;
-	std::vector<CBullet> mBullets;
+	int mRadius;
 };
 
 
@@ -49,4 +55,9 @@ inline void CControlledObject::SetVelocity(CVector2 newVelocity)
 inline void CControlledObject::AddVelocity(CVector2 addend)
 {
 	mVelocity = mVelocity + addend;
+}
+
+inline int CControlledObject::GetRadius() const
+{
+	return mRadius;
 }

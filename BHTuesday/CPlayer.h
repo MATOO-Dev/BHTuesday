@@ -9,12 +9,13 @@
 class CPlayer : public CControlledObject
 {
 public:
-	CPlayer(CVector2 startPosition);
+	CPlayer(CVector2 startPosition, std::vector<CProjectile>& PlayerBullets);
 	~CPlayer();
 	void Update(float timeStep, EControlStyle& myControlStyle);
 	void Render(SDL_Renderer& renderer) const override;
 	void Shoot() override;
 	void Damage(float damage) override;
+	void Kill() override;
 private:
 	const float moveSpeed = 50;
 	const float dragMultiplier = 0.75;

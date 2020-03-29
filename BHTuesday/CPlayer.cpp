@@ -1,7 +1,7 @@
 #include "CPlayer.h"
 
-CPlayer::CPlayer(CVector2 startPosition) :
-	CControlledObject(startPosition)
+CPlayer::CPlayer(CVector2 startPosition, std::vector<CProjectile>& PlayerBullets) :
+	CControlledObject(startPosition, PlayerBullets, 5)
 {}
 
 CPlayer::~CPlayer()
@@ -72,16 +72,20 @@ void CPlayer::Update(float timeStep, EControlStyle& myControlStyle)
 		mPosition.y = windowHeight;
 		SetVelocity(CVector2(mVelocity.x, 0));
 	}
-
+	/*
 	for (int i = 0; i < mBullets.size(); i++)
 	{
 		mBullets[i].Update(timeStep);
+		for (int i = 0; i < enemys.size(); i++)
+		{
+			mBullets[i].Collision(enemys[i]);
+		}
 		if (mBullets[i].inBounds() == false)
 		{
 			mBullets.erase(mBullets.begin() + i);
 		}
 	}
-
+	*/
 }
 
 void CPlayer::Render(SDL_Renderer& renderer) const
@@ -96,10 +100,20 @@ void CPlayer::Render(SDL_Renderer& renderer) const
 
 void CPlayer::Shoot()
 {
-	mBullets.push_back(CBullet(mPosition, CVector2(0, -500)));
+	mBullets.push_back(CProjectile(mPosition, CVector2(0, -500)));
 }
 
 void CPlayer::Damage(float damage)
 {
 	mHealth -= damage;
+
+	if (mHealth < 0)
+	{
+		Kill();
+	}
+}
+
+void CPlayer::Kill()
+{
+	std::cout << "player is kill" << std::endl;
 }

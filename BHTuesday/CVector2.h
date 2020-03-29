@@ -9,6 +9,7 @@ public:
 	CVector2(CVector2 target, CVector2 origin);
 	float length();
 	CVector2 normalize();
+	float GetDistance(const CVector2 other) const;
 	~CVector2();
 	float x;
 	float y;
@@ -17,6 +18,11 @@ public:
 inline CVector2 operator+ (const CVector2& first, const CVector2& second)
 {
 	return CVector2(first.x + second.x, first.y + second.y);
+}
+
+inline CVector2 operator- (const CVector2 first, const CVector2 second)
+{
+	return CVector2(first.x - second.x, first.y - second.y);
 }
 
 inline CVector2 operator*(const CVector2& base, const float& multiplier)

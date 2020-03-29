@@ -2,9 +2,11 @@
 //
 #include <iostream>
 #include <SDL.h>
+#include <SDL_image.h>
 #include <vector>
 #include "CPlayer.h"
 #include "CEnemy.h"
+#include "CProjectile.h"
 #include "Defines.h"
 
 #define TICK_INTERVAL 16
@@ -13,16 +15,18 @@
 int main(int argc, char* argv[])
 {
 	//initialize variables
-	static CPlayer* myPlayer = new CPlayer(CVector2(300, 875));
 	static EControlStyle myControlStyle = EControlStyle::Keyboard;
 	static EGameState activeGameState = EGameState::Active;
-	static ETheme activeTheme = ETheme::Light;
+	static ETheme activeTheme = ETheme::Dark;
+	std::vector<CProjectile> EnemyBullets;
+	std::vector<CProjectile> PlayerBullets;
 	std::vector<CEnemy> Enemys;
+	static CPlayer* myPlayer = new CPlayer(CVector2(300, 875), PlayerBullets);
 
-	Enemys.push_back(CEnemy(CVector2(100, 100), myPlayer));
-	Enemys.push_back(CEnemy(CVector2(200, 100), myPlayer));
-	Enemys.push_back(CEnemy(CVector2(300, 100), myPlayer));
-	Enemys.push_back(CEnemy(CVector2(400, 100), myPlayer));
+	Enemys.push_back(CEnemy(CVector2(100, 100), myPlayer, EnemyBullets));
+	Enemys.push_back(CEnemy(CVector2(200, 100), myPlayer, EnemyBullets));
+	Enemys.push_back(CEnemy(CVector2(300, 100), myPlayer, EnemyBullets));
+	Enemys.push_back(CEnemy(CVector2(400, 100), myPlayer, EnemyBullets));
 
 	if (SDL_Init(SDL_INIT_VIDEO) == 0)
 	{
@@ -82,12 +86,41 @@ int main(int argc, char* argv[])
 						Enemys[i].Update((float)TICK_INTERVAL / 1000.f);
 						Enemys[i].Render(*Renderer);
 					}
+					for (int i = 0; i < EnemyBullets.size(); i++)
+					{
+						EnemyBullets[i].Update((float)TICK_INTERVAL / 1000.f);
+						EnemyBullets[i].Collision(*myPlayer);
+						if (EnemyBullets[i].inBounds() == false)
+						{
+							EnemyBullets.erase(EnemyBullets.begin() + i);
+						}
+						EnemyBullets[i].Render(Renderer);
+					}
+					for (int i = 0; i < PlayerBullets.size(); i++)
+					{
+						PlayerBullets[i].Update((float)TICK_INTERVAL / 1000.f);
+						if (PlayerBullets[i].inBounds() == false)
+						{
+							std::cout << "bullet" << i << "is out of bounds" << std::endl;
+							//PlayerBullets.erase(EnemyBullets.begin() + i);
+							//PlayerBullets.erase(EnemyBullets.begin() + 0);
+						}
+						PlayerBullets[i].Render(Renderer);
+					}
 					break;
 				case(EGameState::Paused):
 					myPlayer->Render(*Renderer);
 					for (int i = 0; i < Enemys.size(); i++)
 					{
 						Enemys[i].Render(*Renderer);
+					}
+					for (int i = 0; i < EnemyBullets.size(); i++)
+					{
+						EnemyBullets[i].Render(Renderer);
+					}
+					for (int i = 0; i < PlayerBullets.size(); i++)
+					{
+						PlayerBullets[i].Render(Renderer);
 					}
 					break;
 				case(EGameState::Settings):
