@@ -17,9 +17,9 @@ int main(int argc, char* argv[])
 	static EControlStyle myControlStyle = EControlStyle::Keyboard;
 	static EGameState activeGameState = EGameState::Active;
 	static ETheme activeTheme = ETheme::Dark;
-	std::vector<CEnemy> Enemys;
 	std::vector<CProjectile> EnemyBullets;
 	std::vector<CProjectile> PlayerBullets;
+	std::vector<CEnemy> Enemys;
 	static CPlayer* myPlayer = new CPlayer(CVector2(300, 875), PlayerBullets);
 
 	Enemys.push_back(CEnemy(CVector2(100, 100), myPlayer, EnemyBullets));
@@ -95,6 +95,17 @@ int main(int argc, char* argv[])
 						}
 						EnemyBullets[i].Render(Renderer);
 					}
+					for (int i = 0; i < PlayerBullets.size(); i++)
+					{
+						PlayerBullets[i].Update((float)TICK_INTERVAL / 1000.f);
+						if (PlayerBullets[i].inBounds() == false)
+						{
+							std::cout << "bullet" << i << "is out of bounds" << std::endl;
+							//PlayerBullets.erase(EnemyBullets.begin() + i);
+							//PlayerBullets.erase(EnemyBullets.begin() + 0);
+						}
+						PlayerBullets[i].Render(Renderer);
+					}
 					break;
 				case(EGameState::Paused):
 					myPlayer->Render(*Renderer);
@@ -105,6 +116,10 @@ int main(int argc, char* argv[])
 					for (int i = 0; i < EnemyBullets.size(); i++)
 					{
 						EnemyBullets[i].Render(Renderer);
+					}
+					for (int i = 0; i < PlayerBullets.size(); i++)
+					{
+						PlayerBullets[i].Render(Renderer);
 					}
 					break;
 				case(EGameState::Settings):

@@ -72,15 +72,20 @@ void CPlayer::Update(float timeStep, EControlStyle& myControlStyle)
 		mPosition.y = windowHeight;
 		SetVelocity(CVector2(mVelocity.x, 0));
 	}
-
+	/*
 	for (int i = 0; i < mBullets.size(); i++)
 	{
 		mBullets[i].Update(timeStep);
+		for (int i = 0; i < enemys.size(); i++)
+		{
+			mBullets[i].Collision(enemys[i]);
+		}
 		if (mBullets[i].inBounds() == false)
 		{
 			mBullets.erase(mBullets.begin() + i);
 		}
 	}
+	*/
 }
 
 void CPlayer::Render(SDL_Renderer& renderer) const

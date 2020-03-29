@@ -19,57 +19,66 @@
     <Filter Include="Projectiles">
       <UniqueIdentifier>{9f5e701f-a9cb-448c-8691-0991a76dc60f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utilities">
+      <UniqueIdentifier>{178630d2-0401-4980-9fbc-910aa7083358}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player">
+      <UniqueIdentifier>{6dc34269-2c41-40e6-8423-f2b551e2f311}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base Classes">
+      <UniqueIdentifier>{f8c91c76-f285-4255-ae2b-762a4a6423b4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BHTuesday.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CPlayer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CVector2.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CEnemy.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CControlledObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CGameManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CButton.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Enemys</Filter>
     </ClCompile>
     <ClCompile Include="CProjectile.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="CButton.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="CGameManager.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="CVector2.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CControlledObject.cpp">
+      <Filter>Base Classes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Defines.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CPlayer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CVector2.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CEnemy.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CControlledObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CGameManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CButton.h">
-      <Filter>Header Files</Filter>
+      <Filter>Enemys</Filter>
     </ClInclude>
     <ClInclude Include="CProjectile.h">
-      <Filter>Header Files</Filter>
+      <Filter>Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="CGameManager.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="CVector2.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Defines.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="CButton.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayer.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CControlledObject.h">
+      <Filter>Base Classes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
