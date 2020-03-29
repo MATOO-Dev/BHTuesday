@@ -14,12 +14,19 @@ enum class EGameState		//defines what state the game is in
 	Menu,
 	Active,
 	Paused,
-	Settings
+	Settings,
+	Editor
 };
 
 enum class ETheme		//defines the current theme
 {
 	Light,
+	Dark
+};
+
+enum class EEnemyType		//defines the current theme
+{
+	Sphere,
 	Dark
 };
 
