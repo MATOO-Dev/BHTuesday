@@ -54,6 +54,15 @@
     <ClCompile Include="CControlledObject.cpp">
       <Filter>Base Classes</Filter>
     </ClCompile>
+    <ClCompile Include="CLevelEditor.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemySphere.cpp">
+      <Filter>Enemys</Filter>
+    </ClCompile>
+    <ClCompile Include="CMenuManager.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CEnemy.h">
@@ -79,6 +88,24 @@
     </ClInclude>
     <ClInclude Include="CControlledObject.h">
       <Filter>Base Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Wave.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="CLevelEditor.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemySphere.h">
+      <Filter>Enemys</Filter>
+    </ClInclude>
+    <ClInclude Include="CMenuManager.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
