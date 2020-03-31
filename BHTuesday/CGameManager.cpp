@@ -1,8 +1,9 @@
 #include "CGameManager.h"
 
 CGameManager::CGameManager() :
-	mRenderer(),
-	consolasFont(TTF_OpenFont("data/fonts/consolas.ttf", 20)),
+	mWindow(nullptr),
+	mRenderer(nullptr),
+	consolasFont(nullptr),
 	mMenuButtons()
 {}
 
@@ -23,10 +24,16 @@ bool CGameManager::InitializeSDL(SDL_Renderer* renderer)
 		ThrowErrorMesssage("Critical error", "Failed to Initialize SDL2_TTF");
 		return false;
 	}
+	if (SDL_CreateWindowAndRenderer(windowWidth, windowHeight, 0, &mWindow, &mRenderer) < 0)
+	{
+		ThrowErrorMesssage("Critical error", "Failed to Create Window or Renderer");
+		return false;
+	}
+
 	SDL_Color white = { 255, 255, 255 };
 	SDL_Color black = { 0, 0, 0 };
 
-	std::cout << consolasFont << std::endl;
+	consolasFont = CreateSizedFont(50);
 	if (consolasFont != nullptr)
 		mMenuButtons.push_back(CButton(CVector2(300, 500), CVector2(200, 100), consolasFont, "test", white, renderer));
 
@@ -59,6 +66,11 @@ void CGameManager::RenderAll(SDL_Renderer* renderer)
 void CGameManager::ClearGameObjects()
 {
 
+}
+
+TTF_Font* CGameManager::CreateSizedFont(int size)
+{
+	return TTF_OpenFont("data/fonts/consolas.ttf", size);
 }
 
 void CGameManager::InitializeMenu(EMenuType menuType)
@@ -144,10 +156,10 @@ bool CGameManager::LoadSettings()		//bool used for error checks
 
 void CGameManager::SwitchGameState(EGameState newGameState)
 {
-
+	//mActiveGameState = newGameState
 }
 
-void CGameManager::ExitGame()
+void CGameManager::ExitGame()		//replace with bool return on update, instead use this to shutdown sdl, window, renderers, and call destructors from here
 {
 
 }

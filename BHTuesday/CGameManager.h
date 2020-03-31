@@ -17,6 +17,7 @@ private:
 	std::vector<CEnemy*> mEnemyRef;
 	//add bullet vectors
 	int mPlayerScore;
+	SDL_Window* mWindow;
 	SDL_Renderer* mRenderer;
 	//std::vector //installed upgrades bool vector
 	int Volume; //correct data type?
@@ -30,6 +31,7 @@ public:
 	void UpdateAll();
 	void RenderAll(SDL_Renderer* renderer);
 	void ClearGameObjects();
+	TTF_Font* CreateSizedFont(int size);
 	void InitializeMenu(EMenuType menuType);
 	void ClearMenu();
 	void UpdateButtons(SDL_MouseButtonEvent mouseDownEvent);
