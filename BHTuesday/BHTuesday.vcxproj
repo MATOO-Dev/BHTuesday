@@ -170,6 +170,7 @@
     <ClCompile Include="CGameManager.cpp" />
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CVector2.cpp" />
+    <ClCompile Include="Wave.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CEnemySphere.h" />

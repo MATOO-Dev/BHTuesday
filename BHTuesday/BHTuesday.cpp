@@ -8,6 +8,7 @@
 #include "CEnemy.h"
 #include "CProjectile.h"
 #include "Defines.h"
+#include "CGameManager.h"
 
 #define TICK_INTERVAL 16
 

@@ -63,6 +63,9 @@
     <ClCompile Include="CMenuManager.cpp">
       <Filter>Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="Wave.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CEnemy.h">

@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Defines.h"
 #include "CButton.h"
 #include <vector>
@@ -12,7 +13,7 @@ struct Menu
 void Menu::UpdateButtons(SDL_MouseButtonEvent mouseDownEvent)		//enter mouse down event
 {
 	CVector2 mousePos = CVector2(mouseDownEvent.x, mouseDownEvent.y);
-	mouseDownEvent.button
+	//mouseDownEvent.button
 	for (int i = 0; i < mMenuButtons.size(); i++)
 	{
 		if (mMenuButtons[i].IsClicked(mousePos))
