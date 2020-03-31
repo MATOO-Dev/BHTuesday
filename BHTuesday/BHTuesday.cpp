@@ -1,9 +1,9 @@
 // BHTuesday.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
-#include <iostream>
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
+#include <iostream>
 #include <vector>
 #include "CPlayer.h"
 #include "CEnemy.h"
@@ -18,12 +18,15 @@ int main(int argc, char* argv[])
 {
 	//initialize variables
 	static EControlStyle myControlStyle = EControlStyle::Keyboard;
-	static EGameState activeGameState = EGameState::Active;
+	static EGameState activeGameState = EGameState::Menu;
 	static ETheme activeTheme = ETheme::Dark;
 	std::vector<CProjectile> EnemyBullets;
 	std::vector<CProjectile> PlayerBullets;
 	std::vector<CEnemy> Enemys;
 	static CPlayer* myPlayer = new CPlayer(CVector2(300, 875), PlayerBullets);
+
+	CGameManager GameManager;
+	if(GameManager.InitializeSDL() == false)
 
 	Enemys.push_back(CEnemy(CVector2(100, 100), myPlayer, EnemyBullets));
 	Enemys.push_back(CEnemy(CVector2(200, 100), myPlayer, EnemyBullets));
@@ -164,5 +167,6 @@ int main(int argc, char* argv[])
 	}
 
 	SDL_Quit();
+	TTF_Quit();
 	return 0;
 }

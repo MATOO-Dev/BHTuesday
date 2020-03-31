@@ -3,6 +3,31 @@
 CGameManager::CGameManager()
 {}
 
+bool CGameManager::InitializeSDL()
+{
+	if (SDL_Init(SDL_INIT_VIDEO) < 0)
+	{
+		ThrowErrorMesssage("Critical error", "Failed to Initialize SDL2_Video");
+		return false;
+	}
+	if (SDL_Init(SDL_INIT_AUDIO) < 0)
+	{
+		ThrowErrorMesssage("Critical error", "Failed to Initialize SDL2_Audio");
+		return false;
+	}
+	if (TTF_Init() < 0)
+	{
+		ThrowErrorMesssage("Critical error", "Failed to Initialize SDL2_TTF");
+		return false;
+	}
+	return true;
+}
+
+void CGameManager::ThrowErrorMesssage(const char* errorHeader, const char* errorContent)
+{
+	MessageBoxA(NULL, errorContent, errorHeader, MB_OK);
+}
+
 void CGameManager::Update()
 {
 
@@ -72,7 +97,7 @@ bool CGameManager::LoadSettings()		//bool used for error checks
 
 void CGameManager::SwitchGameState(EGameState newGameState)
 {
-	
+
 }
 
 void CGameManager::ExitGame()

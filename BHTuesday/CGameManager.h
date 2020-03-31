@@ -3,7 +3,9 @@
 #include "CEnemy.h"
 #include "CLevelEditor.h"
 #include <SDL.h>
+#include <SDL_ttf.h>
 #include <vector>
+#include <Windows.h>
 #include <fstream>
 
 class CGameManager
@@ -17,6 +19,8 @@ private:
 	int Volume; //correct data type?
 public:
 	CGameManager();
+	bool InitializeSDL();
+	void ThrowErrorMesssage(const char* errorHeader, const char* errorContent);
 	void Update();
 	void UpdateAll();
 	void RenderAll();
