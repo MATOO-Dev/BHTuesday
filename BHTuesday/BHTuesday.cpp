@@ -32,6 +32,8 @@ int main(int argc, char* argv[])
 
 	if (SDL_Init(SDL_INIT_VIDEO) == 0)
 	{
+		if (TTF_Init() < 0)
+			std::cout << "error: failed to initialize ttf" << std::endl;
 		SDL_Window* Window = NULL;
 		SDL_Renderer* Renderer = NULL;
 
