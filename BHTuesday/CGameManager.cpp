@@ -1,9 +1,12 @@
 #include "CGameManager.h"
 
-CGameManager::CGameManager()
+CGameManager::CGameManager() :
+	mRenderer(),
+	consolasFont(TTF_OpenFont("data/fonts/consolas.ttf", 20)),
+	mMenuButtons()
 {}
 
-bool CGameManager::InitializeSDL()
+bool CGameManager::InitializeSDL(SDL_Renderer* renderer)
 {
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
@@ -20,6 +23,13 @@ bool CGameManager::InitializeSDL()
 		ThrowErrorMesssage("Critical error", "Failed to Initialize SDL2_TTF");
 		return false;
 	}
+	SDL_Color white = { 255, 255, 255 };
+	SDL_Color black = { 0, 0, 0 };
+
+	std::cout << consolasFont << std::endl;
+	if (consolasFont != nullptr)
+		mMenuButtons.push_back(CButton(CVector2(300, 500), CVector2(200, 100), consolasFont, "test", white, renderer));
+
 	return true;
 }
 
@@ -38,9 +48,12 @@ void CGameManager::UpdateAll()
 
 }
 
-void CGameManager::RenderAll()
+void CGameManager::RenderAll(SDL_Renderer* renderer)
 {
-
+	for (int i = 0; i < mMenuButtons.size(); i++)
+	{
+		mMenuButtons[i].Render(renderer);
+	}
 }
 
 void CGameManager::ClearGameObjects()
@@ -48,14 +61,48 @@ void CGameManager::ClearGameObjects()
 
 }
 
-void CGameManager::ClearMenus()
+void CGameManager::InitializeMenu(EMenuType menuType)
 {
-
+	switch (menuType)
+	{
+	case EMenuType::MainMenu:
+		//mMenuButtons.push_back(CButton(CVector2(300, 500), CVector2(100, 50)));
+		break;
+	case EMenuType::Paused:
+		break;
+	case EMenuType::Settings:
+		break;
+	case EMenuType::Editor:
+		break;
+	case EMenuType::Upgrades:
+		break;
+	default:
+		break;
+	}
 }
 
-void CGameManager::OpenMenu(EMenuType menuToOpen)
+void CGameManager::ClearMenu()
 {
+	mMenuButtons.clear();
+}
 
+void CGameManager::UpdateButtons(SDL_MouseButtonEvent mouseDownEvent)		//enter mouse down event
+{
+	CVector2 mousePos = CVector2(mouseDownEvent.x, mouseDownEvent.y);
+	//mouseDownEvent.button
+	for (int i = 0; i < mMenuButtons.size(); i++)
+	{
+		if (mMenuButtons[i].IsClicked(mousePos))
+			mMenuButtons[i].DoAction();
+	}
+}
+
+void CGameManager::RenderButtons(SDL_Renderer* renderer)
+{
+	for (int i = 0; i < mMenuButtons.size(); i++)
+	{
+		mMenuButtons[i].Render(renderer);
+	}
 }
 
 bool CGameManager::SaveSettings()		//bool used for error checks

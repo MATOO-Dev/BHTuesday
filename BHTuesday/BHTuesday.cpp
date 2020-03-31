@@ -17,26 +17,18 @@
 int main(int argc, char* argv[])
 {
 	//initialize variables
-	static EControlStyle myControlStyle = EControlStyle::Keyboard;
-	static EGameState activeGameState = EGameState::Menu;
-	static ETheme activeTheme = ETheme::Dark;
+	static EGameState activeGameState = EGameState::MainMenu;
+	/*
 	std::vector<CProjectile> EnemyBullets;
 	std::vector<CProjectile> PlayerBullets;
 	std::vector<CEnemy> Enemys;
 	static CPlayer* myPlayer = new CPlayer(CVector2(300, 875), PlayerBullets);
-
+	*/
+	TTF_Init();
 	CGameManager GameManager;
-	if(GameManager.InitializeSDL() == false)
-
-	Enemys.push_back(CEnemy(CVector2(100, 100), myPlayer, EnemyBullets));
-	Enemys.push_back(CEnemy(CVector2(200, 100), myPlayer, EnemyBullets));
-	Enemys.push_back(CEnemy(CVector2(300, 100), myPlayer, EnemyBullets));
-	Enemys.push_back(CEnemy(CVector2(400, 100), myPlayer, EnemyBullets));
 
 	if (SDL_Init(SDL_INIT_VIDEO) == 0)
 	{
-		if (TTF_Init() < 0)
-			std::cout << "error: failed to initialize ttf" << std::endl;
 		SDL_Window* Window = NULL;
 		SDL_Renderer* Renderer = NULL;
 
@@ -44,48 +36,29 @@ int main(int argc, char* argv[])
 		if (SDL_CreateWindowAndRenderer(windowWidth, windowHeight, 0, &Window, &Renderer) == 0)
 		{
 			SDL_bool completed = SDL_FALSE;
+			if (GameManager.InitializeSDL(Renderer) == false)
+			{
+			}
 
 			//game loop
 			while (!completed)
 			{
 				int before = SDL_GetTicks();
 				SDL_Event event;
-
-				//manages background and foreground color in regards to active theme
-				switch (activeTheme)
-				{
-				case(ETheme::Light):
-					SDL_SetRenderDrawColor(Renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
-					SDL_RenderClear(Renderer);
-					SDL_SetRenderDrawColor(Renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
-					break;
-				case(ETheme::Dark):
-					SDL_SetRenderDrawColor(Renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
-					SDL_RenderClear(Renderer);
-					SDL_SetRenderDrawColor(Renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
-					break;
-				}
-
-				{
-					//orientation lines, will be removed later
-					SDL_SetRenderDrawColor(Renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
-					SDL_RenderDrawLine(Renderer, 0, 0, 600, 1000);
-					SDL_RenderDrawLine(Renderer, 600, 0, 0, 1000);
-					SDL_RenderDrawLine(Renderer, 300, 0, 300, 1000);
-					SDL_RenderDrawLine(Renderer, 0, 250, 600, 250);
-					SDL_RenderDrawLine(Renderer, 0, 500, 600, 500);
-					SDL_RenderDrawLine(Renderer, 0, 750, 600, 750);
-					SDL_SetRenderDrawColor(Renderer, 0, 0, 255, SDL_ALPHA_OPAQUE);
-					SDL_RenderDrawLine(Renderer, myPlayer->GetPosition().x, myPlayer->GetPosition().y, 300, 500);
-					SDL_SetRenderDrawColor(Renderer, 255, 25 < 5, 255, SDL_ALPHA_OPAQUE);
-				}
+				SDL_SetRenderDrawColor(Renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+				SDL_RenderClear(Renderer);
+				SDL_SetRenderDrawColor(Renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
 
 				//manages current Game State
 				switch (activeGameState)
 				{
-				case(EGameState::Menu):
+				case(EGameState::MainMenu):
+					GameManager.RenderAll(Renderer);
 					break;
 				case(EGameState::Active):
+					//GameManager.UpdateAll();
+					//GameManager.RenderAll();
+					/*
 					myPlayer->Update((float)TICK_INTERVAL / 1000.f, myControlStyle);
 					myPlayer->Render(*Renderer);
 					for (int i = 0; i < Enemys.size(); i++)
@@ -114,23 +87,11 @@ int main(int argc, char* argv[])
 						}
 						PlayerBullets[i].Render(Renderer);
 					}
+					*/
 					break;
-				case(EGameState::Paused):
-					myPlayer->Render(*Renderer);
-					for (int i = 0; i < Enemys.size(); i++)
-					{
-						Enemys[i].Render(*Renderer);
-					}
-					for (int i = 0; i < EnemyBullets.size(); i++)
-					{
-						EnemyBullets[i].Render(Renderer);
-					}
-					for (int i = 0; i < PlayerBullets.size(); i++)
-					{
-						PlayerBullets[i].Render(Renderer);
-					}
-					break;
-				case(EGameState::Settings):
+				case(EGameState::PauseMenu):
+					//GameManager.RenderAll();
+
 					break;
 				}
 

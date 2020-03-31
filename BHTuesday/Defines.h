@@ -11,11 +11,12 @@ enum class EControlStyle	//defines whether the player is controlled using keyboa
 
 enum class EGameState		//defines what state the game is in
 {
-	Menu,
+	MainMenu,
 	Active,
-	Paused,
-	Settings,
-	Editor
+	PauseMenu,
+	SettingsMenu,
+	EditorMenu,
+	UpgradesMenu
 };
 
 enum class EMenuType		//defines the type of the active menu

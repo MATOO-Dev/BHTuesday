@@ -1,8 +1,10 @@
 #include "CButton.h"
 
-CButton::CButton(CVector2 position, CVector2 size) :
+CButton::CButton(CVector2 position, CVector2 size, TTF_Font* font, const char* text, SDL_Color color, SDL_Renderer* renderer) :
 	mPosition(position),
-	mSize(size)
+	mSize(size),
+	mTextSurface(TTF_RenderText_Blended(font, text, color)),
+	mTextTexture(SDL_CreateTextureFromSurface(renderer, mTextSurface))
 {
 	mButtonBox.h = mSize.y;
 	mButtonBox.w = mSize.x;
@@ -23,6 +25,7 @@ bool CButton::IsClicked(CVector2 mousePos)
 void CButton::Render(SDL_Renderer* renderer)
 {
 	SDL_RenderDrawRect(renderer, &mButtonBox);
+	SDL_RenderCopy(renderer, mTextTexture, NULL, &mButtonBox);
 }
 
 void CButton::DoAction()

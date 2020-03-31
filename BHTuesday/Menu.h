@@ -1,3 +1,4 @@
+/*
 #pragma once
 
 #include "Defines.h"
@@ -20,3 +21,4 @@ void Menu::UpdateButtons(SDL_MouseButtonEvent mouseDownEvent)		//enter mouse dow
 			mMenuButtons[i].DoAction();
 	}
 }
+*/
