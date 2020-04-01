@@ -94,7 +94,7 @@ void CPlayer::Render(SDL_Renderer& renderer) const
 
 	for (int i = 0; i < mBullets.size(); i++)
 	{
-		mBullets[i].Render(&renderer);
+		mBullets[i].Render(renderer);
 	}
 }
 

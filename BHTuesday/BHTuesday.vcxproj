@@ -162,7 +162,6 @@
     <ClCompile Include="BHTuesday.cpp" />
     <ClCompile Include="CEnemySphere.cpp" />
     <ClCompile Include="CLevelEditor.cpp" />
-    <ClCompile Include="CMenuManager.cpp" />
     <ClCompile Include="CProjectile.cpp" />
     <ClCompile Include="CButton.cpp" />
     <ClCompile Include="CControlledObject.cpp" />
@@ -175,7 +174,6 @@
   <ItemGroup>
     <ClInclude Include="CEnemySphere.h" />
     <ClInclude Include="CLevelEditor.h" />
-    <ClInclude Include="CMenuManager.h" />
     <ClInclude Include="CProjectile.h" />
     <ClInclude Include="CButton.h" />
     <ClInclude Include="CControlledObject.h" />

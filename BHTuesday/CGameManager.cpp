@@ -1,6 +1,7 @@
 #include "CGameManager.h"
 
 CGameManager::CGameManager() :
+	mActiveGameState(EGameState::MainMenu),
 	mWindow(nullptr),
 	mRenderer(nullptr),
 	consolasFont(nullptr),
@@ -35,7 +36,7 @@ bool CGameManager::InitializeSDL(SDL_Renderer* renderer)
 
 	consolasFont = CreateSizedFont(50);
 	if (consolasFont != nullptr)
-		mMenuButtons.push_back(CButton(CVector2(300, 500), CVector2(200, 100), consolasFont, "test", white, renderer));
+		mMenuButtons.push_back(CButton(CVector2(300, 500), CVector2(200, 100), consolasFont, "test", white, mRenderer));
 
 	return true;
 }
@@ -47,20 +48,70 @@ void CGameManager::ThrowErrorMesssage(const char* errorHeader, const char* error
 
 void CGameManager::Update()
 {
-
+	switch (mActiveGameState)
+	{
+	case EGameState::MainMenu:
+		//update + render buttons
+		break;
+	case EGameState::Active:
+		UpdateAll();
+		RenderAll();
+		break;
+	case EGameState::PauseMenu:
+		//like active, but without update and with menu options
+		RenderAll();
+		break;
+	case EGameState::SettingsMenu:
+		//like pause, but without background
+		break;
+	case EGameState::EditorMenu:
+		//level editor
+		break;
+	case EGameState::UpgradesMenu:
+		//upgrade shop
+		break;
+	default:
+		break;
+	}
 }
 
 void CGameManager::UpdateAll()
 {
+	/*
+	if (mPlayerRef != nullptr)
+		mPlayerRef->Update();
 
+	for (CEnemy enemy : mEnemyRef)
+		enemy.Update();
+
+	for (CProjectile playerProjectile : mPlayerBullets)
+		playerProjectile.Update();
+
+	for (CProjectile enemyProjectile : mEnemyBullets)
+		enemyProjectile.Update();
+		*/
 }
 
-void CGameManager::RenderAll(SDL_Renderer* renderer)
+void CGameManager::RenderAll()
 {
-	for (int i = 0; i < mMenuButtons.size(); i++)
-	{
-		mMenuButtons[i].Render(renderer);
-	}
+	SDL_SetRenderDrawColor(mRenderer, 0, 0, 0, 0);
+	SDL_RenderClear(mRenderer);
+	SDL_SetRenderDrawColor(mRenderer, 255, 255, 255, 255);
+	if (mPlayerRef != nullptr)
+		mPlayerRef->Render(*mRenderer);
+
+	for (CEnemy enemy : mEnemyRef)
+		enemy.Render(*mRenderer);
+
+	for (CProjectile playerProjectile : mPlayerBullets)
+		playerProjectile.Render(*mRenderer);
+
+	for (CProjectile enemyProjectile : mEnemyBullets)
+		enemyProjectile.Render(*mRenderer);
+
+	for (CButton button : mMenuButtons)
+		button.Render(*mRenderer);
+	SDL_RenderPresent(mRenderer);
 }
 
 void CGameManager::ClearGameObjects()
@@ -73,20 +124,20 @@ TTF_Font* CGameManager::CreateSizedFont(int size)
 	return TTF_OpenFont("data/fonts/consolas.ttf", size);
 }
 
-void CGameManager::InitializeMenu(EMenuType menuType)
+void CGameManager::InitializeMenu(EGameState menuType)
 {
 	switch (menuType)
 	{
-	case EMenuType::MainMenu:
-		//mMenuButtons.push_back(CButton(CVector2(300, 500), CVector2(100, 50)));
+	case EGameState::MainMenu:
+		//mMenuButtons.push_back(CButton(CVector2(300, 500), CVector2(200, 100)));
 		break;
-	case EMenuType::Paused:
+	case EGameState::PauseMenu:
 		break;
-	case EMenuType::Settings:
+	case EGameState::SettingsMenu:
 		break;
-	case EMenuType::Editor:
+	case EGameState::EditorMenu:
 		break;
-	case EMenuType::Upgrades:
+	case EGameState::UpgradesMenu:
 		break;
 	default:
 		break;
@@ -106,14 +157,6 @@ void CGameManager::UpdateButtons(SDL_MouseButtonEvent mouseDownEvent)		//enter m
 	{
 		if (mMenuButtons[i].IsClicked(mousePos))
 			mMenuButtons[i].DoAction();
-	}
-}
-
-void CGameManager::RenderButtons(SDL_Renderer* renderer)
-{
-	for (int i = 0; i < mMenuButtons.size(); i++)
-	{
-		mMenuButtons[i].Render(renderer);
 	}
 }
 
@@ -156,7 +199,7 @@ bool CGameManager::LoadSettings()		//bool used for error checks
 
 void CGameManager::SwitchGameState(EGameState newGameState)
 {
-	//mActiveGameState = newGameState
+	mActiveGameState = newGameState;
 }
 
 void CGameManager::ExitGame()		//replace with bool return on update, instead use this to shutdown sdl, window, renderers, and call destructors from here

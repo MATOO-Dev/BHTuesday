@@ -14,7 +14,7 @@ private:
 public:
 	CButton(CVector2 position, CVector2 size, TTF_Font* font,const char* text, SDL_Color color, SDL_Renderer* renderer);
 	bool IsClicked(CVector2 mousePos);
-	void Render(SDL_Renderer* renderer);
+	void Render(SDL_Renderer& renderer);
 	void DoAction();
 };
 

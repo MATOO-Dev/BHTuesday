@@ -19,15 +19,6 @@ enum class EGameState		//defines what state the game is in
 	UpgradesMenu
 };
 
-enum class EMenuType		//defines the type of the active menu
-{
-	MainMenu,
-	Paused,
-	Settings,
-	Editor,
-	Upgrades
-};
-
 enum class ETheme		//defines the current theme
 {
 	Light,
@@ -38,11 +29,6 @@ enum class EEnemyType		//defines the current theme
 {
 	Sphere,
 	Dark
-};
-
-enum class EButtonType		//defines the type of the current button
-{
-
 };
 
 enum class EButtonAction		//defines the more explicit action of the current button

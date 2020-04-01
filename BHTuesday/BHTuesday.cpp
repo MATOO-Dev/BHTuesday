@@ -53,7 +53,7 @@ int main(int argc, char* argv[])
 				switch (activeGameState)
 				{
 				case(EGameState::MainMenu):
-					GameManager.RenderAll(Renderer);
+					GameManager.RenderAll();
 					break;
 				case(EGameState::Active):
 					//GameManager.UpdateAll();

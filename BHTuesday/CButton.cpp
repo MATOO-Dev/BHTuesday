@@ -22,10 +22,10 @@ bool CButton::IsClicked(CVector2 mousePos)
 	return false;
 }
 
-void CButton::Render(SDL_Renderer* renderer)
+void CButton::Render(SDL_Renderer& renderer)
 {
-	SDL_RenderDrawRect(renderer, &mButtonBox);
-	SDL_RenderCopy(renderer, mTextTexture, NULL, &mButtonBox);
+	SDL_RenderDrawRect(&renderer, &mButtonBox);
+	SDL_RenderCopy(&renderer, mTextTexture, NULL, &mButtonBox);
 }
 
 void CButton::DoAction()
