@@ -28,7 +28,7 @@ private:
 	std::vector<CButton> mMenuButtons;
 public:
 	CGameManager();
-	bool InitializeSDL(SDL_Renderer* renderer);
+	bool InitializeSDL();
 	void ThrowErrorMesssage(const char* errorHeader, const char* errorContent);
 	void Update();
 	void UpdateAll();

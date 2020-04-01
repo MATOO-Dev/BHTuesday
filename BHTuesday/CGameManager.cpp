@@ -8,7 +8,7 @@ CGameManager::CGameManager() :
 	mMenuButtons()
 {}
 
-bool CGameManager::InitializeSDL(SDL_Renderer* renderer)
+bool CGameManager::InitializeSDL()
 {
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
@@ -52,6 +52,7 @@ void CGameManager::Update()
 	{
 	case EGameState::MainMenu:
 		//update + render buttons
+		RenderAll();
 		break;
 	case EGameState::Active:
 		UpdateAll();
@@ -116,7 +117,10 @@ void CGameManager::RenderAll()
 
 void CGameManager::ClearGameObjects()
 {
-
+	mPlayerRef = nullptr;
+	mEnemyRef.clear();
+	mPlayerBullets.clear();
+	mEnemyBullets.clear();
 }
 
 TTF_Font* CGameManager::CreateSizedFont(int size)
@@ -204,5 +208,9 @@ void CGameManager::SwitchGameState(EGameState newGameState)
 
 void CGameManager::ExitGame()		//replace with bool return on update, instead use this to shutdown sdl, window, renderers, and call destructors from here
 {
-
+	ClearGameObjects();
+	SDL_DestroyRenderer(mRenderer);
+	SDL_DestroyWindow(mWindow);
+	TTF_Quit();
+	SDL_Quit();
 }
