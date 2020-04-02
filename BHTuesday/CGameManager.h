@@ -30,8 +30,8 @@ public:
 	CGameManager();
 	bool InitializeSDL();
 	void ThrowErrorMesssage(const char* errorHeader, const char* errorContent);
-	void Update();
-	void UpdateAll();
+	void Update(float timeStep);
+	void UpdateAll(float timeStep);
 	void RenderAll();
 	void ClearGameObjects();
 	TTF_Font* CreateSizedFont(int size);

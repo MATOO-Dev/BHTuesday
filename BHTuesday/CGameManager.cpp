@@ -31,10 +31,8 @@ bool CGameManager::InitializeSDL()
 		return false;
 	}
 
-	consolasFont = CreateSizedFont(50);
-	if (consolasFont != nullptr)
-		//mMenuButtons.push_back(CButton(CVector2(300, 500), CVector2(200, 100), consolasFont, "test", white, mRenderer, EButtonAction::OpenEditorMenu));
-		return true;
+	consolasFont = CreateSizedFont(100);
+	return true;
 }
 
 void CGameManager::ThrowErrorMesssage(const char* errorHeader, const char* errorContent)
@@ -42,16 +40,22 @@ void CGameManager::ThrowErrorMesssage(const char* errorHeader, const char* error
 	MessageBoxA(NULL, errorContent, errorHeader, MB_OK);
 }
 
-void CGameManager::Update()
+void CGameManager::Update(float timeStep)
 {
+
 	switch (mActiveGameState)
 	{
 	case EGameState::MainMenu:
 		//update + render buttons
+		UpdateAll(timeStep);
+		RenderAll();
+		break;
+	case EGameState::LevelSelectMenu:
+		UpdateAll(timeStep);
 		RenderAll();
 		break;
 	case EGameState::Active:
-		UpdateAll();
+		UpdateAll(timeStep);
 		RenderAll();
 		break;
 	case EGameState::PauseMenu:
@@ -60,36 +64,38 @@ void CGameManager::Update()
 		break;
 	case EGameState::SettingsMenu:
 		//like pause, but without background
+		RenderAll();
 		break;
 	case EGameState::EditorMenu:
 		//level editor
+		RenderAll();
 		break;
 	case EGameState::UpgradesMenu:
 		//upgrade shop
+		RenderAll();
 		break;
 	default:
 		break;
 	}
 }
 
-void CGameManager::UpdateAll()
+void CGameManager::UpdateAll(float timeStep)		//updates all gameobjects, excluding buttons
 {
-	/*
+	EControlStyle controlStyle = EControlStyle::Keyboard;
 	if (mPlayerRef != nullptr)
-		mPlayerRef->Update();
+		mPlayerRef->Update(timeStep, controlStyle);
 
 	for (CEnemy enemy : mEnemyRef)
-		enemy.Update();
+		enemy.Update(timeStep);
 
-	for (CProjectile playerProjectile : mPlayerBullets)
-		playerProjectile.Update();
+	for (CProjectile playerProjectile : mPlayerBullets)		//fix bullets not updating //check val/ref //check correct array given to objects
+		playerProjectile.Update(timeStep);
 
 	for (CProjectile enemyProjectile : mEnemyBullets)
-		enemyProjectile.Update();
-		*/
+		enemyProjectile.Update(timeStep);
 }
 
-void CGameManager::RenderAll()
+void CGameManager::RenderAll()		//renders all gameobjects, including buttons
 {
 	SDL_SetRenderDrawColor(mRenderer, 0, 0, 0, 0);
 	SDL_RenderClear(mRenderer);
@@ -127,6 +133,8 @@ TTF_Font* CGameManager::CreateSizedFont(int size)
 void CGameManager::InitializeMenu(EGameState menuType)
 {
 	ClearMenu();
+	if (menuType != EGameState::PauseMenu)
+		ClearGameObjects();
 	SDL_Color white = { 255, 255, 255 };
 	SDL_Color black = { 0, 0, 0 };
 
@@ -139,22 +147,39 @@ void CGameManager::InitializeMenu(EGameState menuType)
 		mMenuButtons.push_back(CButton(CVector2(300, 880), CVector2(200, 100), consolasFont, "Upgrades", white, mRenderer, EButtonAction::OpenUpgradesMenu));
 		break;
 	case EGameState::LevelSelectMenu:
+		mMenuButtons.push_back(CButton(CVector2(300, 200), CVector2(200, 100), consolasFont, "Level 1", white, mRenderer, EButtonAction::SetGameActive));
+		mMenuButtons.push_back(CButton(CVector2(300, 370), CVector2(200, 100), consolasFont, "Level 2", white, mRenderer, EButtonAction::None));
+		mMenuButtons.push_back(CButton(CVector2(300, 540), CVector2(200, 100), consolasFont, "Level 3", white, mRenderer, EButtonAction::None));
+		mMenuButtons.push_back(CButton(CVector2(300, 880), CVector2(200, 100), consolasFont, "Menu", white, mRenderer, EButtonAction::OpenMainMenu));
 		break;
 	case EGameState::Active:
-		//no menu
+		mPlayerRef = new CPlayer(CVector2(300, 750), mPlayerBullets);
+		mEnemyRef.push_back(CEnemy(CVector2(300, 250), mPlayerRef, mEnemyBullets));
 		//maybe hud?
 		break;
 	case EGameState::PauseMenu:
+		mMenuButtons.push_back(CButton(CVector2(300, 370), CVector2(200, 100), consolasFont, "Resume", white, mRenderer, EButtonAction::SetGameActive));
+		mMenuButtons.push_back(CButton(CVector2(300, 540), CVector2(200, 100), consolasFont, "Settings", white, mRenderer, EButtonAction::OpenSettingsMenu));
+		mMenuButtons.push_back(CButton(CVector2(300, 710), CVector2(200, 100), consolasFont, "Editor", white, mRenderer, EButtonAction::OpenEditorMenu));
+		mMenuButtons.push_back(CButton(CVector2(300, 880), CVector2(200, 100), consolasFont, "Menu", white, mRenderer, EButtonAction::OpenMainMenu));
 		break;
 	case EGameState::SettingsMenu:
+		mMenuButtons.push_back(CButton(CVector2(300, 540), CVector2(200, 100), consolasFont, "Video", white, mRenderer, EButtonAction::None));
+		mMenuButtons.push_back(CButton(CVector2(300, 710), CVector2(200, 100), consolasFont, "Volume", white, mRenderer, EButtonAction::None));
+		mMenuButtons.push_back(CButton(CVector2(100, 710), CVector2(60, 100), consolasFont, "-", white, mRenderer, EButtonAction::None));
+		mMenuButtons.push_back(CButton(CVector2(500, 710), CVector2(60, 100), consolasFont, "+", white, mRenderer, EButtonAction::None));
+		mMenuButtons.push_back(CButton(CVector2(300, 880), CVector2(200, 100), consolasFont, "Menu", white, mRenderer, EButtonAction::OpenMainMenu));
 		break;
 	case EGameState::EditorMenu:
+		mMenuButtons.push_back(CButton(CVector2(300, 880), CVector2(200, 100), consolasFont, "Menu", white, mRenderer, EButtonAction::OpenMainMenu));
 		break;
 	case EGameState::UpgradesMenu:
+		mMenuButtons.push_back(CButton(CVector2(300, 880), CVector2(200, 100), consolasFont, "Menu", white, mRenderer, EButtonAction::OpenMainMenu));
 		break;
 	default:
 		break;
 	}
+	SwitchGameState(menuType);
 }
 
 void CGameManager::ClearMenu()

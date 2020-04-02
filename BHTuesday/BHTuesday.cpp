@@ -33,7 +33,7 @@ int main(int argc, char* argv[])
 		int before = SDL_GetTicks();
 		SDL_Event event;
 
-		GameManager.Update();
+		GameManager.Update((float)TICK_INTERVAL / 1000.f);
 
 		{
 			//ensures tickspeed is stable(?)

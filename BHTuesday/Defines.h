@@ -41,13 +41,15 @@ enum class EEnemyType		//defines the current theme
 
 enum class EButtonAction		//defines the more explicit action of the current button
 {
+	None,
 	OpenMainMenu,
 	OpenLevelSelectMenu,
 	OpenStartGame,
 	OpenPauseMenu,
 	OpenSettingsMenu,
 	OpenEditorMenu,
-	OpenUpgradesMenu
+	OpenUpgradesMenu,
+	SetGameActive
 };
 
 /*
