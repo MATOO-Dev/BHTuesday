@@ -31,14 +31,10 @@ bool CGameManager::InitializeSDL()
 		return false;
 	}
 
-	SDL_Color white = { 255, 255, 255 };
-	SDL_Color black = { 0, 0, 0 };
-
 	consolasFont = CreateSizedFont(50);
 	if (consolasFont != nullptr)
-		mMenuButtons.push_back(CButton(CVector2(300, 500), CVector2(200, 100), consolasFont, "test", white, mRenderer));
-
-	return true;
+		//mMenuButtons.push_back(CButton(CVector2(300, 500), CVector2(200, 100), consolasFont, "test", white, mRenderer, EButtonAction::OpenEditorMenu));
+		return true;
 }
 
 void CGameManager::ThrowErrorMesssage(const char* errorHeader, const char* errorContent)
@@ -130,10 +126,23 @@ TTF_Font* CGameManager::CreateSizedFont(int size)
 
 void CGameManager::InitializeMenu(EGameState menuType)
 {
+	ClearMenu();
+	SDL_Color white = { 255, 255, 255 };
+	SDL_Color black = { 0, 0, 0 };
+
 	switch (menuType)
 	{
 	case EGameState::MainMenu:
-		//mMenuButtons.push_back(CButton(CVector2(300, 500), CVector2(200, 100)));
+		mMenuButtons.push_back(CButton(CVector2(300, 370), CVector2(200, 100), consolasFont, "Play", white, mRenderer, EButtonAction::OpenLevelSelectMenu));
+		mMenuButtons.push_back(CButton(CVector2(300, 540), CVector2(200, 100), consolasFont, "Settings", white, mRenderer, EButtonAction::OpenSettingsMenu));
+		mMenuButtons.push_back(CButton(CVector2(300, 710), CVector2(200, 100), consolasFont, "Editor", white, mRenderer, EButtonAction::OpenEditorMenu));
+		mMenuButtons.push_back(CButton(CVector2(300, 880), CVector2(200, 100), consolasFont, "Upgrades", white, mRenderer, EButtonAction::OpenUpgradesMenu));
+		break;
+	case EGameState::LevelSelectMenu:
+		break;
+	case EGameState::Active:
+		//no menu
+		//maybe hud?
 		break;
 	case EGameState::PauseMenu:
 		break;
@@ -155,12 +164,46 @@ void CGameManager::ClearMenu()
 
 void CGameManager::UpdateButtons(SDL_MouseButtonEvent mouseDownEvent)		//enter mouse down event
 {
-	CVector2 mousePos = CVector2(mouseDownEvent.x, mouseDownEvent.y);
-	//mouseDownEvent.button
-	for (int i = 0; i < mMenuButtons.size(); i++)
+	if (mouseDownEvent.button == SDL_BUTTON_LEFT)
 	{
-		if (mMenuButtons[i].IsClicked(mousePos))
-			mMenuButtons[i].DoAction();
+		CVector2 mousePos = CVector2(mouseDownEvent.x, mouseDownEvent.y);
+		//mouseDownEvent.button
+		for (int i = 0; i < mMenuButtons.size(); i++)
+		{
+			if (mMenuButtons[i].IsClicked(mousePos))
+			{
+				switch (mMenuButtons[i].GetAction())
+				{
+				case EButtonAction::OpenMainMenu:
+					InitializeMenu(EGameState::MainMenu);
+					break;
+				case EButtonAction::OpenLevelSelectMenu:
+					InitializeMenu(EGameState::LevelSelectMenu);
+					break;
+				case EButtonAction::OpenStartGame:
+					mMenuButtons.clear();
+					//load level here;
+					SwitchGameState(EGameState::Active);
+					break;
+				case EButtonAction::OpenPauseMenu:
+					InitializeMenu(EGameState::PauseMenu);
+					break;
+				case EButtonAction::OpenSettingsMenu:
+					InitializeMenu(EGameState::SettingsMenu);
+					break;
+				case EButtonAction::OpenEditorMenu:
+					InitializeMenu(EGameState::EditorMenu);
+					break;
+				case EButtonAction::OpenUpgradesMenu:
+					InitializeMenu(EGameState::UpgradesMenu);
+					break;
+					//more actions
+				default:
+					break;
+				}
+				break;
+			}
+		}
 	}
 }
 

@@ -1,7 +1,9 @@
 #pragma once
+#include "Defines.h"
 #include "CVector2.h"
 #include <SDL.h>
 #include <SDL_ttf.h>
+#include <iostream>
 
 class CButton
 {
@@ -11,10 +13,11 @@ private:
 	SDL_Rect mButtonBox;
 	SDL_Surface* mTextSurface;
 	SDL_Texture* mTextTexture;
+	EButtonAction mButtonAction;
 public:
-	CButton(CVector2 position, CVector2 size, TTF_Font* font,const char* text, SDL_Color color, SDL_Renderer* renderer);
+	CButton(CVector2 position, CVector2 size, TTF_Font* font,const char* text, SDL_Color color, SDL_Renderer* renderer, EButtonAction buttonAction);
 	bool IsClicked(CVector2 mousePos);
 	void Render(SDL_Renderer& renderer);
-	void DoAction();
+	EButtonAction GetAction();
 };
 

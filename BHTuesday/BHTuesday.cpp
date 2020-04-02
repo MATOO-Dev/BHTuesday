@@ -23,6 +23,9 @@ int main(int argc, char* argv[])
 	if (GameManager.InitializeSDL())
 		running = SDL_TRUE;
 
+	if (running)
+		GameManager.InitializeMenu(EGameState::MainMenu);
+
 
 	//game loop
 	while (running)
@@ -47,8 +50,19 @@ int main(int argc, char* argv[])
 		{
 			//exits the Game loop upon the event SDL_QUIT occuring
 			while (SDL_PollEvent(&event)) {
-				if (event.type == SDL_QUIT) {
+				switch (event.type)
+				{
+				case (SDL_MOUSEMOTION):
+					//used for potential hovering over buttons
+					break;
+				case(SDL_MOUSEBUTTONDOWN):
+					GameManager.UpdateButtons(event.button);
+					break;
+				case(SDL_QUIT):
 					running = SDL_FALSE;
+					break;
+				default:
+					break;
 				}
 			}
 		}

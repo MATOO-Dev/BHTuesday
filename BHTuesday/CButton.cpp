@@ -1,10 +1,11 @@
 #include "CButton.h"
 
-CButton::CButton(CVector2 position, CVector2 size, TTF_Font* font, const char* text, SDL_Color color, SDL_Renderer* renderer) :
+CButton::CButton(CVector2 position, CVector2 size, TTF_Font* font, const char* text, SDL_Color color, SDL_Renderer* renderer, EButtonAction buttonAction) :
 	mPosition(position),
 	mSize(size),
 	mTextSurface(TTF_RenderText_Blended(font, text, color)),
-	mTextTexture(SDL_CreateTextureFromSurface(renderer, mTextSurface))
+	mTextTexture(SDL_CreateTextureFromSurface(renderer, mTextSurface)),
+	mButtonAction(buttonAction)
 {
 	mButtonBox.h = mSize.y;
 	mButtonBox.w = mSize.x;
@@ -28,7 +29,7 @@ void CButton::Render(SDL_Renderer& renderer)
 	SDL_RenderCopy(&renderer, mTextTexture, NULL, &mButtonBox);
 }
 
-void CButton::DoAction()
+EButtonAction CButton::GetAction()		//perform action switch directly in gameManager
 {
-
+	return mButtonAction;
 }
