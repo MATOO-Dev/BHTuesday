@@ -24,6 +24,7 @@ public:
 	void Kill();
 	CVector2 GetPosition();
 	int GetRadius();
+	float GetHealth();
 private:
 	std::vector<CProjectile>& mBullets;
 	CVector2 mPosition;
@@ -45,4 +46,9 @@ inline CVector2 CPlayer::GetPosition()
 inline int CPlayer::GetRadius()
 {
 	return mRadius;
+}
+
+inline float CPlayer::GetHealth()
+{
+	return mHealth;
 }

@@ -48,37 +48,33 @@ void CGameManager::ThrowErrorMesssage(const char* errorHeader, const char* error
 
 void CGameManager::Update(float timeStep)
 {
+	CVector2* test = new CVector2(0, 0);
+	DestroyGameObject(test);
 
+	RenderAll();
 	switch (mActiveGameState)
 	{
 	case EGameState::MainMenu:
 		//update + render buttons
 		UpdateAll(timeStep);
-		RenderAll();
 		break;
 	case EGameState::LevelSelectMenu:
 		UpdateAll(timeStep);
-		RenderAll();
 		break;
 	case EGameState::Active:
 		UpdateAll(timeStep);
-		RenderAll();
 		break;
 	case EGameState::PauseMenu:
 		//like active, but without update and with menu options
-		RenderAll();
 		break;
 	case EGameState::SettingsMenu:
-		//like pause, but without background
-		RenderAll();
+		//like pause, but without background objects
 		break;
 	case EGameState::EditorMenu:
 		//level editor
-		RenderAll();
 		break;
 	case EGameState::UpgradesMenu:
 		//upgrade shop
-		RenderAll();
 		break;
 	default:
 		break;
@@ -116,7 +112,7 @@ void CGameManager::UpdateAll(float timeStep)		//updates all gameobjects, excludi
 	//same as previous 2, but inverted
 	it = mEnemyBullets.begin();
 	while (it != mEnemyBullets.end())
-		if (it->Update(timeStep) == false || it->Collision(*mPlayerRef) == true)
+		if (it->Update(timeStep) == false || it->Collision(*mPlayerRef) == true)	//C6011 is irrelevant because projectiles can only exist while mPlayerRef is active
 			it = mEnemyBullets.erase(it);
 		else
 			it++;
@@ -305,6 +301,7 @@ void CGameManager::SwitchGameState(EGameState newGameState)
 
 void CGameManager::ExitGame()		//replace with bool return on update, instead use this to shutdown sdl, window, renderers, and call destructors from here
 {
+	ClearMenu();
 	ClearGameObjects();
 	SDL_DestroyRenderer(mRenderer);
 	SDL_DestroyWindow(mWindow);

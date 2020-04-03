@@ -11,7 +11,7 @@
 #include <vector>
 #include <Windows.h>
 #include <fstream>
-#include <algorithm>
+#include <typeinfo>
 
 class CGameManager
 {
@@ -44,4 +44,21 @@ public:
 	bool LoadSettings();		//""
 	void SwitchGameState(EGameState newGameState);
 	void ExitGame();
+	template <typename CClass>
+	void DestroyGameObject(CClass& objectToDelete);
 };
+
+
+template <typename CClass>
+void CGameManager::DestroyGameObject(CClass& objectToDelete)
+{
+	std::string className = typeid(CClass).name();
+	if (className.find("CProjectile") != std::string::npos)
+		std::cout << "CProjectile" << std::endl;
+	else if (className.find("CPlayer") != std::string::npos)
+		std::cout << "CPlayer" << std::endl;
+	else if (className.find("CEnemy") != std::string::npos)
+		std::cout << "CEnemy" << std::endl;
+	else
+		ThrowErrorMesssage("Error", "Type is not valid for CGameManager::DestroyGameObject");
+}

@@ -21,6 +21,7 @@ public:
 	void Kill();
 	CVector2 GetPosition();
 	int GetRadius();
+	float GetHealth();
 private:
 	CVector2 mPosition;
 	CVector2 mVelocity;
@@ -41,4 +42,9 @@ inline CVector2 CEnemy::GetPosition()
 inline int CEnemy::GetRadius()
 {
 	return mRadius;
+}
+
+inline float CEnemy::GetHealth()
+{
+	return mHealth;
 }
