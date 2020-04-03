@@ -160,6 +160,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BHTuesday.cpp" />
+    <ClCompile Include="CAssetManager.cpp" />
     <ClCompile Include="CEnemySphere.cpp" />
     <ClCompile Include="CLevelEditor.cpp" />
     <ClCompile Include="CProjectile.cpp" />
@@ -172,6 +173,7 @@
     <ClCompile Include="Wave.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CAssetManager.h" />
     <ClInclude Include="CEnemySphere.h" />
     <ClInclude Include="CLevelEditor.h" />
     <ClInclude Include="CProjectile.h" />

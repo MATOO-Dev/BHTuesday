@@ -66,6 +66,9 @@
     <ClCompile Include="Wave.cpp">
       <Filter>Level</Filter>
     </ClCompile>
+    <ClCompile Include="CAssetManager.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CEnemy.h">
@@ -106,6 +109,9 @@
     </ClInclude>
     <ClInclude Include="Level.h">
       <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="CAssetManager.h">
+      <Filter>Utilities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

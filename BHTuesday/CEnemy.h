@@ -5,7 +5,7 @@
 class CEnemy : public CControlledObject
 {
 public:
-	CEnemy(CVector2 startPosition, CPlayer* target, std::vector<CProjectile>& EnemyBullets);
+	CEnemy(CVector2 startPosition, CPlayer* target, std::vector<CProjectile>& EnemyBullets, SDL_Renderer* renderer, std::string textureName);
 	~CEnemy();
 	void Update(float timeStep) override;
 	void Render(SDL_Renderer& renderer) const;

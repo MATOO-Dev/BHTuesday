@@ -9,7 +9,7 @@
 class CPlayer : public CControlledObject
 {
 public:
-	CPlayer(CVector2 startPosition, std::vector<CProjectile>& PlayerBullets);
+	CPlayer(CVector2 startPosition, std::vector<CProjectile>& PlayerBullets, SDL_Renderer* renderer, std::string textureName);
 	~CPlayer();
 	void Update(float timeStep, EControlStyle& myControlStyle);
 	void Render(SDL_Renderer& renderer) const override;

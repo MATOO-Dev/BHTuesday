@@ -4,6 +4,7 @@ CGameManager::CGameManager() :
 	mActiveGameState(EGameState::MainMenu),
 	mWindow(nullptr),
 	mRenderer(nullptr),
+	mPlayerRef(nullptr),
 	consolasFont(nullptr),
 	mMenuButtons()
 {}
@@ -18,6 +19,11 @@ bool CGameManager::InitializeSDL()
 	if (SDL_Init(SDL_INIT_AUDIO) < 0)
 	{
 		ThrowErrorMesssage("Critical error", "Failed to Initialize SDL2_Audio");
+		return false;
+	}
+	if (IMG_Init(IMG_INIT_PNG) == 0)
+	{
+		ThrowErrorMesssage("Critical error", "Failed to Initialize PNG support");
 		return false;
 	}
 	if (TTF_Init() < 0)
@@ -153,8 +159,8 @@ void CGameManager::InitializeGameState(EGameState menuType)
 		mMenuButtons.push_back(CButton(CVector2(300, 880), CVector2(200, 100), consolasFont, "Menu", white, mRenderer, EButtonAction::OpenMainMenu));
 		break;
 	case EGameState::Active:
-		mPlayerRef = new CPlayer(CVector2(300, 750), mPlayerBullets);
-		mEnemyRef.push_back(CEnemy(CVector2(300, 250), mPlayerRef, mEnemyBullets));
+		mPlayerRef = new CPlayer(CVector2(300, 750), mPlayerBullets, mRenderer, "PlayerTexture.png");
+		mEnemyRef.push_back(CEnemy(CVector2(300, 250), mPlayerRef, mEnemyBullets, mRenderer, "EnemyTexture.png"));
 		//maybe hud?
 		break;
 	case EGameState::PauseMenu:
@@ -280,5 +286,6 @@ void CGameManager::ExitGame()		//replace with bool return on update, instead use
 	SDL_DestroyRenderer(mRenderer);
 	SDL_DestroyWindow(mWindow);
 	TTF_Quit();
+	IMG_Quit();
 	SDL_Quit();
 }
