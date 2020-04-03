@@ -15,7 +15,7 @@ public:
 	CPlayer(CVector2 startPosition, std::vector<CProjectile>& PlayerBullets, SDL_Renderer* renderer, std::string textureName);
 	~CPlayer();
 	void Update(float timeStep, EControlStyle& myControlStyle);
-	void Render(SDL_Renderer& renderer) const;
+	void Render();
 	void Shoot();
 	void Damage(float damage);
 	void Kill();

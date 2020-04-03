@@ -11,9 +11,12 @@ CProjectile::CProjectile(CVector2 startPosition, CVector2 velocity) :
 CProjectile::~CProjectile()
 {}
 
-void CProjectile::Update(float timeStep)
+bool CProjectile::Update(float timeStep)
 {
 	SetPosition(GetPosition() + (GetVelocity() * timeStep));
+	if (inBounds() == false)
+		return false;
+	return true;
 }
 
 bool CProjectile::inBounds() const
@@ -40,6 +43,6 @@ void CProjectile::Render(SDL_Renderer& Renderer) const
 
 void CProjectile::Collision(CControlledObject& targetObject)
 {
-	if(mPosition.GetDistance(targetObject.GetPosition()) < (mRadius + targetObject.GetRadius()))
-	targetObject.Damage(mDamage);
+	if (mPosition.GetDistance(targetObject.GetPosition()) < (mRadius + targetObject.GetRadius()))
+		targetObject.Damage(mDamage);
 }

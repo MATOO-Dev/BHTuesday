@@ -13,7 +13,7 @@ class CProjectile
 public:
 	CProjectile(CVector2 startPosition, CVector2 velocity);
 	~CProjectile();
-	void Update(float timeStep);
+	bool Update(float timeStep);
 	bool inBounds() const;
 	void Render(SDL_Renderer& Renderer) const;
 	void SetPosition(CVector2 newPosition);

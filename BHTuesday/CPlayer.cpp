@@ -1,10 +1,9 @@
 #include "CPlayer.h"
 
 CPlayer::CPlayer(CVector2 startPosition, std::vector<CProjectile>& PlayerBullets, SDL_Renderer* renderer, std::string textureName) :
-	//CControlledObject(startPosition, PlayerBullets, 5, renderer, textureName)
 	mPosition(startPosition),
 	mVelocity(0, 0),
-	mHealth(1),
+	mHealth(3),
 	mBullets(PlayerBullets),
 	mRenderer(renderer),
 	mTexture(CAssetManager::LoadTexture(mRenderer, textureName)),
@@ -19,7 +18,9 @@ CPlayer::~CPlayer()
 
 void CPlayer::Update(float timeStep, EControlStyle& myControlStyle)
 {
-	//CControlledObject::Update(timeStep);
+	mPosition = (mPosition + (mVelocity * timeStep));
+	mTextureRect.x = mPosition.x - mTextureRect.w / 2;
+	mTextureRect.y = mPosition.y - mTextureRect.h / 2;
 	mVelocity = (mVelocity * dragMultiplier);
 
 	const Uint8* keyInput = SDL_GetKeyboardState(NULL);
@@ -94,20 +95,11 @@ void CPlayer::Update(float timeStep, EControlStyle& myControlStyle)
 		}
 	}
 	*/
-
-	mPosition = (mPosition + (mVelocity * timeStep));
-	mTextureRect.x = mPosition.x - mTextureRect.w / 2;
-	mTextureRect.y = mPosition.y - mTextureRect.h / 2;
 }
 
-void CPlayer::Render(SDL_Renderer& renderer) const
+void CPlayer::Render() 
 {
 	SDL_RenderCopy(mRenderer, mTexture, NULL, &mTextureRect);
-
-	for (int i = 0; i < mBullets.size(); i++)
-	{
-		mBullets[i].Render(renderer);
-	}
 }
 
 void CPlayer::Shoot()

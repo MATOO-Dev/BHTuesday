@@ -91,14 +91,23 @@ void CGameManager::UpdateAll(float timeStep)		//updates all gameobjects, excludi
 	if (mPlayerRef != nullptr)
 		mPlayerRef->Update(timeStep, controlStyle);
 
-	for (CEnemy enemy : mEnemyRef)
+	for (CEnemy& enemy : mEnemyRef)
 		enemy.Update(timeStep);
 
-	for (CProjectile playerProjectile : mPlayerBullets)		//fix bullets not updating //check val/ref //check correct array given to objects
-		playerProjectile.Update(timeStep);
+	//update projectiles and remove if out of bounds
+	std::vector<CProjectile>::iterator it = mPlayerBullets.begin();
+	while (it != mPlayerBullets.end())
+		if (it->Update(timeStep) == false)
+			it = mPlayerBullets.erase(it);
+		else
+			it++;
 
-	for (CProjectile enemyProjectile : mEnemyBullets)
-		enemyProjectile.Update(timeStep);
+	it = mEnemyBullets.begin();
+	while (it != mEnemyBullets.end())
+		if (it->Update(timeStep) == false)
+			it = mEnemyBullets.erase(it);
+		else
+			it++;
 }
 
 void CGameManager::RenderAll()		//renders all gameobjects, including buttons
@@ -107,10 +116,10 @@ void CGameManager::RenderAll()		//renders all gameobjects, including buttons
 	SDL_RenderClear(mRenderer);
 	SDL_SetRenderDrawColor(mRenderer, 255, 255, 255, 255);
 	if (mPlayerRef != nullptr)
-		mPlayerRef->Render(*mRenderer);
+		mPlayerRef->Render();
 
 	for (CEnemy enemy : mEnemyRef)
-		enemy.Render(*mRenderer);
+		enemy.Render();
 
 	for (CProjectile playerProjectile : mPlayerBullets)
 		playerProjectile.Render(*mRenderer);
@@ -288,4 +297,9 @@ void CGameManager::ExitGame()		//replace with bool return on update, instead use
 	TTF_Quit();
 	IMG_Quit();
 	SDL_Quit();
+}
+
+void CGameManager::RemoveFromVector()
+{
+
 }

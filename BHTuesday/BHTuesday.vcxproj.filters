@@ -25,9 +25,6 @@
     <Filter Include="Player">
       <UniqueIdentifier>{6dc34269-2c41-40e6-8423-f2b551e2f311}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Base Classes">
-      <UniqueIdentifier>{f8c91c76-f285-4255-ae2b-762a4a6423b4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Level">
       <UniqueIdentifier>{39ec4672-2adc-4f3a-b42d-89c1da57fdb3}</UniqueIdentifier>
     </Filter>
@@ -53,9 +50,6 @@
     </ClCompile>
     <ClCompile Include="CPlayer.cpp">
       <Filter>Player</Filter>
-    </ClCompile>
-    <ClCompile Include="CEnemySphere.cpp">
-      <Filter>Enemys</Filter>
     </ClCompile>
     <ClCompile Include="CLevelEditor.cpp">
       <Filter>Level</Filter>
@@ -88,9 +82,6 @@
     </ClInclude>
     <ClInclude Include="CPlayer.h">
       <Filter>Player</Filter>
-    </ClInclude>
-    <ClInclude Include="CEnemySphere.h">
-      <Filter>Enemys</Filter>
     </ClInclude>
     <ClInclude Include="Menu.h">
       <Filter>Utilities</Filter>

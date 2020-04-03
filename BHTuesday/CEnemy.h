@@ -12,7 +12,7 @@ public:
 	CEnemy(CVector2 startPosition, CPlayer* target, std::vector<CProjectile>& EnemyBullets, SDL_Renderer* renderer, std::string textureName);
 	~CEnemy();
 	void Update(float timeStep);
-	void Render(SDL_Renderer& renderer) const;
+	void Render();
 	void Shoot();
 	void Damage(float damage);
 	void Kill();

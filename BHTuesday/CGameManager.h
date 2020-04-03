@@ -11,22 +11,23 @@
 #include <vector>
 #include <Windows.h>
 #include <fstream>
+#include <algorithm>
 
 class CGameManager
 {
 private:
-	EGameState mActiveGameState;
-	CPlayer* mPlayerRef;
-	std::vector<CEnemy> mEnemyRef;
-	std::vector<CProjectile> mEnemyBullets;
-	std::vector<CProjectile> mPlayerBullets;
-	int mPlayerScore;
 	SDL_Window* mWindow;
 	SDL_Renderer* mRenderer;
+	EGameState mActiveGameState;
+	int mPlayerScore;
+	CPlayer* mPlayerRef;
+	std::vector<CEnemy> mEnemyRef;
+	std::vector<CProjectile> mPlayerBullets;
+	std::vector<CProjectile> mEnemyBullets;
+	std::vector<CButton> mMenuButtons;
 	//std::vector //installed upgrades bool vector
 	int Volume; //correct data type?
 	TTF_Font* consolasFont;
-	std::vector<CButton> mMenuButtons;
 public:
 	CGameManager();
 	bool InitializeSDL();
@@ -36,6 +37,7 @@ public:
 	void RenderAll();
 	void ClearGameObjects();
 	TTF_Font* CreateSizedFont(int size);
+	void RemoveFromVector();
 	void InitializeGameState(EGameState menuType);
 	void ClearMenu();
 	void UpdateButtons(SDL_MouseButtonEvent mouseDownEvent);
