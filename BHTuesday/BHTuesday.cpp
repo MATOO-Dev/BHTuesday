@@ -24,7 +24,7 @@ int main(int argc, char* argv[])
 		running = SDL_TRUE;
 
 	if (running)
-		GameManager.InitializeMenu(EGameState::MainMenu);
+		GameManager.InitializeGameState(EGameState::MainMenu);
 
 
 	//game loop

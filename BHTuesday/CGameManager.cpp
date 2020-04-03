@@ -130,7 +130,7 @@ TTF_Font* CGameManager::CreateSizedFont(int size)
 	return TTF_OpenFont("data/fonts/consolas.ttf", size);
 }
 
-void CGameManager::InitializeMenu(EGameState menuType)
+void CGameManager::InitializeGameState(EGameState menuType)
 {
 	ClearMenu();
 	if (menuType != EGameState::PauseMenu)
@@ -147,7 +147,7 @@ void CGameManager::InitializeMenu(EGameState menuType)
 		mMenuButtons.push_back(CButton(CVector2(300, 880), CVector2(200, 100), consolasFont, "Upgrades", white, mRenderer, EButtonAction::OpenUpgradesMenu));
 		break;
 	case EGameState::LevelSelectMenu:
-		mMenuButtons.push_back(CButton(CVector2(300, 200), CVector2(200, 100), consolasFont, "Level 1", white, mRenderer, EButtonAction::SetGameActive));
+		mMenuButtons.push_back(CButton(CVector2(300, 200), CVector2(200, 100), consolasFont, "Level 1", white, mRenderer, EButtonAction::StartGame));
 		mMenuButtons.push_back(CButton(CVector2(300, 370), CVector2(200, 100), consolasFont, "Level 2", white, mRenderer, EButtonAction::None));
 		mMenuButtons.push_back(CButton(CVector2(300, 540), CVector2(200, 100), consolasFont, "Level 3", white, mRenderer, EButtonAction::None));
 		mMenuButtons.push_back(CButton(CVector2(300, 880), CVector2(200, 100), consolasFont, "Menu", white, mRenderer, EButtonAction::OpenMainMenu));
@@ -158,7 +158,7 @@ void CGameManager::InitializeMenu(EGameState menuType)
 		//maybe hud?
 		break;
 	case EGameState::PauseMenu:
-		mMenuButtons.push_back(CButton(CVector2(300, 370), CVector2(200, 100), consolasFont, "Resume", white, mRenderer, EButtonAction::SetGameActive));
+		mMenuButtons.push_back(CButton(CVector2(300, 370), CVector2(200, 100), consolasFont, "Resume", white, mRenderer, EButtonAction::StartGame));
 		mMenuButtons.push_back(CButton(CVector2(300, 540), CVector2(200, 100), consolasFont, "Settings", white, mRenderer, EButtonAction::OpenSettingsMenu));
 		mMenuButtons.push_back(CButton(CVector2(300, 710), CVector2(200, 100), consolasFont, "Editor", white, mRenderer, EButtonAction::OpenEditorMenu));
 		mMenuButtons.push_back(CButton(CVector2(300, 880), CVector2(200, 100), consolasFont, "Menu", white, mRenderer, EButtonAction::OpenMainMenu));
@@ -200,27 +200,27 @@ void CGameManager::UpdateButtons(SDL_MouseButtonEvent mouseDownEvent)		//enter m
 				switch (mMenuButtons[i].GetAction())
 				{
 				case EButtonAction::OpenMainMenu:
-					InitializeMenu(EGameState::MainMenu);
+					InitializeGameState(EGameState::MainMenu);
 					break;
 				case EButtonAction::OpenLevelSelectMenu:
-					InitializeMenu(EGameState::LevelSelectMenu);
+					InitializeGameState(EGameState::LevelSelectMenu);
 					break;
-				case EButtonAction::OpenStartGame:
+				case EButtonAction::StartGame:
 					mMenuButtons.clear();
 					//load level here;
-					SwitchGameState(EGameState::Active);
+					InitializeGameState(EGameState::Active);
 					break;
 				case EButtonAction::OpenPauseMenu:
-					InitializeMenu(EGameState::PauseMenu);
+					InitializeGameState(EGameState::PauseMenu);
 					break;
 				case EButtonAction::OpenSettingsMenu:
-					InitializeMenu(EGameState::SettingsMenu);
+					InitializeGameState(EGameState::SettingsMenu);
 					break;
 				case EButtonAction::OpenEditorMenu:
-					InitializeMenu(EGameState::EditorMenu);
+					InitializeGameState(EGameState::EditorMenu);
 					break;
 				case EButtonAction::OpenUpgradesMenu:
-					InitializeMenu(EGameState::UpgradesMenu);
+					InitializeGameState(EGameState::UpgradesMenu);
 					break;
 					//more actions
 				default:

@@ -44,12 +44,11 @@ enum class EButtonAction		//defines the more explicit action of the current butt
 	None,
 	OpenMainMenu,
 	OpenLevelSelectMenu,
-	OpenStartGame,
 	OpenPauseMenu,
 	OpenSettingsMenu,
 	OpenEditorMenu,
 	OpenUpgradesMenu,
-	SetGameActive
+	StartGame
 };
 
 /*

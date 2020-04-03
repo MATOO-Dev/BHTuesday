@@ -35,7 +35,7 @@ public:
 	void RenderAll();
 	void ClearGameObjects();
 	TTF_Font* CreateSizedFont(int size);
-	void InitializeMenu(EGameState menuType);
+	void InitializeGameState(EGameState menuType);
 	void ClearMenu();
 	void UpdateButtons(SDL_MouseButtonEvent mouseDownEvent);
 	bool SaveSettings();		//bool used for error checks
