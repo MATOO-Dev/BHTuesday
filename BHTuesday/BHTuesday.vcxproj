@@ -165,7 +165,6 @@
     <ClCompile Include="CLevelEditor.cpp" />
     <ClCompile Include="CProjectile.cpp" />
     <ClCompile Include="CButton.cpp" />
-    <ClCompile Include="CControlledObject.cpp" />
     <ClCompile Include="CEnemy.cpp" />
     <ClCompile Include="CGameManager.cpp" />
     <ClCompile Include="CPlayer.cpp" />
@@ -178,7 +177,6 @@
     <ClInclude Include="CLevelEditor.h" />
     <ClInclude Include="CProjectile.h" />
     <ClInclude Include="CButton.h" />
-    <ClInclude Include="CControlledObject.h" />
     <ClInclude Include="CEnemy.h" />
     <ClInclude Include="CGameManager.h" />
     <ClInclude Include="CPlayer.h" />

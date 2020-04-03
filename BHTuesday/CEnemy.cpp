@@ -1,8 +1,16 @@
 #include "CEnemy.h"
 
 CEnemy::CEnemy(CVector2 startPosition, CPlayer* target, std::vector<CProjectile>& EnemyBullets, SDL_Renderer* renderer, std::string textureName) :
-	CControlledObject(startPosition, EnemyBullets, 5, renderer, textureName),
-	targetPlayer(target)
+	//CControlledObject(startPosition, EnemyBullets, 5, renderer, textureName),
+	targetPlayer(target),
+	mPosition(startPosition),
+	mVelocity(0, 0),
+	mHealth(1),
+	mBullets(EnemyBullets),
+	mRenderer(renderer),
+	mTexture(CAssetManager::LoadTexture(mRenderer, textureName)),
+	mTextureRect(CAssetManager::CreateTextureRect(mTexture, 1.5)),
+	mRadius(mTextureRect.w / 2)
 {}
 
 CEnemy::~CEnemy()
@@ -10,9 +18,13 @@ CEnemy::~CEnemy()
 
 void CEnemy::Update(float timeStep)
 {
-	CControlledObject::Update(timeStep);
+	//CControlledObject::Update(timeStep);
 
 	Shoot();
+
+	mPosition = (mPosition + (mPosition * timeStep));
+	mTextureRect.x = mPosition.x - mTextureRect.w / 2;
+	mTextureRect.y = mPosition.y - mTextureRect.h / 2;
 }
 
 void CEnemy::Render(SDL_Renderer& renderer) const

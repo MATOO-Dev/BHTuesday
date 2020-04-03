@@ -54,9 +54,6 @@
     <ClCompile Include="CPlayer.cpp">
       <Filter>Player</Filter>
     </ClCompile>
-    <ClCompile Include="CControlledObject.cpp">
-      <Filter>Base Classes</Filter>
-    </ClCompile>
     <ClCompile Include="CEnemySphere.cpp">
       <Filter>Enemys</Filter>
     </ClCompile>
@@ -91,9 +88,6 @@
     </ClInclude>
     <ClInclude Include="CPlayer.h">
       <Filter>Player</Filter>
-    </ClInclude>
-    <ClInclude Include="CControlledObject.h">
-      <Filter>Base Classes</Filter>
     </ClInclude>
     <ClInclude Include="CEnemySphere.h">
       <Filter>Enemys</Filter>

@@ -1,18 +1,29 @@
 #pragma once
-#include "CControlledObject.h"
-#include "CPlayer.h"
 
-class CEnemy : public CControlledObject
+#include "CPlayer.h"
+#include "CProjectile.h"
+#include "CAssetManager.h"
+#include <vector>
+#include <SDL_image.h>
+
+class CEnemy
 {
 public:
 	CEnemy(CVector2 startPosition, CPlayer* target, std::vector<CProjectile>& EnemyBullets, SDL_Renderer* renderer, std::string textureName);
 	~CEnemy();
-	void Update(float timeStep) override;
+	void Update(float timeStep);
 	void Render(SDL_Renderer& renderer) const;
-	void Shoot() override;
-	void Damage(float damage) override;
-	void Kill()override;
+	void Shoot();
+	void Damage(float damage);
+	void Kill();
 private:
+	CVector2 mPosition;
+	CVector2 mVelocity;
 	CPlayer* targetPlayer;
+	std::vector<CProjectile>& mBullets;
+	SDL_Renderer* mRenderer;
+	SDL_Texture* mTexture;
+	SDL_Rect mTextureRect;
+	float mHealth;
+	int mRadius;
 };
-
