@@ -3,8 +3,8 @@
 CGameManager::CGameManager() :
 	mActiveGameState(EGameState::MainMenu),
 	mWindow(nullptr),
-	mRenderer(nullptr),
 	mPlayerRef(nullptr),
+	mRenderer(nullptr),
 	consolasFont(nullptr),
 	mMenuButtons()
 {}

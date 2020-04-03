@@ -25,13 +25,13 @@ public:
 	virtual void Shoot() = 0;
 	virtual void Damage(float damage) = 0;
 	virtual void Kill() = 0;
-	void SetTexture(std::string filename);
 protected:
 	std::vector<CProjectile>& mBullets;
 	CVector2 mPosition;
 	CVector2 mVelocity;
 	SDL_Renderer* mRenderer;
 	SDL_Texture* mTexture;
+	SDL_Rect mTextureRect;
 	float mHealth;
 	int mRadius;
 };

@@ -90,8 +90,7 @@ void CPlayer::Update(float timeStep, EControlStyle& myControlStyle)
 
 void CPlayer::Render(SDL_Renderer& renderer) const
 {
-	SDL_RenderCopy(mRenderer, mTexture, NULL, NULL);
-	SDL_RenderDrawLine(&renderer, mPosition.x - 25, mPosition.y, mPosition.x + 25, mPosition.y);
+	SDL_RenderCopy(mRenderer, mTexture, NULL, &mTextureRect);
 
 	for (int i = 0; i < mBullets.size(); i++)
 	{
