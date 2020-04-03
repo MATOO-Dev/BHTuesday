@@ -37,7 +37,6 @@ public:
 	void RenderAll();
 	void ClearGameObjects();
 	TTF_Font* CreateSizedFont(int size);
-	void RemoveFromVector();
 	void InitializeGameState(EGameState menuType);
 	void ClearMenu();
 	void UpdateButtons(SDL_MouseButtonEvent mouseDownEvent);

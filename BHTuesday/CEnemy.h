@@ -1,10 +1,13 @@
 #pragma once
 
+class CProjectile;
+
 #include "CPlayer.h"
 #include "CProjectile.h"
 #include "CAssetManager.h"
 #include <vector>
 #include <SDL_image.h>
+
 
 class CEnemy
 {
@@ -16,6 +19,8 @@ public:
 	void Shoot();
 	void Damage(float damage);
 	void Kill();
+	CVector2 GetPosition();
+	int GetRadius();
 private:
 	CVector2 mPosition;
 	CVector2 mVelocity;
@@ -27,3 +32,13 @@ private:
 	float mHealth;
 	int mRadius;
 };
+
+inline CVector2 CEnemy::GetPosition()
+{
+	return mPosition;
+}
+
+inline int CEnemy::GetRadius()
+{
+	return mRadius;
+}

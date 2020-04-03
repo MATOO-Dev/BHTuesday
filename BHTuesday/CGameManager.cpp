@@ -102,9 +102,21 @@ void CGameManager::UpdateAll(float timeStep)		//updates all gameobjects, excludi
 		else
 			it++;
 
+	//also check against enemy collision
+	for (int i = 0; i < mEnemyRef.size(); i++)
+	{
+		it = mPlayerBullets.begin();
+		while (it != mPlayerBullets.end())
+			if (it->Collision(mEnemyRef[i]) == true)
+				it = mPlayerBullets.erase(it);
+			else
+				it++;
+	}
+
+	//same as previous 2, but inverted
 	it = mEnemyBullets.begin();
 	while (it != mEnemyBullets.end())
-		if (it->Update(timeStep) == false)
+		if (it->Update(timeStep) == false || it->Collision(*mPlayerRef) == true)
 			it = mEnemyBullets.erase(it);
 		else
 			it++;
@@ -169,7 +181,9 @@ void CGameManager::InitializeGameState(EGameState menuType)
 		break;
 	case EGameState::Active:
 		mPlayerRef = new CPlayer(CVector2(300, 750), mPlayerBullets, mRenderer, "PlayerTexture.png");
-		mEnemyRef.push_back(CEnemy(CVector2(300, 250), mPlayerRef, mEnemyBullets, mRenderer, "EnemyTexture.png"));
+		for (int i = 0; i < 10; i++)
+			mEnemyRef.push_back(CEnemy(CVector2(60 * i + 30, 250), mPlayerRef, mEnemyBullets, mRenderer, "EnemyTexture.png"));
+		//300, 250
 		//maybe hud?
 		break;
 	case EGameState::PauseMenu:
@@ -297,9 +311,4 @@ void CGameManager::ExitGame()		//replace with bool return on update, instead use
 	TTF_Quit();
 	IMG_Quit();
 	SDL_Quit();
-}
-
-void CGameManager::RemoveFromVector()
-{
-
 }
