@@ -1,7 +1,7 @@
 #include "CPlayer.h"
 
-CPlayer::CPlayer(CVector2 startPosition, std::vector<CProjectile>& PlayerBullets) :
-	CControlledObject(startPosition, PlayerBullets, 5)
+CPlayer::CPlayer(CVector2 startPosition, std::vector<CProjectile>& PlayerBullets, SDL_Renderer* renderer, std::string textureName) :
+	CControlledObject(startPosition, PlayerBullets, 5, renderer, textureName)
 {}
 
 CPlayer::~CPlayer()
@@ -90,11 +90,11 @@ void CPlayer::Update(float timeStep, EControlStyle& myControlStyle)
 
 void CPlayer::Render(SDL_Renderer& renderer) const
 {
-	SDL_RenderDrawLine(&renderer, mPosition.x - 25, mPosition.y, mPosition.x + 25, mPosition.y);
+	SDL_RenderCopy(mRenderer, mTexture, NULL, &mTextureRect);
 
 	for (int i = 0; i < mBullets.size(); i++)
 	{
-		mBullets[i].Render(&renderer);
+		mBullets[i].Render(renderer);
 	}
 }
 

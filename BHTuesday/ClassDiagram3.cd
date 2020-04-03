@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CControlledObject" Collapsed="true">
+    <Position X="5.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAACEgOAABAABQAACAAAAAAAACkAAABgAAAgAAgA=</HashCode>
+      <FileName>CControlledObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CEnemy">
+    <Position X="1.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAQAAACAAEAABAAAAAAACAAAABAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>CEnemy.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="targetPlayer" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="CEnemySphere" Collapsed="true">
+    <Position X="1.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CEnemySphere.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CPlayer">
+    <Position X="7.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAACAEEAAhAAAAAAAAAAAAAAgAAAAABAAAAAAAAA=</HashCode>
+      <FileName>CPlayer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CProjectile">
+    <Position X="3.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ARQAAAAEAKAAAAAAAAAAAAAAACAACkAAABgAAAABAgA=</HashCode>
+      <FileName>CProjectile.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="mPosition" />
+      <Field Name="mVelocity" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="CButton">
+    <Position X="12.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAACAAACAAAAAAAAAAAAAAAAAAIAAAAABAAgAAAAgA=</HashCode>
+      <FileName>CButton.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="mPosition" />
+      <Field Name="mSize" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="CGameManager">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACwAAAAwAAQAEIQgAAAgAgIAAAAAggAAAgIAAAAAAAA=</HashCode>
+      <FileName>CGameManager.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="mPlayerRef" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="CLevelEditor">
+    <Position X="6.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAgAAAAAAAAAAAACEAAAAAAQAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>CLevelEditor.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="mCurrentLevel" />
+      <Field Name="mCurrentWave" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="CMenuManager">
+    <Position X="14.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAAAAAAgAAAAAAAEgAAgAAAAgBAAAAA=</HashCode>
+      <FileName>CMenuManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CVector2">
+    <Position X="12.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAABAAAAQAAAAAEAAABAAAAAAAAAAAABgAAAAAAA=</HashCode>
+      <FileName>CVector2.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="Level">
+    <Position X="5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAABAA=</HashCode>
+      <FileName>Level.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Wave">
+    <Position X="3.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAEAABIAAA=</HashCode>
+      <FileName>Wave.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="EControlStyle" Collapsed="true">
+    <Position X="17" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Defines.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EGameState" Collapsed="true">
+    <Position X="17" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAACQAAAAAAAgEAAAAAAAACA=</HashCode>
+      <FileName>Defines.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EMenuType" Collapsed="true">
+    <Position X="17" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAQAAAAAAAQAAAAAAQAAAAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>Defines.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ETheme" Collapsed="true">
+    <Position X="17" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Defines.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EEnemyType" Collapsed="true">
+    <Position X="17" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAQAAAAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Defines.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EButtonType" Collapsed="true">
+    <Position X="17" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Defines.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EButtonAction" Collapsed="true">
+    <Position X="17" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Defines.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

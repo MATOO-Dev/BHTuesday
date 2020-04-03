@@ -1,164 +1,97 @@
 // BHTuesday.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
-#include <iostream>
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
+#include <iostream>
 #include <vector>
 #include "CPlayer.h"
 #include "CEnemy.h"
 #include "CProjectile.h"
 #include "Defines.h"
+#include "CGameManager.h"
 
 #define TICK_INTERVAL 16
 
 
 int main(int argc, char* argv[])
 {
-	//initialize variables
-	static EControlStyle myControlStyle = EControlStyle::Keyboard;
-	static EGameState activeGameState = EGameState::Active;
-	static ETheme activeTheme = ETheme::Dark;
-	std::vector<CProjectile> EnemyBullets;
-	std::vector<CProjectile> PlayerBullets;
-	std::vector<CEnemy> Enemys;
-	static CPlayer* myPlayer = new CPlayer(CVector2(300, 875), PlayerBullets);
+	CGameManager GameManager;
 
-	Enemys.push_back(CEnemy(CVector2(100, 100), myPlayer, EnemyBullets));
-	Enemys.push_back(CEnemy(CVector2(200, 100), myPlayer, EnemyBullets));
-	Enemys.push_back(CEnemy(CVector2(300, 100), myPlayer, EnemyBullets));
-	Enemys.push_back(CEnemy(CVector2(400, 100), myPlayer, EnemyBullets));
+	SDL_bool running = SDL_FALSE;
 
-	if (SDL_Init(SDL_INIT_VIDEO) == 0)
+	if (GameManager.InitializeSDL())
+		running = SDL_TRUE;
+
+	if (running)
+		GameManager.InitializeGameState(EGameState::MainMenu);
+
+
+	//game loop
+	while (running)
 	{
-		SDL_Window* Window = NULL;
-		SDL_Renderer* Renderer = NULL;
+		int before = SDL_GetTicks();
+		SDL_Event event;
 
-		//create a window using sdl
-		if (SDL_CreateWindowAndRenderer(windowWidth, windowHeight, 0, &Window, &Renderer) == 0)
+		GameManager.Update((float)TICK_INTERVAL / 1000.f);
+
 		{
-			SDL_bool completed = SDL_FALSE;
-
-			//game loop
-			while (!completed)
+			//ensures tickspeed is stable(?)
+			int after = SDL_GetTicks();
+			int ticks = after - before;
+			if (ticks < 16)
 			{
-				int before = SDL_GetTicks();
-				SDL_Event event;
+				SDL_Delay(16 - ticks);
+			}
 
-				//manages background and foreground color in regards to active theme
-				switch (activeTheme)
+			ticks = SDL_GetTicks() - before;
+		}
+
+		{
+			//exits the Game loop upon the event SDL_QUIT occuring
+			while (SDL_PollEvent(&event)) {
+				switch (event.type)
 				{
-				case(ETheme::Light):
-					SDL_SetRenderDrawColor(Renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
-					SDL_RenderClear(Renderer);
-					SDL_SetRenderDrawColor(Renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+				case (SDL_MOUSEMOTION):
+					//used for potential hovering over buttons
 					break;
-				case(ETheme::Dark):
-					SDL_SetRenderDrawColor(Renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
-					SDL_RenderClear(Renderer);
-					SDL_SetRenderDrawColor(Renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
+				case(SDL_MOUSEBUTTONDOWN):
+					GameManager.UpdateButtons(event.button);
+					break;
+				case(SDL_QUIT):
+					running = SDL_FALSE;
+					break;
+				default:
 					break;
 				}
-
-				{
-					//orientation lines, will be removed later
-					SDL_SetRenderDrawColor(Renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
-					SDL_RenderDrawLine(Renderer, 0, 0, 600, 1000);
-					SDL_RenderDrawLine(Renderer, 600, 0, 0, 1000);
-					SDL_RenderDrawLine(Renderer, 300, 0, 300, 1000);
-					SDL_RenderDrawLine(Renderer, 0, 250, 600, 250);
-					SDL_RenderDrawLine(Renderer, 0, 500, 600, 500);
-					SDL_RenderDrawLine(Renderer, 0, 750, 600, 750);
-					SDL_SetRenderDrawColor(Renderer, 0, 0, 255, SDL_ALPHA_OPAQUE);
-					SDL_RenderDrawLine(Renderer, myPlayer->GetPosition().x, myPlayer->GetPosition().y, 300, 500);
-					SDL_SetRenderDrawColor(Renderer, 255, 25 < 5, 255, SDL_ALPHA_OPAQUE);
-				}
-
-				//manages current Game State
-				switch (activeGameState)
-				{
-				case(EGameState::Menu):
-					break;
-				case(EGameState::Active):
-					myPlayer->Update((float)TICK_INTERVAL / 1000.f, myControlStyle);
-					myPlayer->Render(*Renderer);
-					for (int i = 0; i < Enemys.size(); i++)
-					{
-						Enemys[i].Update((float)TICK_INTERVAL / 1000.f);
-						Enemys[i].Render(*Renderer);
-					}
-					for (int i = 0; i < EnemyBullets.size(); i++)
-					{
-						EnemyBullets[i].Update((float)TICK_INTERVAL / 1000.f);
-						EnemyBullets[i].Collision(*myPlayer);
-						if (EnemyBullets[i].inBounds() == false)
-						{
-							EnemyBullets.erase(EnemyBullets.begin() + i);
-						}
-						EnemyBullets[i].Render(Renderer);
-					}
-					for (int i = 0; i < PlayerBullets.size(); i++)
-					{
-						PlayerBullets[i].Update((float)TICK_INTERVAL / 1000.f);
-						if (PlayerBullets[i].inBounds() == false)
-						{
-							std::cout << "bullet" << i << "is out of bounds" << std::endl;
-							//PlayerBullets.erase(EnemyBullets.begin() + i);
-							//PlayerBullets.erase(EnemyBullets.begin() + 0);
-						}
-						PlayerBullets[i].Render(Renderer);
-					}
-					break;
-				case(EGameState::Paused):
-					myPlayer->Render(*Renderer);
-					for (int i = 0; i < Enemys.size(); i++)
-					{
-						Enemys[i].Render(*Renderer);
-					}
-					for (int i = 0; i < EnemyBullets.size(); i++)
-					{
-						EnemyBullets[i].Render(Renderer);
-					}
-					for (int i = 0; i < PlayerBullets.size(); i++)
-					{
-						PlayerBullets[i].Render(Renderer);
-					}
-					break;
-				case(EGameState::Settings):
-					break;
-				}
-
-				//displays the rendered image
-				SDL_RenderPresent(Renderer);
-
-				{
-					//ensures tickspeed is stable(?)
-					int after = SDL_GetTicks();
-					int ticks = after - before;
-					if (ticks < 16)
-					{
-						SDL_Delay(16 - ticks);
-					}
-
-					ticks = SDL_GetTicks() - before;
-				}
-
-				{
-					//exits the Game loop upon the event SDL_QUIT occuring
-					while (SDL_PollEvent(&event)) {
-						if (event.type == SDL_QUIT) {
-							completed = SDL_TRUE;
-						}
-					}
-				}
-
 			}
 		}
-		if (Renderer)
-			SDL_DestroyRenderer(Renderer);
-		if (Window)
-			SDL_DestroyWindow(Window);
 	}
 
-	SDL_Quit();
+	GameManager.ExitGame();
 	return 0;
 }
+
+/*
+for (int i = 0; i < EnemyBullets.size(); i++)
+{
+	EnemyBullets[i].Update((float)TICK_INTERVAL / 1000.f);
+	EnemyBullets[i].Collision(*myPlayer);
+	if (EnemyBullets[i].inBounds() == false)
+	{
+		EnemyBullets.erase(EnemyBullets.begin() + i);
+	}
+	EnemyBullets[i].Render(Renderer);
+}
+for (int i = 0; i < PlayerBullets.size(); i++)
+{
+	PlayerBullets[i].Update((float)TICK_INTERVAL / 1000.f);
+	if (PlayerBullets[i].inBounds() == false)
+	{
+		std::cout << "bullet" << i << "is out of bounds" << std::endl;
+		//PlayerBullets.erase(EnemyBullets.begin() + i);
+		//PlayerBullets.erase(EnemyBullets.begin() + 0);
+	}
+	PlayerBullets[i].Render(Renderer);
+}
+*/

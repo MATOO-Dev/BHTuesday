@@ -28,6 +28,9 @@
     <Filter Include="Base Classes">
       <UniqueIdentifier>{f8c91c76-f285-4255-ae2b-762a4a6423b4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Level">
+      <UniqueIdentifier>{39ec4672-2adc-4f3a-b42d-89c1da57fdb3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BHTuesday.cpp">
@@ -53,6 +56,18 @@
     </ClCompile>
     <ClCompile Include="CControlledObject.cpp">
       <Filter>Base Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemySphere.cpp">
+      <Filter>Enemys</Filter>
+    </ClCompile>
+    <ClCompile Include="CLevelEditor.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="Wave.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="CAssetManager.cpp">
+      <Filter>Utilities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -80,8 +95,27 @@
     <ClInclude Include="CControlledObject.h">
       <Filter>Base Classes</Filter>
     </ClInclude>
+    <ClInclude Include="CEnemySphere.h">
+      <Filter>Enemys</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="CLevelEditor.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Wave.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="CAssetManager.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram2.cd" />
+    <None Include="ClassDiagram3.cd" />
   </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 #include "CEnemy.h"
 
-CEnemy::CEnemy(CVector2 startPosition, CPlayer* target, std::vector<CProjectile>& EnemyBullets) :
-	CControlledObject(startPosition, EnemyBullets, 5),
+CEnemy::CEnemy(CVector2 startPosition, CPlayer* target, std::vector<CProjectile>& EnemyBullets, SDL_Renderer* renderer, std::string textureName) :
+	CControlledObject(startPosition, EnemyBullets, 5, renderer, textureName),
 	targetPlayer(target)
 {}
 

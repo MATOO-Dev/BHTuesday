@@ -2,6 +2,13 @@
 
 const static int windowWidth = 600;
 const static int windowHeight = 1000;
+/*
+static SDL_Color white = { 255, 255, 255 };
+static SDL_Color black = { 0, 0, 0 };
+static SDL_Color yellow = { 255, 255, 0 };
+static SDL_Color magenta = { 255, 0, 255 };
+static SDL_Color aqua = { 0, 255, 255 };
+*/
 
 enum class EControlStyle	//defines whether the player is controlled using keyboard controls or the mouse
 {
@@ -11,16 +18,37 @@ enum class EControlStyle	//defines whether the player is controlled using keyboa
 
 enum class EGameState		//defines what state the game is in
 {
-	Menu,
+	MainMenu,
+	LevelSelectMenu,
 	Active,
-	Paused,
-	Settings
+	PauseMenu,
+	SettingsMenu,
+	EditorMenu,
+	UpgradesMenu
 };
 
 enum class ETheme		//defines the current theme
 {
 	Light,
 	Dark
+};
+
+enum class EEnemyType		//defines the current theme
+{
+	Sphere,
+	Dark
+};
+
+enum class EButtonAction		//defines the more explicit action of the current button
+{
+	None,
+	OpenMainMenu,
+	OpenLevelSelectMenu,
+	OpenPauseMenu,
+	OpenSettingsMenu,
+	OpenEditorMenu,
+	OpenUpgradesMenu,
+	StartGame
 };
 
 /*

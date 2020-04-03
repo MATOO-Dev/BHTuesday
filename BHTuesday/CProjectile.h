@@ -15,7 +15,7 @@ public:
 	~CProjectile();
 	void Update(float timeStep);
 	bool inBounds() const;
-	void Render(SDL_Renderer* Renderer) const;
+	void Render(SDL_Renderer& Renderer) const;
 	void SetPosition(CVector2 newPosition);
 	CVector2 GetPosition() const;
 	void SetVelocity(CVector2 newVelocity);

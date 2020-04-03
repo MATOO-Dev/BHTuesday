@@ -29,13 +29,13 @@ bool CProjectile::inBounds() const
 	return true;
 }
 
-void CProjectile::Render(SDL_Renderer* Renderer) const
+void CProjectile::Render(SDL_Renderer& Renderer) const
 {
-	SDL_RenderDrawLine(Renderer, mPosition.x, mPosition.y, mPosition.x, mPosition.y);
-	SDL_RenderDrawLine(Renderer, mPosition.x - mRadius, mPosition.y, mPosition.x + mRadius, mPosition.y);
-	SDL_RenderDrawLine(Renderer, mPosition.x, mPosition.y - mRadius, mPosition.x, mPosition.y + mRadius);
-	SDL_RenderDrawLine(Renderer, mPosition.x - mRadius, mPosition.y - mRadius, mPosition.x + mRadius, mPosition.y + mRadius);
-	SDL_RenderDrawLine(Renderer, mPosition.x + mRadius, mPosition.y - mRadius, mPosition.x - mRadius, mPosition.y + mRadius);
+	SDL_RenderDrawLine(&Renderer, mPosition.x, mPosition.y, mPosition.x, mPosition.y);
+	SDL_RenderDrawLine(&Renderer, mPosition.x - mRadius, mPosition.y, mPosition.x + mRadius, mPosition.y);
+	SDL_RenderDrawLine(&Renderer, mPosition.x, mPosition.y - mRadius, mPosition.x, mPosition.y + mRadius);
+	SDL_RenderDrawLine(&Renderer, mPosition.x - mRadius, mPosition.y - mRadius, mPosition.x + mRadius, mPosition.y + mRadius);
+	SDL_RenderDrawLine(&Renderer, mPosition.x + mRadius, mPosition.y - mRadius, mPosition.x - mRadius, mPosition.y + mRadius);
 }
 
 void CProjectile::Collision(CControlledObject& targetObject)

@@ -4,13 +4,15 @@ class CProjectile;
 
 #include "CVector2.h"
 #include "CProjectile.h"
+#include "CAssetManager.h"
 #include <vector>
+#include <SDL_image.h>
 
 
 class CControlledObject
 {
 public:
-	CControlledObject(CVector2 startPosition, std::vector<CProjectile>& EnemyBullets, int radius);
+	CControlledObject(CVector2 startPosition, std::vector<CProjectile>& EnemyBullets, int radius, SDL_Renderer* renderer, std::string textureName);
 	~CControlledObject();
 	virtual void Update(float timeStep);
 	virtual void Render(SDL_Renderer& renderer) const = 0;
@@ -27,6 +29,9 @@ protected:
 	std::vector<CProjectile>& mBullets;
 	CVector2 mPosition;
 	CVector2 mVelocity;
+	SDL_Renderer* mRenderer;
+	SDL_Texture* mTexture;
+	SDL_Rect mTextureRect;
 	float mHealth;
 	int mRadius;
 };
