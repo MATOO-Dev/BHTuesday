@@ -2,6 +2,7 @@
 
 class CProjectile;
 
+#include "CVector2.h"
 #include "CPlayer.h"
 #include "CProjectile.h"
 #include "CAssetManager.h"
@@ -12,13 +13,12 @@ class CProjectile;
 class CEnemy
 {
 public:
-	CEnemy(CVector2 startPosition, CPlayer* target, std::vector<CProjectile>& EnemyBullets, SDL_Renderer* renderer, std::string textureName);
+	CEnemy(CVector2 startPosition, CPlayer* target, std::vector<CProjectile>* EnemyBullets, SDL_Renderer* renderer, std::string textureName);
 	~CEnemy();
 	void Update(float timeStep);
 	void Render();
 	void Shoot();
 	void Damage(float damage);
-	void Kill();
 	CVector2 GetPosition();
 	int GetRadius();
 	float GetHealth();
@@ -26,7 +26,7 @@ private:
 	CVector2 mPosition;
 	CVector2 mVelocity;
 	CPlayer* targetPlayer;
-	std::vector<CProjectile>& mBullets;
+	std::vector<CProjectile>* mBullets;
 	SDL_Renderer* mRenderer;
 	SDL_Texture* mTexture;
 	SDL_Rect mTextureRect;

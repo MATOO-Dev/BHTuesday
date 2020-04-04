@@ -119,5 +119,5 @@ void CPlayer::Damage(float damage)
 
 void CPlayer::Kill()
 {
-	//std::cout << "player is kill" << std::endl;
+
 }

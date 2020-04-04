@@ -1,6 +1,6 @@
 #include "CEnemy.h"
 
-CEnemy::CEnemy(CVector2 startPosition, CPlayer* target, std::vector<CProjectile>& EnemyBullets, SDL_Renderer* renderer, std::string textureName) :
+CEnemy::CEnemy(CVector2 startPosition, CPlayer* target, std::vector<CProjectile>* EnemyBullets, SDL_Renderer* renderer, std::string textureName) :
 	targetPlayer(target),
 	mPosition(startPosition),
 	mVelocity(0, 0),
@@ -34,17 +34,10 @@ void CEnemy::Render()
 
 void CEnemy::Shoot()
 {
-	mBullets.push_back(CProjectile(mPosition, CVector2(targetPlayer->GetPosition(), mPosition).normalize() * 500));
+	mBullets->push_back(CProjectile(mPosition, CVector2(targetPlayer->GetPosition(), mPosition).normalize() * 500));
 }
 
 void CEnemy::Damage(float damage)
 {
 	mHealth -= damage;
-	if (mHealth < 0)
-		Kill();
-}
-
-void CEnemy::Kill()
-{
-	std::cout << "enemy is kill" << std::endl;
 }
