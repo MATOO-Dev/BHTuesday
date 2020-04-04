@@ -30,6 +30,14 @@ CButton::CButton(CVector2 position, CVector2 size, TTF_Font* font, const char* t
 
 CButton::~CButton()
 {
+	//delete mTextSurface;
+	//delete mTextTexture;
+
+	//causes triggering of breakpoint, attempting assigning nullptr instead
+	mTextSurface = nullptr;
+	mTextTexture = nullptr;
+
+	delete mButtonTexture;
 }
 
 bool CButton::IsClicked(CVector2 mousePos)
@@ -44,8 +52,7 @@ bool CButton::IsClicked(CVector2 mousePos)
 
 void CButton::Render(SDL_Renderer& renderer)
 {
-	if (mButtonAction != EButtonAction::None)
-		SDL_RenderDrawRect(&renderer, &mButtonBox);
+	SDL_RenderDrawRect(&renderer, &mButtonBox);
 	if (mTextTexture != nullptr)
 		SDL_RenderCopy(&renderer, mTextTexture, NULL, &mButtonBox);
 	if (mButtonTexture != nullptr)

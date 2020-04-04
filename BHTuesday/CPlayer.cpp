@@ -3,7 +3,7 @@
 CPlayer::CPlayer(CVector2 startPosition, std::vector<CProjectile>& PlayerBullets, SDL_Renderer* renderer, std::string textureName) :
 	mPosition(startPosition),
 	mVelocity(0, 0),
-	mHealth(99999),
+	mHealth(9999),
 	mBullets(PlayerBullets),
 	mRenderer(renderer),
 	mTexture(CAssetManager::LoadTexture(mRenderer, textureName)),
@@ -13,7 +13,9 @@ CPlayer::CPlayer(CVector2 startPosition, std::vector<CProjectile>& PlayerBullets
 
 CPlayer::~CPlayer()
 {
-
+	delete[] &mBullets;
+	delete mRenderer;
+	delete mTexture;
 }
 
 void CPlayer::Update(float timeStep, EControlStyle& myControlStyle)

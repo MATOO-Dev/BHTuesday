@@ -34,13 +34,13 @@ private:
 	TTF_Font* consolasFont;
 public:
 	CGameManager();
+	~CGameManager();
 	bool InitializeSDL();
 	void ThrowErrorMesssage(const char* errorHeader, const char* errorContent);
 	void Update(float timeStep);
 	void UpdateAll(float timeStep);
 	void RenderAll();
 	void ClearGameObjects();
-	TTF_Font* CreateSizedFont(int size);
 	void InitializeGameState(EGameState menuType);
 	void ClearMenu();
 	void UpdateButtons(SDL_MouseButtonEvent mouseDownEvent);

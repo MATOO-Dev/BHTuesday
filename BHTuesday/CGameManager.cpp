@@ -9,6 +9,15 @@ CGameManager::CGameManager() :
 	mMenuButtons()
 {}
 
+CGameManager::~CGameManager()
+{
+	delete mPlayerRef;
+	mEnemyRef.clear();
+	//delete consolasFont;
+	//causes exception, setting to nullptr instead
+	consolasFont = nullptr;
+}
+
 bool CGameManager::InitializeSDL()
 {
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -37,7 +46,7 @@ bool CGameManager::InitializeSDL()
 		return false;
 	}
 
-	consolasFont = CreateSizedFont(100);
+	consolasFont = CAssetManager::CreateSizedFont(100);
 	return true;
 }
 
@@ -98,7 +107,6 @@ void CGameManager::UpdateAll(float timeStep)		//updates all gameobjects, excludi
 			int x = 5;
 	}
 
-
 	//update projectiles and remove if out of bounds
 	std::vector<CProjectile>::iterator it = mPlayerBullets.begin();
 	while (it != mPlayerBullets.end())
@@ -125,8 +133,6 @@ void CGameManager::UpdateAll(float timeStep)		//updates all gameobjects, excludi
 
 	//remove killed enemys
 	mEnemyRef.erase(std::remove(mEnemyRef.begin(), mEnemyRef.end(), nullptr), mEnemyRef.end());
-
-
 
 	//same as previous 2, but inverted
 	it = mEnemyBullets.begin();
@@ -165,11 +171,6 @@ void CGameManager::ClearGameObjects()
 	mEnemyRef.clear();
 	mPlayerBullets.clear();
 	mEnemyBullets.clear();
-}
-
-TTF_Font* CGameManager::CreateSizedFont(int size)
-{
-	return TTF_OpenFont("data/fonts/consolas.ttf", size);
 }
 
 void CGameManager::InitializeGameState(EGameState menuType)

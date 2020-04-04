@@ -172,6 +172,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CAssetManager.h" />
+    <ClInclude Include="Image.h" />
     <ClInclude Include="CLevelEditor.h" />
     <ClInclude Include="CProjectile.h" />
     <ClInclude Include="CButton.h" />
@@ -181,7 +182,7 @@
     <ClInclude Include="CVector2.h" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="Level.h" />
-    <ClInclude Include="Menu.h" />
+    <ClInclude Include="Text.h" />
     <ClInclude Include="Wave.h" />
   </ItemGroup>
   <ItemGroup>

@@ -13,7 +13,12 @@ CEnemy::CEnemy(CVector2 startPosition, CPlayer* target, std::vector<CProjectile>
 {}
 
 CEnemy::~CEnemy()
-{}
+{
+	delete targetPlayer;
+	delete[] mBullets;
+	delete mRenderer;
+	delete mTexture;
+}
 
 void CEnemy::Update(float timeStep)
 {
