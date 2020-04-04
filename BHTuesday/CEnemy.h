@@ -1,18 +1,50 @@
 #pragma once
-#include "CControlledObject.h"
-#include "CPlayer.h"
 
-class CEnemy : public CControlledObject
+class CProjectile;
+
+#include "CVector2.h"
+#include "CPlayer.h"
+#include "CProjectile.h"
+#include "CAssetManager.h"
+#include <vector>
+#include <SDL_image.h>
+
+
+class CEnemy
 {
 public:
-	CEnemy(CVector2 startPosition, CPlayer* target, std::vector<CProjectile>& EnemyBullets, SDL_Renderer* renderer, std::string textureName);
+	CEnemy(CVector2 startPosition, CPlayer* target, std::vector<CProjectile>* EnemyBullets, SDL_Renderer* renderer, std::string textureName);
 	~CEnemy();
-	void Update(float timeStep) override;
-	void Render(SDL_Renderer& renderer) const;
-	void Shoot() override;
-	void Damage(float damage) override;
-	void Kill()override;
+	void Update(float timeStep);
+	void Render();
+	void Shoot();
+	void Damage(float damage);
+	CVector2 GetPosition();
+	int GetRadius();
+	float GetHealth();
 private:
+	CVector2 mPosition;
+	CVector2 mVelocity;
 	CPlayer* targetPlayer;
+	std::vector<CProjectile>* mBullets;
+	SDL_Renderer* mRenderer;
+	SDL_Texture* mTexture;
+	SDL_Rect mTextureRect;
+	float mHealth;
+	int mRadius;
 };
 
+inline CVector2 CEnemy::GetPosition()
+{
+	return mPosition;
+}
+
+inline int CEnemy::GetRadius()
+{
+	return mRadius;
+}
+
+inline float CEnemy::GetHealth()
+{
+	return mHealth;
+}

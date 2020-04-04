@@ -1,26 +1,31 @@
 #pragma once
 
-class CControlledObject;
+
+class CPlayer;
+class CEnemy;
 
 #include "CVector2.h"
 #include "Defines.h"
-#include "CControlledObject.h"
+#include "CPlayer.h"
+#include "CEnemy.h"
 #include <iostream>
 #include <SDL.h>
+
 
 class CProjectile
 {
 public:
 	CProjectile(CVector2 startPosition, CVector2 velocity);
 	~CProjectile();
-	void Update(float timeStep);
+	bool Update(float timeStep);
 	bool inBounds() const;
 	void Render(SDL_Renderer& Renderer) const;
 	void SetPosition(CVector2 newPosition);
 	CVector2 GetPosition() const;
 	void SetVelocity(CVector2 newVelocity);
 	CVector2 GetVelocity() const;
-	void Collision(CControlledObject& targetObject);
+	bool PlayerCollision(CPlayer& target);
+	bool EnemyCollision(CEnemy& target);
 private:
 	CVector2 mPosition;
 	CVector2 mVelocity;

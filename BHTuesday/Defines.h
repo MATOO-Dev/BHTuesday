@@ -2,6 +2,8 @@
 
 const static int windowWidth = 600;
 const static int windowHeight = 1000;
+const static int scrollSpeed = 50;
+
 /*
 static SDL_Color white = { 255, 255, 255 };
 static SDL_Color black = { 0, 0, 0 };
@@ -20,11 +22,12 @@ enum class EGameState		//defines what state the game is in
 {
 	MainMenu,
 	LevelSelectMenu,
-	Active,
 	PauseMenu,
+	DeathMenu,
 	SettingsMenu,
 	EditorMenu,
-	UpgradesMenu
+	UpgradesMenu,
+	Active,
 };
 
 enum class ETheme		//defines the current theme

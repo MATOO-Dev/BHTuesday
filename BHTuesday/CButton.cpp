@@ -28,6 +28,10 @@ CButton::CButton(CVector2 position, CVector2 size, TTF_Font* font, const char* t
 	mButtonBox.y = mPosition.y - (mSize.y / 2);
 }
 
+CButton::~CButton()
+{
+}
+
 bool CButton::IsClicked(CVector2 mousePos)
 {
 	if (mousePos.x > mPosition.x - (mSize.x / 2))

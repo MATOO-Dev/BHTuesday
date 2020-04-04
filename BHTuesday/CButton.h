@@ -18,6 +18,7 @@ private:
 public:
 	CButton(CVector2 position, CVector2 size, SDL_Texture* buttonTexture, SDL_Renderer* renderer, EButtonAction buttonAction);
 	CButton(CVector2 position, CVector2 size, TTF_Font* font,const char* text, SDL_Color color, SDL_Renderer* renderer, EButtonAction buttonAction);
+	~CButton();
 	bool IsClicked(CVector2 mousePos);
 	void Render(SDL_Renderer& renderer);
 	EButtonAction GetAction();

@@ -48,57 +48,93 @@ void CGameManager::ThrowErrorMesssage(const char* errorHeader, const char* error
 
 void CGameManager::Update(float timeStep)
 {
-
 	switch (mActiveGameState)
 	{
 	case EGameState::MainMenu:
 		//update + render buttons
 		UpdateAll(timeStep);
-		RenderAll();
 		break;
 	case EGameState::LevelSelectMenu:
 		UpdateAll(timeStep);
-		RenderAll();
 		break;
 	case EGameState::Active:
 		UpdateAll(timeStep);
-		RenderAll();
 		break;
 	case EGameState::PauseMenu:
 		//like active, but without update and with menu options
-		RenderAll();
 		break;
 	case EGameState::SettingsMenu:
-		//like pause, but without background
-		RenderAll();
+		//like pause, but without background objects
 		break;
 	case EGameState::EditorMenu:
 		//level editor
-		RenderAll();
 		break;
 	case EGameState::UpgradesMenu:
 		//upgrade shop
-		RenderAll();
 		break;
 	default:
 		break;
 	}
+	RenderAll();
 }
 
 void CGameManager::UpdateAll(float timeStep)		//updates all gameobjects, excluding buttons
 {
 	EControlStyle controlStyle = EControlStyle::Keyboard;
 	if (mPlayerRef != nullptr)
+	{
 		mPlayerRef->Update(timeStep, controlStyle);
+		if (mPlayerRef->GetHealth() < 0)
+		{
+			//mPlayerRef = nullptr;
+			InitializeGameState(EGameState::DeathMenu);
+		}
+	}
 
-	for (CEnemy enemy : mEnemyRef)
-		enemy.Update(timeStep);
+	for (CEnemy* enemy : mEnemyRef)
+	{
+		enemy->Update(timeStep);
+		if (enemy->GetHealth() < 0)
+			int x = 5;
+	}
 
-	for (CProjectile playerProjectile : mPlayerBullets)		//fix bullets not updating //check val/ref //check correct array given to objects
-		playerProjectile.Update(timeStep);
 
-	for (CProjectile enemyProjectile : mEnemyBullets)
-		enemyProjectile.Update(timeStep);
+	//update projectiles and remove if out of bounds
+	std::vector<CProjectile>::iterator it = mPlayerBullets.begin();
+	while (it != mPlayerBullets.end())
+		if (it->Update(timeStep) == false)
+			it = mPlayerBullets.erase(it);
+		else
+			it++;
+
+	//also check against enemy collision
+	for (int i = 0; i < mEnemyRef.size(); i++)
+	{
+		it = mPlayerBullets.begin();
+		while (it != mPlayerBullets.end())
+			if (mEnemyRef[i] != nullptr && it->EnemyCollision(*mEnemyRef[i]) == true)
+			{
+				it = mPlayerBullets.erase(it);
+
+				if (mEnemyRef[i]->GetHealth() < 0)
+					mEnemyRef[i] = nullptr;
+			}
+			else
+				it++;
+	}
+
+	//remove killed enemys
+	mEnemyRef.erase(std::remove(mEnemyRef.begin(), mEnemyRef.end(), nullptr), mEnemyRef.end());
+
+
+
+	//same as previous 2, but inverted
+	it = mEnemyBullets.begin();
+	while (it != mEnemyBullets.end())
+		if (it->Update(timeStep) == false || it->PlayerCollision(*mPlayerRef) == true)	//C6011 is irrelevant because projectiles can only exist while mPlayerRef is active
+			it = mEnemyBullets.erase(it);
+		else
+			it++;
 }
 
 void CGameManager::RenderAll()		//renders all gameobjects, including buttons
@@ -107,10 +143,10 @@ void CGameManager::RenderAll()		//renders all gameobjects, including buttons
 	SDL_RenderClear(mRenderer);
 	SDL_SetRenderDrawColor(mRenderer, 255, 255, 255, 255);
 	if (mPlayerRef != nullptr)
-		mPlayerRef->Render(*mRenderer);
+		mPlayerRef->Render();
 
-	for (CEnemy enemy : mEnemyRef)
-		enemy.Render(*mRenderer);
+	for (CEnemy* enemy : mEnemyRef)
+		enemy->Render();
 
 	for (CProjectile playerProjectile : mPlayerBullets)
 		playerProjectile.Render(*mRenderer);
@@ -139,8 +175,8 @@ TTF_Font* CGameManager::CreateSizedFont(int size)
 void CGameManager::InitializeGameState(EGameState menuType)
 {
 	ClearMenu();
-	if (menuType != EGameState::PauseMenu)
-		ClearGameObjects();
+	//if (menuType != EGameState::PauseMenu || menuType != EGameState::DeathMenu)
+		//ClearGameObjects();
 	SDL_Color white = { 255, 255, 255 };
 	SDL_Color black = { 0, 0, 0 };
 
@@ -160,7 +196,9 @@ void CGameManager::InitializeGameState(EGameState menuType)
 		break;
 	case EGameState::Active:
 		mPlayerRef = new CPlayer(CVector2(300, 750), mPlayerBullets, mRenderer, "PlayerTexture.png");
-		mEnemyRef.push_back(CEnemy(CVector2(300, 250), mPlayerRef, mEnemyBullets, mRenderer, "EnemyTexture.png"));
+		for (int i = 0; i < 10; i++)
+			mEnemyRef.push_back(new CEnemy(CVector2(50 * i + 50, 250), mPlayerRef, &mEnemyBullets, mRenderer, "EnemyTexture.png"));
+		//300, 250
 		//maybe hud?
 		break;
 	case EGameState::PauseMenu:
@@ -182,6 +220,10 @@ void CGameManager::InitializeGameState(EGameState menuType)
 	case EGameState::UpgradesMenu:
 		mMenuButtons.push_back(CButton(CVector2(300, 880), CVector2(200, 100), consolasFont, "Menu", white, mRenderer, EButtonAction::OpenMainMenu));
 		break;
+	case EGameState::DeathMenu:
+		mMenuButtons.push_back(CButton(CVector2(300, 50), CVector2(300, 100), consolasFont, "You Died", white, mRenderer, EButtonAction::None));
+		mMenuButtons.push_back(CButton(CVector2(300, 880), CVector2(200, 100), consolasFont, "Menu", white, mRenderer, EButtonAction::OpenMainMenu));
+		break;
 	default:
 		break;
 	}
@@ -191,6 +233,7 @@ void CGameManager::InitializeGameState(EGameState menuType)
 void CGameManager::ClearMenu()
 {
 	mMenuButtons.clear();
+	mMenuButtons.shrink_to_fit();
 }
 
 void CGameManager::UpdateButtons(SDL_MouseButtonEvent mouseDownEvent)		//enter mouse down event
@@ -282,6 +325,7 @@ void CGameManager::SwitchGameState(EGameState newGameState)
 
 void CGameManager::ExitGame()		//replace with bool return on update, instead use this to shutdown sdl, window, renderers, and call destructors from here
 {
+	ClearMenu();
 	ClearGameObjects();
 	SDL_DestroyRenderer(mRenderer);
 	SDL_DestroyWindow(mWindow);
