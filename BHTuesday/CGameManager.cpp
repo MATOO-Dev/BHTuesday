@@ -107,6 +107,8 @@ void CGameManager::UpdateAll(float timeStep)		//updates all gameobjects, excludi
 		else
 			it++;
 
+	std::vector<int> indicesToDelete;
+
 	//also check against enemy collision
 	for (int i = 0; i < mEnemyRef.size(); i++)
 	{
@@ -115,24 +117,22 @@ void CGameManager::UpdateAll(float timeStep)		//updates all gameobjects, excludi
 			if (it->Collision(mEnemyRef[i]) == true)
 			{
 				it = mPlayerBullets.erase(it);
-				std::cout << i << std::endl;
 
-				//if (mEnemyRef.size() != 1)
-				//if (mEnemyRef.begin() != mEnemyRef.end())
-				mEnemyRef.resize(mEnemyRef.size() + 1);
-				mEnemyRef.erase(mEnemyRef.begin() + i);
-
-				//mEnemyRef.clear();
-
-				//else
-				//{
-				//	std::cout << "le error" << std::endl;
-				//	mEnemyRef.clear();
-				//}
+				if (mEnemyRef[i].GetHealth() < 0)
+					indicesToDelete.push_back(i);
 			}
 			else
 				it++;
 	}
+
+	//remove killed enemys
+	for (int iD = 0; iD < indicesToDelete.size(); iD++)
+	{
+		mEnemyRef.erase(mEnemyRef.begin() + indicesToDelete[iD]);
+	}
+	indicesToDelete.clear();
+
+
 
 	//same as previous 2, but inverted
 	it = mEnemyBullets.begin();
@@ -202,8 +202,8 @@ void CGameManager::InitializeGameState(EGameState menuType)
 		break;
 	case EGameState::Active:
 		mPlayerRef = new CPlayer(CVector2(300, 750), mPlayerBullets, mRenderer, "PlayerTexture.png");
-		for (int i = 0; i < 3; i++)
-			mEnemyRef.push_back(CEnemy(CVector2(100 * i + 100, 250), mPlayerRef, &mEnemyBullets, mRenderer, "EnemyTexture.png"));
+		for (int i = 0; i < 10; i++)
+			mEnemyRef.push_back(CEnemy(CVector2(50 * i + 50, 250), mPlayerRef, &mEnemyBullets, mRenderer, "EnemyTexture.png"));
 		//300, 250
 		//maybe hud?
 		break;
