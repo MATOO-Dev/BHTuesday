@@ -198,7 +198,7 @@ void CGameManager::InitializeGameState(EGameState menuType)
 	case EGameState::Active:
 		mPlayerRef = new CPlayer(CVector2(300, 750), mPlayerBullets, mRenderer, "PlayerTexture.png");
 		for (int i = 0; i < 10; i++)
-			mEnemyRef.push_back(new CEnemy(CVector2(50 * i + 50, 250), mPlayerRef, &mEnemyBullets, mRenderer, "EnemyTexture.png"));
+			mEnemyRef.push_back(new CEnemy(CVector2(50 * i + 50, 250), CVector2(0, 50), mPlayerRef, &mEnemyBullets, mRenderer, "EnemyTexture.png"));
 		//300, 250
 		//maybe hud?
 		break;

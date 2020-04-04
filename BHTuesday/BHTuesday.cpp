@@ -71,27 +71,3 @@ int main(int argc, char* argv[])
 	GameManager.ExitGame();
 	return 0;
 }
-
-/*
-for (int i = 0; i < EnemyBullets.size(); i++)
-{
-	EnemyBullets[i].Update((float)TICK_INTERVAL / 1000.f);
-	EnemyBullets[i].Collision(*myPlayer);
-	if (EnemyBullets[i].inBounds() == false)
-	{
-		EnemyBullets.erase(EnemyBullets.begin() + i);
-	}
-	EnemyBullets[i].Render(Renderer);
-}
-for (int i = 0; i < PlayerBullets.size(); i++)
-{
-	PlayerBullets[i].Update((float)TICK_INTERVAL / 1000.f);
-	if (PlayerBullets[i].inBounds() == false)
-	{
-		std::cout << "bullet" << i << "is out of bounds" << std::endl;
-		//PlayerBullets.erase(EnemyBullets.begin() + i);
-		//PlayerBullets.erase(EnemyBullets.begin() + 0);
-	}
-	PlayerBullets[i].Render(Renderer);
-}
-*/

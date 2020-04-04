@@ -10,7 +10,7 @@ public:
 	float length();
 	CVector2 normalize();
 	float GetDistance(const CVector2 other) const;
-	~CVector2();
+	static CVector2 Zero();
 	float x;
 	float y;
 };
@@ -38,4 +38,9 @@ inline float CVector2::length()
 inline CVector2 CVector2::normalize()
 {
 	return(CVector2(x / this->length(), y / this->length()));
+}
+
+inline CVector2 CVector2::Zero()
+{
+	return(CVector2(0, 0));
 }

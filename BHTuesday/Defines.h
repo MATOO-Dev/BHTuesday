@@ -1,16 +1,16 @@
 #pragma once
 
+#include <SDL.h>
+
 const static int windowWidth = 600;
 const static int windowHeight = 1000;
 const static int scrollSpeed = 50;
 
-/*
 static SDL_Color white = { 255, 255, 255 };
 static SDL_Color black = { 0, 0, 0 };
 static SDL_Color yellow = { 255, 255, 0 };
 static SDL_Color magenta = { 255, 0, 255 };
 static SDL_Color aqua = { 0, 255, 255 };
-*/
 
 enum class EControlStyle	//defines whether the player is controlled using keyboard controls or the mouse
 {
@@ -36,10 +36,18 @@ enum class ETheme		//defines the current theme
 	Dark
 };
 
-enum class EEnemyType		//defines the current theme
+enum class EEnemyType		//defines an enemys type
 {
 	Sphere,
 	Dark
+};
+
+enum class EEnemyState		//defines the current state of an enemy
+{
+	Intro,
+	Idle,
+	Shoot,
+	Outro
 };
 
 enum class EButtonAction		//defines the more explicit action of the current button
