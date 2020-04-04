@@ -21,7 +21,7 @@ void CEnemy::Update(float timeStep)
 	mTextureRect.x = mPosition.x - mTextureRect.w / 2;
 	mTextureRect.y = mPosition.y - mTextureRect.h / 2;
 
-	//Shoot();
+	Shoot();
 }
 
 void CEnemy::Render()

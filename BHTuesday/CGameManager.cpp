@@ -87,14 +87,14 @@ void CGameManager::UpdateAll(float timeStep)		//updates all gameobjects, excludi
 		if (mPlayerRef->GetHealth() < 0)
 		{
 			//mPlayerRef = nullptr;
-			//InitializeGameState(EGameState::DeathMenu);
+			InitializeGameState(EGameState::DeathMenu);
 		}
 	}
 
-	for (CEnemy& enemy : mEnemyRef)
+	for (CEnemy* enemy : mEnemyRef)
 	{
-		enemy.Update(timeStep);
-		if (enemy.GetHealth() < 0)
+		enemy->Update(timeStep);
+		if (enemy->GetHealth() < 0)
 			int x = 5;
 	}
 
@@ -107,37 +107,31 @@ void CGameManager::UpdateAll(float timeStep)		//updates all gameobjects, excludi
 		else
 			it++;
 
-	std::vector<int> indicesToDelete;
-
 	//also check against enemy collision
 	for (int i = 0; i < mEnemyRef.size(); i++)
 	{
 		it = mPlayerBullets.begin();
 		while (it != mPlayerBullets.end())
-			if (it->Collision(mEnemyRef[i]) == true)
+			if (mEnemyRef[i] != nullptr && it->EnemyCollision(*mEnemyRef[i]) == true)
 			{
 				it = mPlayerBullets.erase(it);
 
-				if (mEnemyRef[i].GetHealth() < 0)
-					indicesToDelete.push_back(i);
+				if (mEnemyRef[i]->GetHealth() < 0)
+					mEnemyRef[i] = nullptr;
 			}
 			else
 				it++;
 	}
 
 	//remove killed enemys
-	for (int iD = 0; iD < indicesToDelete.size(); iD++)
-	{
-		mEnemyRef.erase(mEnemyRef.begin() + indicesToDelete[iD]);
-	}
-	indicesToDelete.clear();
+	mEnemyRef.erase(std::remove(mEnemyRef.begin(), mEnemyRef.end(), nullptr), mEnemyRef.end());
 
 
 
 	//same as previous 2, but inverted
 	it = mEnemyBullets.begin();
 	while (it != mEnemyBullets.end())
-		if (it->Update(timeStep) == false || it->Collision(*mPlayerRef) == true)	//C6011 is irrelevant because projectiles can only exist while mPlayerRef is active
+		if (it->Update(timeStep) == false || it->PlayerCollision(*mPlayerRef) == true)	//C6011 is irrelevant because projectiles can only exist while mPlayerRef is active
 			it = mEnemyBullets.erase(it);
 		else
 			it++;
@@ -151,8 +145,8 @@ void CGameManager::RenderAll()		//renders all gameobjects, including buttons
 	if (mPlayerRef != nullptr)
 		mPlayerRef->Render();
 
-	for (CEnemy enemy : mEnemyRef)
-		enemy.Render();
+	for (CEnemy* enemy : mEnemyRef)
+		enemy->Render();
 
 	for (CProjectile playerProjectile : mPlayerBullets)
 		playerProjectile.Render(*mRenderer);
@@ -203,7 +197,7 @@ void CGameManager::InitializeGameState(EGameState menuType)
 	case EGameState::Active:
 		mPlayerRef = new CPlayer(CVector2(300, 750), mPlayerBullets, mRenderer, "PlayerTexture.png");
 		for (int i = 0; i < 10; i++)
-			mEnemyRef.push_back(CEnemy(CVector2(50 * i + 50, 250), mPlayerRef, &mEnemyBullets, mRenderer, "EnemyTexture.png"));
+			mEnemyRef.push_back(new CEnemy(CVector2(50 * i + 50, 250), mPlayerRef, &mEnemyBullets, mRenderer, "EnemyTexture.png"));
 		//300, 250
 		//maybe hud?
 		break;

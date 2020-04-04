@@ -15,6 +15,7 @@ class CEnemy;
 #include <vector>
 #include <Windows.h>
 #include <fstream>
+#include <algorithm>
 
 class CGameManager
 {
@@ -24,7 +25,7 @@ private:
 	EGameState mActiveGameState;
 	int mPlayerScore;
 	CPlayer* mPlayerRef;
-	std::vector<CEnemy> mEnemyRef;
+	std::vector<CEnemy*> mEnemyRef;
 	std::vector<CProjectile> mPlayerBullets;
 	std::vector<CProjectile> mEnemyBullets;
 	std::vector<CButton> mMenuButtons;

@@ -24,8 +24,8 @@ public:
 	CVector2 GetPosition() const;
 	void SetVelocity(CVector2 newVelocity);
 	CVector2 GetVelocity() const;
-	template<typename CClass>
-	bool Collision(CClass& target);
+	bool PlayerCollision(CPlayer& target);
+	bool EnemyCollision(CEnemy& target);
 private:
 	CVector2 mPosition;
 	CVector2 mVelocity;
@@ -51,16 +51,4 @@ inline void CProjectile::SetVelocity(CVector2 newVelocity)
 inline CVector2 CProjectile::GetVelocity() const
 {
 	return mVelocity;
-}
-
-//handle collision for both enemies and players
-template<typename CClass>
-bool CProjectile::Collision(CClass& target)
-{
-	if (mPosition.GetDistance(target.GetPosition()) < (mRadius + target.GetRadius() - 10))
-	{
-		target.Damage(mDamage);
-		return true;
-	}
-	return false;
 }
