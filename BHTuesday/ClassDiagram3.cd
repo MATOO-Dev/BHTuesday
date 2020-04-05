@@ -1,21 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="CEnemy">
-    <Position X="7.75" Y="5" Width="1.5" />
+    <Position X="10" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>gAQAAACAAEAABABBQAAACAAAQBAECAAAABgAAAAAAgA=</HashCode>
+      <HashCode>gAQAAECAACAABABBQAAACAEEQBAECAAAABgAACwIEgA=</HashCode>
       <FileName>CEnemy.h</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Field Name="targetPlayer" />
-      <Field Name="mVelocity" />
       <Field Name="mPosition" />
+      <Field Name="mVelocity" />
+      <Field Name="targetPlayer" />
     </ShowAsAssociation>
   </Class>
   <Class Name="CPlayer">
-    <Position X="5" Y="5.5" Width="1.5" />
+    <Position X="5" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AIQAAACAEGAAhABBQAAAAAAAQAAkCAAAABgAAAAAAgA=</HashCode>
+      <HashCode>AIQAAACAEGAAhABBQAAAAAAAQAAkCAAAABgAACgAAgA=</HashCode>
       <FileName>CPlayer.h</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -24,9 +24,9 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="CProjectile">
-    <Position X="9.75" Y="0.5" Width="1.5" />
+    <Position X="10" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ARQAAAAEAKAAAAAAAAAAAAAAACAACkAAABgAAAABAgA=</HashCode>
+      <HashCode>ARQAAAgEACAAAAgAAAAAAAAAACAACkAAABgAAAABAgA=</HashCode>
       <FileName>CProjectile.h</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -35,9 +35,9 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="CButton">
-    <Position X="7.75" Y="0.5" Width="1.5" />
+    <Position X="5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AIAACAAAKABAAAAAAAAAAAABAAAAAAAAQJAAgAAAAgA=</HashCode>
+      <HashCode>AIAACAAAKAhAIAAAAAAAAAABAAAAAAAAQJAAgAAAAgA=</HashCode>
       <FileName>CButton.h</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -48,12 +48,12 @@
   <Class Name="CGameManager">
     <Position X="2.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AiQAAAAwAAgAGKSgAAAgAgIAAAAEggAAAgIAgAQAAAE=</HashCode>
+      <HashCode>AiQAAAAwAAgAGKSgIAAgAgIAAAAEggAAAgIAgBAIAAE=</HashCode>
       <FileName>CGameManager.h</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Field Name="mPlayerRef" />
       <Field Name="mActiveGameState" />
+      <Field Name="mPlayerRef" />
     </ShowAsAssociation>
   </Class>
   <Class Name="CLevelEditor">
@@ -68,9 +68,9 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="CVector2">
-    <Position X="5" Y="2.25" Width="1.5" />
+    <Position X="7.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AQAAAABAAAAQAAAAAEAAABAAAAAAAAAAAABgAAAAAAA=</HashCode>
+      <HashCode>AQAAAABAAAAAAAAAEEAAAAAAAQAAAAAAAABgAAAAAAA=</HashCode>
       <FileName>CVector2.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -84,7 +84,7 @@
   <Struct Name="Wave">
     <Position X="0.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAEAABIAAA=</HashCode>
+      <HashCode>AAIAAAAAAAAAAAAAAAAABAAAAAABAAAAAAAEAABIAAA=</HashCode>
       <FileName>Wave.h</FileName>
     </TypeIdentifier>
   </Struct>
@@ -96,9 +96,9 @@
     </TypeIdentifier>
   </Enum>
   <Enum Name="EGameState" Collapsed="true">
-    <Position X="2.75" Y="7" Width="1.5" />
+    <Position X="2.75" Y="7.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAQAAAAAAGAACQAAAAAAAgEAAAAAAAACA=</HashCode>
+      <HashCode>AAAAAAAAAAAAQIAAAAAGAACQAAAAAAAgEAAAAAAAACA=</HashCode>
       <FileName>Defines.h</FileName>
     </TypeIdentifier>
   </Enum>
@@ -112,14 +112,14 @@
   <Enum Name="EEnemyType" Collapsed="true">
     <Position X="0.5" Y="7" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAQAAAAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAIAAAAAAAgAQAAAAAAAAAIAAAAAAAA=</HashCode>
       <FileName>Defines.h</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="EButtonAction" Collapsed="true">
-    <Position X="2.75" Y="7.75" Width="1.5" />
+    <Position X="2.75" Y="8.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAQAAQAAAAAAAAAAAAgEgAAAAAgAACAAAAAEAAAA=</HashCode>
+      <HashCode>AAAAAQAAQAAAAAAAAAAAAoEgAAAAAgAACAAAAAEAAAA=</HashCode>
       <FileName>Defines.h</FileName>
     </TypeIdentifier>
   </Enum>
