@@ -29,7 +29,7 @@ private:
 	std::vector<CProjectile>& mBullets;
 	CVector2 mPosition;
 	CVector2 mVelocity;
-	const float moveSpeed = 50;
+	const float moveSpeed = 100;
 	const float dragMultiplier = 0.75;
 	SDL_Renderer* mRenderer;
 	SDL_Texture* mTexture;

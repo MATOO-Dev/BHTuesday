@@ -22,6 +22,7 @@ CButton::CButton(CVector2 position, CVector2 size, TTF_Font* font, const char* t
 	mButtonAction(buttonAction),
 	mButtonTexture(nullptr)
 {
+	SDL_FreeSurface(mTextSurface);
 	mButtonBox.h = mSize.y;
 	mButtonBox.w = mSize.x;
 	mButtonBox.x = mPosition.x - (mSize.x / 2);
@@ -30,14 +31,8 @@ CButton::CButton(CVector2 position, CVector2 size, TTF_Font* font, const char* t
 
 CButton::~CButton()
 {
-	//delete mTextSurface;
-	//delete mTextTexture;
-
-	//causes triggering of breakpoint, attempting assigning nullptr instead
-	mTextSurface = nullptr;
-	mTextTexture = nullptr;
-
-	delete mButtonTexture;
+	SDL_DestroyTexture(mTextTexture);
+	SDL_DestroyTexture(mButtonTexture);
 }
 
 bool CButton::IsClicked(CVector2 mousePos)
@@ -52,6 +47,7 @@ bool CButton::IsClicked(CVector2 mousePos)
 
 void CButton::Render(SDL_Renderer& renderer)
 {
+	//SDL_FreeSurface(mTextSurface);
 	SDL_RenderDrawRect(&renderer, &mButtonBox);
 	if (mTextTexture != nullptr)
 		SDL_RenderCopy(&renderer, mTextTexture, NULL, &mButtonBox);
@@ -62,4 +58,15 @@ void CButton::Render(SDL_Renderer& renderer)
 EButtonAction CButton::GetAction()		//perform action switch directly in gameManager
 {
 	return mButtonAction;
+}
+
+void CButton::UpdateText(TTF_Font* font, const char* text, SDL_Color color, SDL_Renderer* renderer)
+{
+	if (mTextSurface != nullptr)
+		SDL_FreeSurface(mTextSurface);
+	if (mTextTexture != nullptr)
+		SDL_DestroyTexture(mTextTexture);
+	mTextSurface = TTF_RenderText_Blended(font, text, color);
+	mTextTexture = SDL_CreateTextureFromSurface(renderer, mTextSurface);
+	SDL_FreeSurface(mTextSurface);
 }

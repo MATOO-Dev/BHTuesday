@@ -49,8 +49,7 @@ int main(int argc, char* argv[])
 		}
 
 		{
-			//exits the Game loop upon the event SDL_QUIT occuring
-			while (SDL_PollEvent(&event)) {
+		while (SDL_PollEvent(&event)) {
 				switch (event.type)
 				{
 				case (SDL_MOUSEMOTION):
@@ -60,6 +59,7 @@ int main(int argc, char* argv[])
 					GameManager.UpdateButtons(event.button);
 					break;
 				case(SDL_QUIT):
+					//exits the Game loop upon the event SDL_QUIT occuring
 					running = false;
 					break;
 				default:

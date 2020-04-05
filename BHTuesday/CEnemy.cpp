@@ -21,6 +21,7 @@ CEnemy::~CEnemy()
 	delete targetPlayer;
 	delete[] mBullets;
 	delete mRenderer;
+	SDL_DestroyTexture(mTexture);
 	delete mTexture;
 }
 

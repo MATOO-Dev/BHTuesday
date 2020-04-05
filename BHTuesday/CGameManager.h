@@ -17,6 +17,7 @@ class CEnemy;
 #include <Windows.h>
 #include <fstream>
 #include <algorithm>
+#include <string>
 
 class CGameManager
 {
@@ -31,10 +32,13 @@ private:
 	std::vector<CProjectile> mPlayerBullets;
 	std::vector<CProjectile> mEnemyBullets;
 	std::vector<CButton> mMenuButtons;
+	//std::vector<Image> mMenuImages;
+	//std::vector<Text> mMenuTexts;
 	//std::vector //installed upgrades bool vector
 	int Volume; //correct data type?
 	TTF_Font* consolasFont;
 	bool& mGameRunning;
+	void OverrideButtonText(std::vector<std::string> texts);
 public:
 	CGameManager(bool& running);
 	~CGameManager();
