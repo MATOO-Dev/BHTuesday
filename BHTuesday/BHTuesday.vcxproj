@@ -169,11 +169,13 @@
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CVector2.cpp" />
     <ClCompile Include="EnemyKamikaze.cpp" />
+    <ClCompile Include="EnemyPellets.cpp" />
     <ClCompile Include="Wave.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CAssetManager.h" />
     <ClInclude Include="EnemyKamikaze.h" />
+    <ClInclude Include="EnemyPellets.h" />
     <ClInclude Include="EnemySubclassIncluder.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="CLevelEditor.h" />

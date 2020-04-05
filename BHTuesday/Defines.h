@@ -24,10 +24,11 @@ enum class EGameState		//defines what state the game is in
 	LevelSelectMenu,
 	PauseMenu,
 	DeathMenu,
+	VictoryMenu,
 	SettingsMenu,
 	EditorMenu,
 	UpgradesMenu,
-	Active,
+	Active
 };
 
 enum class ETheme		//defines the current theme
@@ -61,7 +62,8 @@ enum class EButtonAction		//defines the more explicit action of the current butt
 	OpenSettingsMenu,
 	OpenEditorMenu,
 	OpenUpgradesMenu,
-	StartGame
+	StartGame,
+	QuitGame
 };
 
 /*

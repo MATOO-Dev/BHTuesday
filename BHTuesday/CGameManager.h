@@ -25,6 +25,7 @@ private:
 	SDL_Renderer* mRenderer;
 	EGameState mActiveGameState;
 	int mPlayerScore;
+	int mTotalScore;
 	CPlayer* mPlayerRef;
 	std::vector<CEnemy*> mEnemyRef;
 	std::vector<CProjectile> mPlayerBullets;

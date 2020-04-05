@@ -63,6 +63,9 @@
     <ClCompile Include="EnemyKamikaze.cpp">
       <Filter>Enemys</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyPellets.cpp">
+      <Filter>Enemys</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CEnemy.h">
@@ -107,8 +110,11 @@
     <ClInclude Include="EnemyKamikaze.h">
       <Filter>Enemys</Filter>
     </ClInclude>
+    <ClInclude Include="EnemyPellets.h">
+      <Filter>Enemys</Filter>
+    </ClInclude>
     <ClInclude Include="EnemySubclassIncluder.h">
-      <Filter>Header Files</Filter>
+      <Filter>Enemys</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,9 +1,9 @@
 #include "CProjectile.h"
 
-CProjectile::CProjectile(CVector2 startPosition, CVector2 velocity) :
+CProjectile::CProjectile(CVector2 startPosition, CVector2 velocity, int radius) :
 	mPosition(startPosition),
 	mVelocity(velocity),
-	mRadius(2),
+	mRadius(radius),
 	mDamage(1)
 {}
 

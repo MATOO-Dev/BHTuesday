@@ -132,6 +132,8 @@ void CGameManager::UpdateAll(float timeStep)		//updates all gameobjects, excludi
 		//should remove enemy if it collides with player
 		if (mEnemyRef[i] != nullptr && mEnemyRef[i]->IntersectsPlayer())
 			mEnemyRef[i] = nullptr;
+		if (mEnemyRef[i] != nullptr && mEnemyRef[i]->OutOfBounds() && mEnemyRef[i]->GetState() != EEnemyState::Intro)
+			mEnemyRef[i] = nullptr;
 	}
 
 	//remove killed enemys
@@ -179,8 +181,8 @@ void CGameManager::ClearGameObjects()
 void CGameManager::InitializeGameState(EGameState menuType)
 {
 	ClearMenu();
-	//if (menuType != EGameState::PauseMenu || menuType != EGameState::DeathMenu)
-		//ClearGameObjects();
+	if (menuType != EGameState::PauseMenu && menuType != EGameState::DeathMenu)
+		ClearGameObjects();
 	SDL_Color white = { 255, 255, 255 };
 	SDL_Color black = { 0, 0, 0 };
 
@@ -199,9 +201,10 @@ void CGameManager::InitializeGameState(EGameState menuType)
 		mMenuButtons.push_back(CButton(CVector2(300, 880), CVector2(200, 100), consolasFont, "Menu", white, mRenderer, EButtonAction::OpenMainMenu));
 		break;
 	case EGameState::Active:
+		mPlayerScore = 0;
 		mPlayerRef = new CPlayer(CVector2(300, 750), mPlayerBullets, mRenderer, "PlayerTexture.png");
 		for (int i = 0; i < 10; i++)
-			mEnemyRef.push_back(new CEnemy(CVector2(50 * i + 50, 250), CVector2(0, 50), mPlayerRef, &mEnemyBullets, mRenderer, "EnemyPellets.png", EEnemyType::Null));
+			mEnemyRef.push_back(new EnemyPellets(CVector2(50 * i + 100, 500), CVector2(0, 100), mPlayerRef, &mEnemyBullets, mRenderer));
 		mEnemyRef.push_back(new EnemyKamikaze(CVector2(300, 500), CVector2(0, 200), mPlayerRef, &mEnemyBullets, mRenderer));
 		//300, 250
 		//maybe hud?
@@ -226,8 +229,12 @@ void CGameManager::InitializeGameState(EGameState menuType)
 		mMenuButtons.push_back(CButton(CVector2(300, 880), CVector2(200, 100), consolasFont, "Menu", white, mRenderer, EButtonAction::OpenMainMenu));
 		break;
 	case EGameState::DeathMenu:
+		mTotalScore += mPlayerScore;
 		mMenuButtons.push_back(CButton(CVector2(300, 50), CVector2(300, 100), consolasFont, "You Died", white, mRenderer, EButtonAction::None));
 		mMenuButtons.push_back(CButton(CVector2(300, 880), CVector2(200, 100), consolasFont, "Menu", white, mRenderer, EButtonAction::OpenMainMenu));
+		break;
+	case EGameState::VictoryMenu:
+		mTotalScore += mPlayerScore;
 		break;
 	default:
 		break;
@@ -275,6 +282,10 @@ void CGameManager::UpdateButtons(SDL_MouseButtonEvent mouseDownEvent)		//enter m
 					break;
 				case EButtonAction::OpenUpgradesMenu:
 					InitializeGameState(EGameState::UpgradesMenu);
+					break;
+				case EButtonAction::QuitGame:
+					SDL_Event* QuitEvent = SDL_QUIT;
+					SDL_PushEvent(SDL_QUIT);
 					break;
 					//more actions
 				default:

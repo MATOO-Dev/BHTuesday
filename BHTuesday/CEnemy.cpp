@@ -5,6 +5,7 @@ CEnemy::CEnemy(CVector2 targetPosition, CVector2 velocity, CPlayer* target, std:
 	mTargetPosition(targetPosition),
 	mPosition(CVector2(targetPosition.x, -100)),
 	mVelocity(velocity),
+	mIntroVelocity(velocity),
 	mHealth(5),
 	mBullets(EnemyBullets),
 	mRenderer(renderer),
@@ -50,7 +51,7 @@ void CEnemy::Render()
 void CEnemy::Shoot()
 {
 	//change position based on target
-	mBullets->push_back(CProjectile(mPosition, CVector2(targetPlayer->GetPosition(), mPosition).Normalize() * 500));
+	mBullets->push_back(CProjectile(mPosition, CVector2(targetPlayer->GetPosition(), mPosition).Normalize() * 500, 2));
 }
 
 void CEnemy::Damage(float damage)

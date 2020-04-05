@@ -24,10 +24,12 @@ public:
 	float GetHealth();
 	bool OutOfBounds();
 	bool IntersectsPlayer();
+	EEnemyState GetState();
 protected:
 	CVector2 mPosition;
 	CVector2 mTargetPosition;
 	CVector2 mVelocity;
+	CVector2 mIntroVelocity;
 	CPlayer* targetPlayer;
 	std::vector<CProjectile>* mBullets;
 	SDL_Renderer* mRenderer;
@@ -52,4 +54,9 @@ inline int CEnemy::GetRadius()
 inline float CEnemy::GetHealth()
 {
 	return mHealth;
+}
+
+inline EEnemyState CEnemy::GetState()
+{
+	return mEnemyState;
 }

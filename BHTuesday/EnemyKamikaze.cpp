@@ -9,6 +9,7 @@ EnemyKamikaze::~EnemyKamikaze()
 
 void EnemyKamikaze::Update(float timeStep)
 {
+
 	mPosition = (mPosition + (mVelocity * timeStep));
 	mTextureRect.x = mPosition.x - mTextureRect.w / 2;
 	mTextureRect.y = mPosition.y - mTextureRect.h / 2;
@@ -51,15 +52,11 @@ void EnemyKamikaze::Render()
 			SDL_RenderCopy(mRenderer, mTexture, NULL, &mTextureRect);
 		else
 		{
-			//float angle = atan2(mTargetPosition.y, mTargetPosition.x) * 180 / 3.14159265;
-			//if (mTargetPosition.x > mPosition.x)
-			//	SDL_RenderCopyEx(mRenderer, mTexture, NULL, &mTextureRect, -90 + angle, NULL, SDL_FLIP_NONE);
-			//else
-			//	SDL_RenderCopyEx(mRenderer, mTexture, NULL, &mTextureRect, -55 + angle, NULL, SDL_FLIP_NONE);
-			CVector2 delta = mPosition - mTargetPosition;
-			float angle = atan2(delta.y, delta.x) * 180 / 3.14159265;
-			SDL_RenderCopyEx(mRenderer, mTexture, NULL, &mTextureRect, +angle, NULL, SDL_FLIP_NONE);
-
+			float angle = atan2(mTargetPosition.y, mTargetPosition.x) * 180 / 3.14159265;
+			if (mTargetPosition.x > mPosition.x)
+				SDL_RenderCopyEx(mRenderer, mTexture, NULL, &mTextureRect, -90 + angle, NULL, SDL_FLIP_NONE);
+			else
+				SDL_RenderCopyEx(mRenderer, mTexture, NULL, &mTextureRect, -55 + angle, NULL, SDL_FLIP_NONE);
 		}
 	}
 	else

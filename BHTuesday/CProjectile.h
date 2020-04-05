@@ -15,7 +15,7 @@ class CEnemy;
 class CProjectile
 {
 public:
-	CProjectile(CVector2 startPosition, CVector2 velocity);
+	CProjectile(CVector2 startPosition, CVector2 velocity, int radius);
 	~CProjectile();
 	bool Update(float timeStep);
 	bool inBounds() const;

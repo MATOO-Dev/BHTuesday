@@ -3,7 +3,7 @@
 CPlayer::CPlayer(CVector2 startPosition, std::vector<CProjectile>& PlayerBullets, SDL_Renderer* renderer, std::string textureName) :
 	mPosition(startPosition),
 	mVelocity(0, 0),
-	mHealth(9999),
+	mHealth(5),
 	mBullets(PlayerBullets),
 	mRenderer(renderer),
 	mTexture(CAssetManager::LoadTexture(mRenderer, textureName)),
@@ -106,7 +106,7 @@ void CPlayer::Render()
 
 void CPlayer::Shoot()
 {
-	mBullets.push_back(CProjectile(mPosition, CVector2(0, -500)));
+	mBullets.push_back(CProjectile(mPosition, CVector2(0, -500), 2));
 }
 
 void CPlayer::Damage(float damage)
