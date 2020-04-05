@@ -54,11 +54,17 @@
     <ClCompile Include="CLevelEditor.cpp">
       <Filter>Level</Filter>
     </ClCompile>
+    <ClCompile Include="CAssetManager.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
     <ClCompile Include="Wave.cpp">
       <Filter>Level</Filter>
     </ClCompile>
-    <ClCompile Include="CAssetManager.cpp">
-      <Filter>Utilities</Filter>
+    <ClCompile Include="EnemyKamikaze.cpp">
+      <Filter>Enemys</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyPellets.cpp">
+      <Filter>Enemys</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -83,20 +89,32 @@
     <ClInclude Include="CPlayer.h">
       <Filter>Player</Filter>
     </ClInclude>
-    <ClInclude Include="Menu.h">
+    <ClInclude Include="CLevelEditor.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="CAssetManager.h">
       <Filter>Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="CLevelEditor.h">
+    <ClInclude Include="Level.h">
       <Filter>Level</Filter>
     </ClInclude>
     <ClInclude Include="Wave.h">
       <Filter>Level</Filter>
     </ClInclude>
-    <ClInclude Include="Level.h">
-      <Filter>Level</Filter>
-    </ClInclude>
-    <ClInclude Include="CAssetManager.h">
+    <ClInclude Include="Text.h">
       <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyKamikaze.h">
+      <Filter>Enemys</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyPellets.h">
+      <Filter>Enemys</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemySubclassIncluder.h">
+      <Filter>Enemys</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

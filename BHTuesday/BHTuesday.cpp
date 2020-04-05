@@ -16,12 +16,13 @@
 
 int main(int argc, char* argv[])
 {
-	CGameManager GameManager;
+	bool running = false;
 
-	SDL_bool running = SDL_FALSE;
+	CGameManager GameManager(running);
+
 
 	if (GameManager.InitializeSDL())
-		running = SDL_TRUE;
+		running = true;
 
 	if (running)
 		GameManager.InitializeGameState(EGameState::MainMenu);
@@ -48,7 +49,6 @@ int main(int argc, char* argv[])
 		}
 
 		{
-			//exits the Game loop upon the event SDL_QUIT occuring
 			while (SDL_PollEvent(&event)) {
 				switch (event.type)
 				{
@@ -59,7 +59,8 @@ int main(int argc, char* argv[])
 					GameManager.UpdateButtons(event.button);
 					break;
 				case(SDL_QUIT):
-					running = SDL_FALSE;
+					//exits the Game loop upon the event SDL_QUIT occuring
+					running = false;
 					break;
 				default:
 					break;
@@ -71,27 +72,3 @@ int main(int argc, char* argv[])
 	GameManager.ExitGame();
 	return 0;
 }
-
-/*
-for (int i = 0; i < EnemyBullets.size(); i++)
-{
-	EnemyBullets[i].Update((float)TICK_INTERVAL / 1000.f);
-	EnemyBullets[i].Collision(*myPlayer);
-	if (EnemyBullets[i].inBounds() == false)
-	{
-		EnemyBullets.erase(EnemyBullets.begin() + i);
-	}
-	EnemyBullets[i].Render(Renderer);
-}
-for (int i = 0; i < PlayerBullets.size(); i++)
-{
-	PlayerBullets[i].Update((float)TICK_INTERVAL / 1000.f);
-	if (PlayerBullets[i].inBounds() == false)
-	{
-		std::cout << "bullet" << i << "is out of bounds" << std::endl;
-		//PlayerBullets.erase(EnemyBullets.begin() + i);
-		//PlayerBullets.erase(EnemyBullets.begin() + 0);
-	}
-	PlayerBullets[i].Render(Renderer);
-}
-*/

@@ -1,13 +1,26 @@
 #include "CGameManager.h"
 
-CGameManager::CGameManager() :
+CGameManager::CGameManager(bool& running) :
 	mActiveGameState(EGameState::MainMenu),
 	mWindow(nullptr),
 	mPlayerRef(nullptr),
 	mRenderer(nullptr),
 	consolasFont(nullptr),
-	mMenuButtons()
+	mMenuButtons(),
+	mGameRunning(running),
+	mPlayerScore(0),
+	mTotalScore(0),
+	Volume(0)
 {}
+
+CGameManager::~CGameManager()
+{
+	delete mPlayerRef;
+	mEnemyRef.clear();
+	//delete consolasFont;
+	//causes exception, setting to nullptr instead
+	consolasFont = nullptr;
+}
 
 bool CGameManager::InitializeSDL()
 {
@@ -37,7 +50,7 @@ bool CGameManager::InitializeSDL()
 		return false;
 	}
 
-	consolasFont = CreateSizedFont(100);
+	consolasFont = CAssetManager::CreateSizedFont(100);
 	return true;
 }
 
@@ -53,24 +66,34 @@ void CGameManager::Update(float timeStep)
 	case EGameState::MainMenu:
 		//update + render buttons
 		UpdateAll(timeStep);
+		OverrideButtonText({ "Play", "Settings", "Editor", "Upgrades", "Quit" });
 		break;
 	case EGameState::LevelSelectMenu:
+		OverrideButtonText({ "Level 1", "Level 2", "Level 3", "Menu" });
 		UpdateAll(timeStep);
 		break;
 	case EGameState::Active:
 		UpdateAll(timeStep);
+		OverrideButtonText({ ("Score: " + std::to_string(mPlayerScore)).c_str(), ("Health: " + std::to_string(int(mPlayerRef->GetHealth()))).c_str() });
 		break;
 	case EGameState::PauseMenu:
 		//like active, but without update and with menu options
+		OverrideButtonText({ "Level 1", "Level 2", "Level 3", "Menu" });
 		break;
 	case EGameState::SettingsMenu:
 		//like pause, but without background objects
+		OverrideButtonText({ "Video", "Volume", "-", "+", "Menu" });
 		break;
 	case EGameState::EditorMenu:
 		//level editor
+		OverrideButtonText({ "Menu" });
 		break;
 	case EGameState::UpgradesMenu:
 		//upgrade shop
+		OverrideButtonText({ "Menu" });
+		break;
+	case EGameState::DeathMenu:
+		OverrideButtonText({ "You Died", "Menu" });
 		break;
 	default:
 		break;
@@ -98,7 +121,6 @@ void CGameManager::UpdateAll(float timeStep)		//updates all gameobjects, excludi
 			int x = 5;
 	}
 
-
 	//update projectiles and remove if out of bounds
 	std::vector<CProjectile>::iterator it = mPlayerBullets.begin();
 	while (it != mPlayerBullets.end())
@@ -117,16 +139,22 @@ void CGameManager::UpdateAll(float timeStep)		//updates all gameobjects, excludi
 				it = mPlayerBullets.erase(it);
 
 				if (mEnemyRef[i]->GetHealth() < 0)
+				{
 					mEnemyRef[i] = nullptr;
+					mPlayerScore++;
+				}
 			}
 			else
 				it++;
+		//should remove enemy if it collides with player
+		if (mEnemyRef[i] != nullptr && mEnemyRef[i]->IntersectsPlayer())
+			mEnemyRef[i] = nullptr;
+		if (mEnemyRef[i] != nullptr && mEnemyRef[i]->OutOfBounds() && mEnemyRef[i]->GetState() != EEnemyState::Intro)
+			mEnemyRef[i] = nullptr;
 	}
 
 	//remove killed enemys
 	mEnemyRef.erase(std::remove(mEnemyRef.begin(), mEnemyRef.end(), nullptr), mEnemyRef.end());
-
-
 
 	//same as previous 2, but inverted
 	it = mEnemyBullets.begin();
@@ -162,31 +190,30 @@ void CGameManager::RenderAll()		//renders all gameobjects, including buttons
 void CGameManager::ClearGameObjects()
 {
 	mPlayerRef = nullptr;
-	mEnemyRef.clear();
-	mPlayerBullets.clear();
-	mEnemyBullets.clear();
-}
-
-TTF_Font* CGameManager::CreateSizedFont(int size)
-{
-	return TTF_OpenFont("data/fonts/consolas.ttf", size);
+	std::vector<CEnemy*>().swap(mEnemyRef);
+	mEnemyRef.shrink_to_fit();
+	std::vector<CProjectile>().swap(mPlayerBullets);
+	mPlayerBullets.shrink_to_fit();
+	std::vector<CProjectile>().swap(mEnemyBullets);
+	mEnemyBullets.shrink_to_fit();
 }
 
 void CGameManager::InitializeGameState(EGameState menuType)
 {
 	ClearMenu();
-	//if (menuType != EGameState::PauseMenu || menuType != EGameState::DeathMenu)
-		//ClearGameObjects();
+	if (menuType != EGameState::PauseMenu && menuType != EGameState::DeathMenu)
+		ClearGameObjects();
 	SDL_Color white = { 255, 255, 255 };
 	SDL_Color black = { 0, 0, 0 };
 
 	switch (menuType)
 	{
 	case EGameState::MainMenu:
-		mMenuButtons.push_back(CButton(CVector2(300, 370), CVector2(200, 100), consolasFont, "Play", white, mRenderer, EButtonAction::OpenLevelSelectMenu));
-		mMenuButtons.push_back(CButton(CVector2(300, 540), CVector2(200, 100), consolasFont, "Settings", white, mRenderer, EButtonAction::OpenSettingsMenu));
-		mMenuButtons.push_back(CButton(CVector2(300, 710), CVector2(200, 100), consolasFont, "Editor", white, mRenderer, EButtonAction::OpenEditorMenu));
-		mMenuButtons.push_back(CButton(CVector2(300, 880), CVector2(200, 100), consolasFont, "Upgrades", white, mRenderer, EButtonAction::OpenUpgradesMenu));
+		mMenuButtons.push_back(CButton(CVector2(300, 200), CVector2(200, 100), consolasFont, "Play", white, mRenderer, EButtonAction::OpenLevelSelectMenu));
+		mMenuButtons.push_back(CButton(CVector2(300, 370), CVector2(200, 100), consolasFont, "Settings", white, mRenderer, EButtonAction::OpenSettingsMenu));
+		mMenuButtons.push_back(CButton(CVector2(300, 540), CVector2(200, 100), consolasFont, "Editor", white, mRenderer, EButtonAction::OpenEditorMenu));
+		mMenuButtons.push_back(CButton(CVector2(300, 710), CVector2(200, 100), consolasFont, "Upgrades", white, mRenderer, EButtonAction::OpenUpgradesMenu));
+		mMenuButtons.push_back(CButton(CVector2(300, 880), CVector2(200, 100), consolasFont, "Quit", white, mRenderer, EButtonAction::QuitGame));
 		break;
 	case EGameState::LevelSelectMenu:
 		mMenuButtons.push_back(CButton(CVector2(300, 200), CVector2(200, 100), consolasFont, "Level 1", white, mRenderer, EButtonAction::StartGame));
@@ -195,16 +222,23 @@ void CGameManager::InitializeGameState(EGameState menuType)
 		mMenuButtons.push_back(CButton(CVector2(300, 880), CVector2(200, 100), consolasFont, "Menu", white, mRenderer, EButtonAction::OpenMainMenu));
 		break;
 	case EGameState::Active:
-		mPlayerRef = new CPlayer(CVector2(300, 750), mPlayerBullets, mRenderer, "PlayerTexture.png");
-		for (int i = 0; i < 10; i++)
-			mEnemyRef.push_back(new CEnemy(CVector2(50 * i + 50, 250), mPlayerRef, &mEnemyBullets, mRenderer, "EnemyTexture.png"));
+		if (mActiveGameState != EGameState::PauseMenu)
+		{
+			mPlayerScore = 0;
+			mMenuButtons.push_back(CButton(CVector2(75, 975), CVector2(150, 50), consolasFont, "Score: 0", white, mRenderer, EButtonAction::None));
+			mMenuButtons.push_back(CButton(CVector2(525, 975), CVector2(150, 50), consolasFont, "Health: 0", white, mRenderer, EButtonAction::None));
+			mPlayerRef = new CPlayer(CVector2(300, 750), mPlayerBullets, mRenderer, "PlayerTexture.png");
+			for (int i = 0; i < 10; i++)
+				mEnemyRef.push_back(new EnemyPellets(CVector2(150 * i + 25, 300), CVector2(0, 200), mPlayerRef, &mEnemyBullets, mRenderer));
+			mEnemyRef.push_back(new EnemyKamikaze(CVector2(300, 500), CVector2(0, 200), mPlayerRef, &mEnemyBullets, mRenderer));
+		}
 		//300, 250
 		//maybe hud?
 		break;
 	case EGameState::PauseMenu:
 		mMenuButtons.push_back(CButton(CVector2(300, 370), CVector2(200, 100), consolasFont, "Resume", white, mRenderer, EButtonAction::StartGame));
-		mMenuButtons.push_back(CButton(CVector2(300, 540), CVector2(200, 100), consolasFont, "Settings", white, mRenderer, EButtonAction::OpenSettingsMenu));
 		mMenuButtons.push_back(CButton(CVector2(300, 710), CVector2(200, 100), consolasFont, "Editor", white, mRenderer, EButtonAction::OpenEditorMenu));
+		mMenuButtons.push_back(CButton(CVector2(300, 540), CVector2(200, 100), consolasFont, "Settings", white, mRenderer, EButtonAction::OpenSettingsMenu));
 		mMenuButtons.push_back(CButton(CVector2(300, 880), CVector2(200, 100), consolasFont, "Menu", white, mRenderer, EButtonAction::OpenMainMenu));
 		break;
 	case EGameState::SettingsMenu:
@@ -221,8 +255,12 @@ void CGameManager::InitializeGameState(EGameState menuType)
 		mMenuButtons.push_back(CButton(CVector2(300, 880), CVector2(200, 100), consolasFont, "Menu", white, mRenderer, EButtonAction::OpenMainMenu));
 		break;
 	case EGameState::DeathMenu:
+		mTotalScore += mPlayerScore;
 		mMenuButtons.push_back(CButton(CVector2(300, 50), CVector2(300, 100), consolasFont, "You Died", white, mRenderer, EButtonAction::None));
 		mMenuButtons.push_back(CButton(CVector2(300, 880), CVector2(200, 100), consolasFont, "Menu", white, mRenderer, EButtonAction::OpenMainMenu));
+		break;
+	case EGameState::VictoryMenu:
+		mTotalScore += mPlayerScore;
 		break;
 	default:
 		break;
@@ -232,7 +270,7 @@ void CGameManager::InitializeGameState(EGameState menuType)
 
 void CGameManager::ClearMenu()
 {
-	mMenuButtons.clear();
+	std::vector<CButton>().swap(mMenuButtons);
 	mMenuButtons.shrink_to_fit();
 }
 
@@ -270,6 +308,10 @@ void CGameManager::UpdateButtons(SDL_MouseButtonEvent mouseDownEvent)		//enter m
 					break;
 				case EButtonAction::OpenUpgradesMenu:
 					InitializeGameState(EGameState::UpgradesMenu);
+					break;
+				case EButtonAction::QuitGame:
+					//bool* tempBool = false;
+					mGameRunning = false;
 					break;
 					//more actions
 				default:
@@ -332,4 +374,13 @@ void CGameManager::ExitGame()		//replace with bool return on update, instead use
 	TTF_Quit();
 	IMG_Quit();
 	SDL_Quit();
+}
+
+void CGameManager::OverrideButtonText(std::vector<std::string> texts)
+{
+	for (int i = 0; i < texts.size(); i++)
+	{
+		if (mMenuButtons.size() >= i + 1)
+			mMenuButtons[i].UpdateText(consolasFont, texts[i].c_str(), white, mRenderer);
+	}
 }

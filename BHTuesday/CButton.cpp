@@ -22,6 +22,7 @@ CButton::CButton(CVector2 position, CVector2 size, TTF_Font* font, const char* t
 	mButtonAction(buttonAction),
 	mButtonTexture(nullptr)
 {
+	SDL_FreeSurface(mTextSurface);
 	mButtonBox.h = mSize.y;
 	mButtonBox.w = mSize.x;
 	mButtonBox.x = mPosition.x - (mSize.x / 2);
@@ -30,6 +31,8 @@ CButton::CButton(CVector2 position, CVector2 size, TTF_Font* font, const char* t
 
 CButton::~CButton()
 {
+	SDL_DestroyTexture(mTextTexture);
+	SDL_DestroyTexture(mButtonTexture);
 }
 
 bool CButton::IsClicked(CVector2 mousePos)
@@ -44,8 +47,8 @@ bool CButton::IsClicked(CVector2 mousePos)
 
 void CButton::Render(SDL_Renderer& renderer)
 {
-	if (mButtonAction != EButtonAction::None)
-		SDL_RenderDrawRect(&renderer, &mButtonBox);
+	//SDL_FreeSurface(mTextSurface);
+	SDL_RenderDrawRect(&renderer, &mButtonBox);
 	if (mTextTexture != nullptr)
 		SDL_RenderCopy(&renderer, mTextTexture, NULL, &mButtonBox);
 	if (mButtonTexture != nullptr)
@@ -55,4 +58,11 @@ void CButton::Render(SDL_Renderer& renderer)
 EButtonAction CButton::GetAction()		//perform action switch directly in gameManager
 {
 	return mButtonAction;
+}
+
+void CButton::UpdateText(TTF_Font* font, const char* text, SDL_Color color, SDL_Renderer* renderer)
+{
+	mTextSurface = TTF_RenderText_Blended(font, text, color);
+	mTextTexture = SDL_CreateTextureFromSurface(renderer, mTextSurface);
+	SDL_FreeSurface(mTextSurface);
 }

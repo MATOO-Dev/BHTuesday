@@ -15,11 +15,6 @@ CVector2::CVector2(CVector2 target, CVector2 origin) :
 	y(target.y - origin.y)
 {}
 
-CVector2::~CVector2()
-{
-
-}
-
 float CVector2::GetDistance(const CVector2 other) const
 {
 	CVector2 connection = CVector2(other - *this);

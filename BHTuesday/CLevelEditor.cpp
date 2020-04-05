@@ -5,7 +5,7 @@ void CLevelEditor::PlaceEnemy()
 	//detect current enemy type, then create it and add to wave at clicked position
 	switch (mSelectedEnemyType)
 	{
-	case EEnemyType::Sphere:
+	case EEnemyType::Null:
 		//CSphere newSphere = CSphere();
 		//currentWave.Add(newSphere);
 		break;

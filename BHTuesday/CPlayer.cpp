@@ -3,7 +3,7 @@
 CPlayer::CPlayer(CVector2 startPosition, std::vector<CProjectile>& PlayerBullets, SDL_Renderer* renderer, std::string textureName) :
 	mPosition(startPosition),
 	mVelocity(0, 0),
-	mHealth(3),
+	mHealth(5),
 	mBullets(PlayerBullets),
 	mRenderer(renderer),
 	mTexture(CAssetManager::LoadTexture(mRenderer, textureName)),
@@ -13,7 +13,10 @@ CPlayer::CPlayer(CVector2 startPosition, std::vector<CProjectile>& PlayerBullets
 
 CPlayer::~CPlayer()
 {
-
+	delete[] & mBullets;
+	delete mRenderer;
+	SDL_DestroyTexture(mTexture);
+	delete mTexture;
 }
 
 void CPlayer::Update(float timeStep, EControlStyle& myControlStyle)
@@ -61,24 +64,24 @@ void CPlayer::Update(float timeStep, EControlStyle& myControlStyle)
 	}
 
 	//keeps Player in bounds(window)
-	if (mPosition.x < 0)
+	if (mPosition.x - mRadius < 0)
 	{
-		mPosition.x = 0;
+		mPosition.x = mRadius;
 		mVelocity = CVector2(0, mVelocity.y);
 	}
-	if (mPosition.x > windowWidth)
+	if (mPosition.x + mRadius > windowWidth)
 	{
-		mPosition.x = windowWidth;
+		mPosition.x = windowWidth - mRadius;
 		mVelocity = CVector2(0, mVelocity.y);
 	}
-	if (mPosition.y < 0)
+	if (mPosition.y - mRadius < 0)
 	{
-		mPosition.y = 0;
+		mPosition.y = mRadius;
 		mVelocity = CVector2(mVelocity.x, 0);
 	}
-	if (mPosition.y > windowHeight)
+	if (mPosition.y + mRadius > windowHeight)
 	{
-		mPosition.y = windowHeight;
+		mPosition.y = windowHeight - mRadius;
 		mVelocity = CVector2(mVelocity.x, 0);
 	}
 	/*
@@ -97,14 +100,14 @@ void CPlayer::Update(float timeStep, EControlStyle& myControlStyle)
 	*/
 }
 
-void CPlayer::Render() 
+void CPlayer::Render()
 {
 	SDL_RenderCopy(mRenderer, mTexture, NULL, &mTextureRect);
 }
 
 void CPlayer::Shoot()
 {
-	mBullets.push_back(CProjectile(mPosition, CVector2(0, -500)));
+	mBullets.push_back(CProjectile(CVector2(mPosition.x, mPosition.y - 5), CVector2(0, -500), 2));
 }
 
 void CPlayer::Damage(float damage)

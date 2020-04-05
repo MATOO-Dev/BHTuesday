@@ -15,3 +15,8 @@ SDL_Rect CAssetManager::CreateTextureRect(SDL_Texture* texture, float scale)
 	SDL_QueryTexture(texture, NULL, NULL, &width, &height);
 	return SDL_Rect{ 0, 0, int(width * scale), int(height * scale)};
 }
+
+TTF_Font* CAssetManager::CreateSizedFont(int size)
+{
+	return TTF_OpenFont("data/fonts/consolas.ttf", size);
+}
