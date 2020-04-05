@@ -38,8 +38,10 @@ enum class ETheme		//defines the current theme
 
 enum class EEnemyType		//defines an enemys type
 {
-	Sphere,
-	Dark
+	Null,
+	Pellets,
+	Beam,
+	Kamikaze
 };
 
 enum class EEnemyState		//defines the current state of an enemy

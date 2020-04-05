@@ -13,7 +13,7 @@ class CProjectile;
 class CEnemy
 {
 public:
-	CEnemy(CVector2 targetPosition, CVector2 velocity, CPlayer* target, std::vector<CProjectile>* EnemyBullets, SDL_Renderer* renderer, std::string textureName);
+	CEnemy(CVector2 targetPosition, CVector2 velocity, CPlayer* target, std::vector<CProjectile>* EnemyBullets, SDL_Renderer* renderer, std::string textureName, EEnemyType type);
 	~CEnemy();
 	virtual void Update(float timeStep);
 	virtual void Render();
@@ -22,7 +22,9 @@ public:
 	CVector2 GetPosition();
 	int GetRadius();
 	float GetHealth();
-private:
+	bool OutOfBounds();
+	bool IntersectsPlayer();
+protected:
 	CVector2 mPosition;
 	CVector2 mTargetPosition;
 	CVector2 mVelocity;
@@ -31,6 +33,8 @@ private:
 	SDL_Renderer* mRenderer;
 	SDL_Texture* mTexture;
 	SDL_Rect mTextureRect;
+	EEnemyType mEnemyType;
+	EEnemyState mEnemyState;
 	float mHealth;
 	int mRadius;
 };

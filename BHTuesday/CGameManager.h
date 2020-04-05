@@ -6,6 +6,7 @@ class CEnemy;
 #include "CVector2.h"
 #include "CPlayer.h"
 #include "CEnemy.h"
+#include "EnemySubclassIncluder.h"
 #include "CProjectile.h"
 #include "CLevelEditor.h"
 #include "CButton.h"
