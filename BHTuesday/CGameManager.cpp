@@ -67,8 +67,10 @@ void CGameManager::Update(float timeStep)
 	case EGameState::MainMenu:
 		//update + render buttons
 		UpdateAll(timeStep);
+		OverrideButtonText({ "Play", "Settings", "Editor", "Upgrades", "Quit" });
 		break;
 	case EGameState::LevelSelectMenu:
+		OverrideButtonText({ "Level 1", "Level 2", "Level 3", "Menu" });
 		UpdateAll(timeStep);
 		break;
 	case EGameState::Active:
@@ -80,15 +82,19 @@ void CGameManager::Update(float timeStep)
 		break;
 	case EGameState::PauseMenu:
 		//like active, but without update and with menu options
+		OverrideButtonText({ "Level 1", "Level 2", "Level 3", "Menu" });
 		break;
 	case EGameState::SettingsMenu:
 		//like pause, but without background objects
+		OverrideButtonText({ "Video", "Volume", "-", "+", "Menu" });
 		break;
 	case EGameState::EditorMenu:
 		//level editor
+		OverrideButtonText({ "Menu" });
 		break;
 	case EGameState::UpgradesMenu:
 		//upgrade shop
+		OverrideButtonText({ "Menu" });
 		break;
 	default:
 		break;
@@ -371,6 +377,7 @@ void CGameManager::OverrideButtonText(std::vector<std::string> texts)
 {
 	for (int i = 0; i < texts.size(); i++)
 	{
-		mMenuButtons[i].UpdateText(consolasFont, texts[i].c_str(), white, mRenderer);
+		if (mMenuButtons.size() >= i + 1)
+			mMenuButtons[i].UpdateText(consolasFont, texts[i].c_str(), white, mRenderer);
 	}
 }

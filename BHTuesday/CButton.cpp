@@ -62,10 +62,6 @@ EButtonAction CButton::GetAction()		//perform action switch directly in gameMana
 
 void CButton::UpdateText(TTF_Font* font, const char* text, SDL_Color color, SDL_Renderer* renderer)
 {
-	if (mTextSurface != nullptr)
-		SDL_FreeSurface(mTextSurface);
-	if (mTextTexture != nullptr)
-		SDL_DestroyTexture(mTextTexture);
 	mTextSurface = TTF_RenderText_Blended(font, text, color);
 	mTextTexture = SDL_CreateTextureFromSurface(renderer, mTextSurface);
 	SDL_FreeSurface(mTextSurface);
