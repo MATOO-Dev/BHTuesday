@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
 		}
 
 		{
-		while (SDL_PollEvent(&event)) {
+			while (SDL_PollEvent(&event)) {
 				switch (event.type)
 				{
 				case (SDL_MOUSEMOTION):

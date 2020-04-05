@@ -61,7 +61,6 @@ void CGameManager::ThrowErrorMesssage(const char* errorHeader, const char* error
 
 void CGameManager::Update(float timeStep)
 {
-	std::string scoreString;
 	switch (mActiveGameState)
 	{
 	case EGameState::MainMenu:
@@ -75,10 +74,7 @@ void CGameManager::Update(float timeStep)
 		break;
 	case EGameState::Active:
 		UpdateAll(timeStep);
-		scoreString = std::to_string(mPlayerScore);
-		scoreString = "Score: " + scoreString;
-		for (CButton& button : mMenuButtons)
-			button.UpdateText(consolasFont, scoreString.c_str(), white, mRenderer);
+		OverrideButtonText({ ("Score: " + std::to_string(mPlayerScore)).c_str(), ("Health: " + std::to_string(int(mPlayerRef->GetHealth()))).c_str() });
 		break;
 	case EGameState::PauseMenu:
 		//like active, but without update and with menu options
@@ -95,6 +91,9 @@ void CGameManager::Update(float timeStep)
 	case EGameState::UpgradesMenu:
 		//upgrade shop
 		OverrideButtonText({ "Menu" });
+		break;
+	case EGameState::DeathMenu:
+		OverrideButtonText({ "You Died", "Menu" });
 		break;
 	default:
 		break;
@@ -223,12 +222,16 @@ void CGameManager::InitializeGameState(EGameState menuType)
 		mMenuButtons.push_back(CButton(CVector2(300, 880), CVector2(200, 100), consolasFont, "Menu", white, mRenderer, EButtonAction::OpenMainMenu));
 		break;
 	case EGameState::Active:
-		mPlayerScore = 0;
-		mMenuButtons.push_back(CButton(CVector2(75, 975), CVector2(150, 50), consolasFont, "Score: 0", white, mRenderer, EButtonAction::None));
-		mPlayerRef = new CPlayer(CVector2(300, 750), mPlayerBullets, mRenderer, "PlayerTexture.png");
-		for (int i = 0; i < 10; i++)
-			mEnemyRef.push_back(new EnemyPellets(CVector2(150 * i + 25, 300), CVector2(0, 200), mPlayerRef, &mEnemyBullets, mRenderer));
-		mEnemyRef.push_back(new EnemyKamikaze(CVector2(300, 500), CVector2(0, 200), mPlayerRef, &mEnemyBullets, mRenderer));
+		if (mActiveGameState != EGameState::PauseMenu)
+		{
+			mPlayerScore = 0;
+			mMenuButtons.push_back(CButton(CVector2(75, 975), CVector2(150, 50), consolasFont, "Score: 0", white, mRenderer, EButtonAction::None));
+			mMenuButtons.push_back(CButton(CVector2(525, 975), CVector2(150, 50), consolasFont, "Health: 0", white, mRenderer, EButtonAction::None));
+			mPlayerRef = new CPlayer(CVector2(300, 750), mPlayerBullets, mRenderer, "PlayerTexture.png");
+			for (int i = 0; i < 10; i++)
+				mEnemyRef.push_back(new EnemyPellets(CVector2(150 * i + 25, 300), CVector2(0, 200), mPlayerRef, &mEnemyBullets, mRenderer));
+			mEnemyRef.push_back(new EnemyKamikaze(CVector2(300, 500), CVector2(0, 200), mPlayerRef, &mEnemyBullets, mRenderer));
+		}
 		//300, 250
 		//maybe hud?
 		break;
