@@ -70,7 +70,6 @@ bool CEnemy::IntersectsPlayer()
 	if (mPosition.GetDistance(targetPlayer->GetPosition()) < (mRadius + targetPlayer->GetRadius()))
 	{
 		targetPlayer->Damage(1);
-		Damage(mHealth);
 		return true;
 	}
 	return false;

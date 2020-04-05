@@ -129,14 +129,9 @@ void CGameManager::UpdateAll(float timeStep)		//updates all gameobjects, excludi
 			}
 			else
 				it++;
-	}
-
-	//should remove enemy if it collides with player, but doesnt work
-	for (CEnemy* current : mEnemyRef)
-	{
-		if (current != nullptr && current->IntersectsPlayer())
-			current = nullptr;
-		std::cout << current << std::endl;
+		//should remove enemy if it collides with player
+		if (mEnemyRef[i] != nullptr && mEnemyRef[i]->IntersectsPlayer())
+			mEnemyRef[i] = nullptr;
 	}
 
 	//remove killed enemys
@@ -205,7 +200,7 @@ void CGameManager::InitializeGameState(EGameState menuType)
 		break;
 	case EGameState::Active:
 		mPlayerRef = new CPlayer(CVector2(300, 750), mPlayerBullets, mRenderer, "PlayerTexture.png");
-		for (int i = 0; i < 0; i++)
+		for (int i = 0; i < 10; i++)
 			mEnemyRef.push_back(new CEnemy(CVector2(50 * i + 50, 250), CVector2(0, 50), mPlayerRef, &mEnemyBullets, mRenderer, "EnemyPellets.png", EEnemyType::Null));
 		mEnemyRef.push_back(new EnemyKamikaze(CVector2(300, 500), CVector2(0, 200), mPlayerRef, &mEnemyBullets, mRenderer));
 		//300, 250

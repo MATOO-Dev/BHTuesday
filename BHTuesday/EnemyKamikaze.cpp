@@ -40,6 +40,7 @@ void EnemyKamikaze::Update(float timeStep)
 	default:
 		break;
 	}
+	IntersectsPlayer();
 }
 
 void EnemyKamikaze::Render()
@@ -56,8 +57,8 @@ void EnemyKamikaze::Render()
 			//else
 			//	SDL_RenderCopyEx(mRenderer, mTexture, NULL, &mTextureRect, -55 + angle, NULL, SDL_FLIP_NONE);
 			CVector2 delta = mPosition - mTargetPosition;
-			float angle = atan2(delta.y, delta.x) * 180 / 3.14159265; 
-			SDL_RenderCopyEx(mRenderer, mTexture, NULL, &mTextureRect, -55 + angle, NULL, SDL_FLIP_NONE);
+			float angle = atan2(delta.y, delta.x) * 180 / 3.14159265;
+			SDL_RenderCopyEx(mRenderer, mTexture, NULL, &mTextureRect, +angle, NULL, SDL_FLIP_NONE);
 
 		}
 	}
