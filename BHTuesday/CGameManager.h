@@ -34,8 +34,9 @@ private:
 	//std::vector //installed upgrades bool vector
 	int Volume; //correct data type?
 	TTF_Font* consolasFont;
+	bool& mGameRunning;
 public:
-	CGameManager();
+	CGameManager(bool& running);
 	~CGameManager();
 	bool InitializeSDL();
 	void ThrowErrorMesssage(const char* errorHeader, const char* errorContent);

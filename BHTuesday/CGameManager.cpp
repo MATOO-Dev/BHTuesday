@@ -1,12 +1,16 @@
 #include "CGameManager.h"
 
-CGameManager::CGameManager() :
+CGameManager::CGameManager(bool& running) :
 	mActiveGameState(EGameState::MainMenu),
 	mWindow(nullptr),
 	mPlayerRef(nullptr),
 	mRenderer(nullptr),
 	consolasFont(nullptr),
-	mMenuButtons()
+	mMenuButtons(),
+	mGameRunning(running),
+	mPlayerScore(0),
+	mTotalScore(0),
+	Volume(0)
 {}
 
 CGameManager::~CGameManager()
@@ -189,10 +193,11 @@ void CGameManager::InitializeGameState(EGameState menuType)
 	switch (menuType)
 	{
 	case EGameState::MainMenu:
-		mMenuButtons.push_back(CButton(CVector2(300, 370), CVector2(200, 100), consolasFont, "Play", white, mRenderer, EButtonAction::OpenLevelSelectMenu));
-		mMenuButtons.push_back(CButton(CVector2(300, 540), CVector2(200, 100), consolasFont, "Settings", white, mRenderer, EButtonAction::OpenSettingsMenu));
-		mMenuButtons.push_back(CButton(CVector2(300, 710), CVector2(200, 100), consolasFont, "Editor", white, mRenderer, EButtonAction::OpenEditorMenu));
-		mMenuButtons.push_back(CButton(CVector2(300, 880), CVector2(200, 100), consolasFont, "Upgrades", white, mRenderer, EButtonAction::OpenUpgradesMenu));
+		mMenuButtons.push_back(CButton(CVector2(300, 200), CVector2(200, 100), consolasFont, "Play", white, mRenderer, EButtonAction::OpenLevelSelectMenu));
+		mMenuButtons.push_back(CButton(CVector2(300, 370), CVector2(200, 100), consolasFont, "Settings", white, mRenderer, EButtonAction::OpenSettingsMenu));
+		mMenuButtons.push_back(CButton(CVector2(300, 540), CVector2(200, 100), consolasFont, "Editor", white, mRenderer, EButtonAction::OpenEditorMenu));
+		mMenuButtons.push_back(CButton(CVector2(300, 710), CVector2(200, 100), consolasFont, "Upgrades", white, mRenderer, EButtonAction::OpenUpgradesMenu));
+		mMenuButtons.push_back(CButton(CVector2(300, 880), CVector2(200, 100), consolasFont, "Quit", white, mRenderer, EButtonAction::QuitGame));
 		break;
 	case EGameState::LevelSelectMenu:
 		mMenuButtons.push_back(CButton(CVector2(300, 200), CVector2(200, 100), consolasFont, "Level 1", white, mRenderer, EButtonAction::StartGame));
@@ -211,8 +216,8 @@ void CGameManager::InitializeGameState(EGameState menuType)
 		break;
 	case EGameState::PauseMenu:
 		mMenuButtons.push_back(CButton(CVector2(300, 370), CVector2(200, 100), consolasFont, "Resume", white, mRenderer, EButtonAction::StartGame));
-		mMenuButtons.push_back(CButton(CVector2(300, 540), CVector2(200, 100), consolasFont, "Settings", white, mRenderer, EButtonAction::OpenSettingsMenu));
 		mMenuButtons.push_back(CButton(CVector2(300, 710), CVector2(200, 100), consolasFont, "Editor", white, mRenderer, EButtonAction::OpenEditorMenu));
+		mMenuButtons.push_back(CButton(CVector2(300, 540), CVector2(200, 100), consolasFont, "Settings", white, mRenderer, EButtonAction::OpenSettingsMenu));
 		mMenuButtons.push_back(CButton(CVector2(300, 880), CVector2(200, 100), consolasFont, "Menu", white, mRenderer, EButtonAction::OpenMainMenu));
 		break;
 	case EGameState::SettingsMenu:
@@ -284,8 +289,8 @@ void CGameManager::UpdateButtons(SDL_MouseButtonEvent mouseDownEvent)		//enter m
 					InitializeGameState(EGameState::UpgradesMenu);
 					break;
 				case EButtonAction::QuitGame:
-					SDL_Event* QuitEvent = SDL_QUIT;
-					SDL_PushEvent(SDL_QUIT);
+					//bool* tempBool = false;
+					mGameRunning = false;
 					break;
 					//more actions
 				default:

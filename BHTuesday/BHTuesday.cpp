@@ -16,12 +16,13 @@
 
 int main(int argc, char* argv[])
 {
-	CGameManager GameManager;
+	bool running = false;
 
-	SDL_bool running = SDL_FALSE;
+	CGameManager GameManager(running);
+
 
 	if (GameManager.InitializeSDL())
-		running = SDL_TRUE;
+		running = true;
 
 	if (running)
 		GameManager.InitializeGameState(EGameState::MainMenu);
@@ -59,7 +60,7 @@ int main(int argc, char* argv[])
 					GameManager.UpdateButtons(event.button);
 					break;
 				case(SDL_QUIT):
-					running = SDL_FALSE;
+					running = false;
 					break;
 				default:
 					break;
