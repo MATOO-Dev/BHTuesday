@@ -228,9 +228,9 @@ void CGameManager::InitializeGameState(EGameState menuType)
 			mMenuButtons.push_back(CButton(CVector2(75, 975), CVector2(150, 50), consolasFont, "Score: 0", white, mRenderer, EButtonAction::None));
 			mMenuButtons.push_back(CButton(CVector2(525, 975), CVector2(150, 50), consolasFont, "Health: 0", white, mRenderer, EButtonAction::None));
 			mPlayerRef = new CPlayer(CVector2(300, 750), mPlayerBullets, mRenderer, "PlayerTexture.png");
-			for (int i = 0; i < 10; i++)
-				mEnemyRef.push_back(new EnemyPellets(CVector2(150 * i + 25, 300), CVector2(0, 200), mPlayerRef, &mEnemyBullets, mRenderer));
-			mEnemyRef.push_back(new EnemyKamikaze(CVector2(300, 500), CVector2(0, 200), mPlayerRef, &mEnemyBullets, mRenderer));
+			for (int i = 0; i < 6; i++)
+				mEnemyRef.push_back(new EnemyPellets(CVector2(100 * i + 50, 200), CVector2(0, 200), mPlayerRef, &mEnemyBullets, mRenderer));
+			mEnemyRef.push_back(new EnemyKamikaze(CVector2(300, 400), CVector2(0, 100), mPlayerRef, &mEnemyBullets, mRenderer));
 		}
 		//300, 250
 		//maybe hud?
