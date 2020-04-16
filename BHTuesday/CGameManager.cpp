@@ -17,9 +17,6 @@ CGameManager::~CGameManager()
 {
 	delete mPlayerRef;
 	mEnemyRef.clear();
-	//delete consolasFont;
-	//causes exception, setting to nullptr instead
-	consolasFont = nullptr;
 }
 
 bool CGameManager::InitializeSDL()
@@ -369,6 +366,7 @@ void CGameManager::ExitGame()		//replace with bool return on update, instead use
 {
 	ClearMenu();
 	ClearGameObjects();
+	TTF_CloseFont(consolasFont);
 	SDL_DestroyRenderer(mRenderer);
 	SDL_DestroyWindow(mWindow);
 	TTF_Quit();
