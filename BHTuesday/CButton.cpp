@@ -8,10 +8,10 @@ CButton::CButton(CVector2 position, CVector2 size, SDL_Texture* buttonTexture, S
 	mButtonAction(buttonAction),
 	mButtonTexture(buttonTexture)
 {
-	mButtonBox.h = mSize.y;
-	mButtonBox.w = mSize.x;
-	mButtonBox.x = mPosition.x - (mSize.x / 2);
-	mButtonBox.y = mPosition.y - (mSize.y / 2);
+	mButtonBox.h = int(mSize.y);
+	mButtonBox.w = int(mSize.x);
+	mButtonBox.x = int(mPosition.x - (mSize.x / 2));
+	mButtonBox.y = int(mPosition.y - (mSize.y / 2));
 }
 
 CButton::CButton(CVector2 position, CVector2 size, TTF_Font* font, const char* text, SDL_Color color, SDL_Renderer* renderer, EButtonAction buttonAction) :
@@ -23,10 +23,10 @@ CButton::CButton(CVector2 position, CVector2 size, TTF_Font* font, const char* t
 	mButtonTexture(nullptr)
 {
 	SDL_FreeSurface(mTextSurface);
-	mButtonBox.h = mSize.y;
-	mButtonBox.w = mSize.x;
-	mButtonBox.x = mPosition.x - (mSize.x / 2);
-	mButtonBox.y = mPosition.y - (mSize.y / 2);
+	mButtonBox.h = int(mSize.y);
+	mButtonBox.w = int(mSize.x);
+	mButtonBox.x = int(mPosition.x - (mSize.x / 2));
+	mButtonBox.y = int(mPosition.y - (mSize.y / 2));
 }
 
 CButton::~CButton()
