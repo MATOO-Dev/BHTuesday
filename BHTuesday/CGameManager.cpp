@@ -156,8 +156,8 @@ void CGameManager::UpdateAll(float timeStep)		//updates all gameobjects, excludi
 	//same as previous 2, but inverted
 	it = mEnemyBullets.begin();
 	while (it != mEnemyBullets.end())
-		if (it->Update(timeStep) == false || it->PlayerCollision(*mPlayerRef) == true)	//C6011 is irrelevant because projectiles can only exist while mPlayerRef is active
-			it = mEnemyBullets.erase(it);
+		if (it->Update(timeStep) == false || it->PlayerCollision(*mPlayerRef) == true)	//C6011 is irrelevant because projectiles can only exist while mPlayerRef is not null, 
+			it = mEnemyBullets.erase(it);												//so mPlayerRef cannot be nullptr in this case
 		else
 			it++;
 }
@@ -226,7 +226,7 @@ void CGameManager::InitializeGameState(EGameState menuType)
 			mMenuButtons.push_back(CButton(CVector2(525, 975), CVector2(150, 50), consolasFont, "Health: 0", white, mRenderer, EButtonAction::None));
 			mPlayerRef = new CPlayer(CVector2(300, 750), mPlayerBullets, mRenderer, "PlayerTexture.png");
 			for (int i = 0; i < 6; i++)
-				mEnemyRef.push_back(new EnemyPellets(CVector2(100 * i + 50, 200), CVector2(0, 200), mPlayerRef, &mEnemyBullets, mRenderer));
+				mEnemyRef.push_back(new EnemyPellets(CVector2(float(100 * i + 50), 200), CVector2(0, 200), mPlayerRef, &mEnemyBullets, mRenderer));
 			mEnemyRef.push_back(new EnemyKamikaze(CVector2(300, 400), CVector2(0, 100), mPlayerRef, &mEnemyBullets, mRenderer));
 		}
 		//300, 250
@@ -275,7 +275,7 @@ void CGameManager::UpdateButtons(SDL_MouseButtonEvent mouseDownEvent)		//enter m
 {
 	if (mouseDownEvent.button == SDL_BUTTON_LEFT)
 	{
-		CVector2 mousePos = CVector2(mouseDownEvent.x, mouseDownEvent.y);
+		CVector2 mousePos = CVector2((float)mouseDownEvent.x, (float)mouseDownEvent.y);
 		//mouseDownEvent.button
 		for (size_t i = 0; i < mMenuButtons.size(); i++)
 		{

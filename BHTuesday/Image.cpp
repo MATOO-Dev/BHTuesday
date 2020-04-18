@@ -5,10 +5,10 @@ Image::Image(CVector2 position, CVector2 size, std::string textureName, SDL_Rend
 	mSize(size),
 	mTexture(CAssetManager::LoadTexture(renderer, textureName))
 {
-	mImageBox.h = mSize.y;
-	mImageBox.w = mSize.x;
-	mImageBox.x = mPosition.x - (mSize.x / 2);
-	mImageBox.y = mPosition.y - (mSize.y / 2);
+	mImageBox.h = (int)mSize.y;
+	mImageBox.w = (int)mSize.x;
+	mImageBox.x = (int)mPosition.x - ((int)mSize.x / 2);
+	mImageBox.y = (int)mPosition.y - ((int)mSize.y / 2);
 }
 
 Image::~Image()

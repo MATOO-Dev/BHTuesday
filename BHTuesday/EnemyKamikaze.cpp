@@ -11,8 +11,8 @@ void EnemyKamikaze::Update(float timeStep)
 {
 
 	mPosition = (mPosition + (mVelocity * timeStep));
-	mTextureRect.x = mPosition.x - mTextureRect.w / 2;
-	mTextureRect.y = mPosition.y - mTextureRect.h / 2;
+	mTextureRect.x = (int)mPosition.x - mTextureRect.w / 2;
+	mTextureRect.y = (int)mPosition.y - mTextureRect.h / 2;
 
 	if (OutOfBounds())
 		mHealth = -1;
@@ -52,7 +52,7 @@ void EnemyKamikaze::Render()
 			SDL_RenderCopy(mRenderer, mTexture, NULL, &mTextureRect);
 		else
 		{
-			float angle = atan2(mTargetPosition.y, mTargetPosition.x) * 180 / 3.14159265;
+			double angle = atan2(mTargetPosition.y, mTargetPosition.x) * 180 / 3.14159265;
 			if (mTargetPosition.x > mPosition.x)
 				SDL_RenderCopyEx(mRenderer, mTexture, NULL, &mTextureRect, -90 + angle, NULL, SDL_FLIP_NONE);
 			else
@@ -61,7 +61,7 @@ void EnemyKamikaze::Render()
 	}
 	else
 	{
-		SDL_RenderDrawLine(mRenderer, mPosition.x - 10, mPosition.y - 10, mPosition.x + 10, mPosition.y + 10);
-		SDL_RenderDrawLine(mRenderer, mPosition.x + 10, mPosition.y - 10, mPosition.x - 10, mPosition.y + 10);
+		SDL_RenderDrawLine(mRenderer, (int)mPosition.x - 10, (int)mPosition.y - 10, (int)mPosition.x + 10, (int)mPosition.y + 10);
+		SDL_RenderDrawLine(mRenderer, (int)mPosition.x + 10, (int)mPosition.y - 10, (int)mPosition.x - 10, (int)mPosition.y + 10);
 	}
 }

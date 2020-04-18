@@ -5,10 +5,10 @@ Text::Text(CVector2 position, CVector2 size, std::string text, SDL_Renderer* ren
 	mSize(size),
 	mTextTexture(SDL_CreateTextureFromSurface(renderer, TTF_RenderText_Blended(CAssetManager::CreateSizedFont(fontSize), text.c_str(), textColor)))
 {
-	mTextBox.h = mSize.y;
-	mTextBox.w = mSize.x;
-	mTextBox.x = mPosition.x - (mSize.x / 2);
-	mTextBox.y = mPosition.y - (mSize.y / 2);
+	mTextBox.h = (int)mSize.y;
+	mTextBox.w = (int)mSize.x;
+	mTextBox.x = (int)mPosition.x - ((int)mSize.x / 2);
+	mTextBox.y = (int)mPosition.y - ((int)mSize.y / 2);
 }
 
 Text::~Text()

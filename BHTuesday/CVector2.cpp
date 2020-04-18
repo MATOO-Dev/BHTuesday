@@ -6,8 +6,8 @@ CVector2::CVector2(float xVal, float yVal) :
 {}
 
 CVector2::CVector2(Uint32 mousePoition) :
-	x(mousePoition),
-	y(mousePoition)
+	x((float)mousePoition),
+	y((float)mousePoition)
 {}
 
 CVector2::CVector2(CVector2 target, CVector2 origin) :

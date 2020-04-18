@@ -58,7 +58,7 @@ void CPlayer::Update(float timeStep, EControlStyle& myControlStyle)
 		int mouseX;
 		int mouseY;
 		SDL_GetMouseState(&mouseX, &mouseY);
-		mPosition = CVector2(mouseX, mouseY);
+		mPosition = CVector2((float)mouseX, (float)mouseY);
 		break;
 
 	}
