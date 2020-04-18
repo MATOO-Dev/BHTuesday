@@ -66,6 +66,12 @@
     <ClCompile Include="EnemyPellets.cpp">
       <Filter>Enemys</Filter>
     </ClCompile>
+    <ClCompile Include="Image.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Text.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CEnemy.h">

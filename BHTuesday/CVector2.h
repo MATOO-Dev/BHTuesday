@@ -37,7 +37,10 @@ inline bool operator==(const CVector2 first, const CVector2 second)
 
 inline float CVector2::length()
 {
-	return(sqrt((x * x) + (y * y)));
+	double tempX = double(x);
+	double tempY = double(y);
+	//used to circumvent C26451: Arithmetic overflow
+	return((float)sqrt((tempX * tempX) + (tempY * tempY)));
 }
 
 inline CVector2 CVector2::Normalize()

@@ -22,8 +22,8 @@ CPlayer::~CPlayer()
 void CPlayer::Update(float timeStep, EControlStyle& myControlStyle)
 {
 	mPosition = (mPosition + (mVelocity * timeStep));
-	mTextureRect.x = mPosition.x - mTextureRect.w / 2;
-	mTextureRect.y = mPosition.y - mTextureRect.h / 2;
+	mTextureRect.x = (int)mPosition.x - mTextureRect.w / 2;
+	mTextureRect.y = (int)mPosition.y - mTextureRect.h / 2;
 	mVelocity = (mVelocity * dragMultiplier);
 
 	const Uint8* keyInput = SDL_GetKeyboardState(NULL);
@@ -58,7 +58,7 @@ void CPlayer::Update(float timeStep, EControlStyle& myControlStyle)
 		int mouseX;
 		int mouseY;
 		SDL_GetMouseState(&mouseX, &mouseY);
-		mPosition = CVector2(mouseX, mouseY);
+		mPosition = CVector2((float)mouseX, (float)mouseY);
 		break;
 
 	}
@@ -66,22 +66,22 @@ void CPlayer::Update(float timeStep, EControlStyle& myControlStyle)
 	//keeps Player in bounds(window)
 	if (mPosition.x - mRadius < 0)
 	{
-		mPosition.x = mRadius;
+		mPosition.x = float(mRadius);
 		mVelocity = CVector2(0, mVelocity.y);
 	}
 	if (mPosition.x + mRadius > windowWidth)
 	{
-		mPosition.x = windowWidth - mRadius;
+		mPosition.x = float(windowWidth - mRadius);
 		mVelocity = CVector2(0, mVelocity.y);
 	}
 	if (mPosition.y - mRadius < 0)
 	{
-		mPosition.y = mRadius;
+		mPosition.y = float(mRadius);
 		mVelocity = CVector2(mVelocity.x, 0);
 	}
 	if (mPosition.y + mRadius > windowHeight)
 	{
-		mPosition.y = windowHeight - mRadius;
+		mPosition.y = float(windowHeight - mRadius);
 		mVelocity = CVector2(mVelocity.x, 0);
 	}
 	/*

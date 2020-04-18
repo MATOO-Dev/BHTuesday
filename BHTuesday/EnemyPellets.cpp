@@ -9,8 +9,8 @@ void EnemyPellets::Update(float timeStep)
 	//std::cout << mPosition.y << std::endl;
 
 	mPosition = (mPosition + (mVelocity * timeStep));
-	mTextureRect.x = mPosition.x - mTextureRect.w / 2;
-	mTextureRect.y = mPosition.y - mTextureRect.h / 2;
+	mTextureRect.x = (int)mPosition.x - mTextureRect.w / 2;
+	mTextureRect.y = (int)mPosition.y - mTextureRect.h / 2;
 
 	switch (mEnemyState)
 	{
@@ -49,8 +49,8 @@ void EnemyPellets::Render()
 	}
 	else
 	{
-		SDL_RenderDrawLine(mRenderer, mPosition.x - 10, mPosition.y - 10, mPosition.x + 10, mPosition.y + 10);
-		SDL_RenderDrawLine(mRenderer, mPosition.x + 10, mPosition.y - 10, mPosition.x - 10, mPosition.y + 10);
+		SDL_RenderDrawLine(mRenderer, (int)mPosition.x - 10, (int)mPosition.y - 10, (int)mPosition.x + 10, (int)mPosition.y + 10);
+		SDL_RenderDrawLine(mRenderer, (int)mPosition.x + 10, (int)mPosition.y - 10, (int)mPosition.x - 10, (int)mPosition.y + 10);
 	}
 }
 

@@ -32,8 +32,8 @@ void CEnemy::Update(float timeStep)
 	//same for vel.x for diagonally moving enemys?
 
 	mPosition = (mPosition + (mVelocity * timeStep));
-	mTextureRect.x = mPosition.x - mTextureRect.w / 2;
-	mTextureRect.y = mPosition.y - mTextureRect.h / 2;
+	mTextureRect.x = int(mPosition.x - mTextureRect.w / 2);
+	mTextureRect.y = int(mPosition.y - mTextureRect.h / 2);
 
 	Shoot();
 }
@@ -44,8 +44,8 @@ void CEnemy::Render()
 		SDL_RenderCopy(mRenderer, mTexture, NULL, &mTextureRect);
 	else
 	{
-		SDL_RenderDrawLine(mRenderer, mPosition.x - 10, mPosition.y - 10, mPosition.x + 10, mPosition.y + 10);
-		SDL_RenderDrawLine(mRenderer, mPosition.x + 10, mPosition.y - 10, mPosition.x - 10, mPosition.y + 10);
+		SDL_RenderDrawLine(mRenderer, (int)mPosition.x - 10, (int)mPosition.y - 10, (int)mPosition.x + 10, (int)mPosition.y + 10);
+		SDL_RenderDrawLine(mRenderer, (int)mPosition.x + 10, (int)mPosition.y - 10, (int)mPosition.x - 10, (int)mPosition.y + 10);
 	}
 }
 
