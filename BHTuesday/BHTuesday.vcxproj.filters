@@ -72,6 +72,9 @@
     <ClCompile Include="Text.cpp">
       <Filter>Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="CLevelLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CEnemy.h">
@@ -121,6 +124,9 @@
     </ClInclude>
     <ClInclude Include="EnemySubclassIncluder.h">
       <Filter>Enemys</Filter>
+    </ClInclude>
+    <ClInclude Include="CLevelLoader.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

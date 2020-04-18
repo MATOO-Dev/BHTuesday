@@ -11,6 +11,8 @@
 #include "Defines.h"
 #include "CGameManager.h"
 
+#include "CLevelLoader.h"
+
 #define TICK_INTERVAL 16
 
 
@@ -26,6 +28,9 @@ int main(int argc, char* argv[])
 
 	if (running)
 		GameManager.InitializeGameState(EGameState::MainMenu);
+
+	CLevelLoader test = CLevelLoader();
+	test.ParseFile("testFile.txt");
 
 
 	//game loop

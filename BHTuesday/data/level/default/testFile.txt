@@ -1,0 +1,5 @@
+Levelname L1
+Waveamount 5
+	startWave
+	endWave
+endLevel

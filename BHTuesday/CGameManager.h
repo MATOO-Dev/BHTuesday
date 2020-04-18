@@ -10,7 +10,7 @@ class CEnemy;
 #include "CProjectile.h"
 #include "CLevelEditor.h"
 #include "CButton.h"
-#include "Text.h"
+#include "Level.h"
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
@@ -44,7 +44,7 @@ public:
 	CGameManager(bool& running);
 	~CGameManager();
 	bool InitializeSDL();
-	void ThrowErrorMesssage(const char* errorHeader, const char* errorContent);
+	static void ThrowErrorMesssage(const char* errorHeader, const char* errorContent);
 	void Update(float timeStep);
 	void UpdateAll(float timeStep);
 	void RenderAll();
