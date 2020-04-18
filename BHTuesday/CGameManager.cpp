@@ -127,7 +127,7 @@ void CGameManager::UpdateAll(float timeStep)		//updates all gameobjects, excludi
 			it++;
 
 	//also check against enemy collision
-	for (int i = 0; i < mEnemyRef.size(); i++)
+	for (size_t i = 0; i < mEnemyRef.size(); i++)
 	{
 		it = mPlayerBullets.begin();
 		while (it != mPlayerBullets.end())
@@ -277,7 +277,7 @@ void CGameManager::UpdateButtons(SDL_MouseButtonEvent mouseDownEvent)		//enter m
 	{
 		CVector2 mousePos = CVector2(mouseDownEvent.x, mouseDownEvent.y);
 		//mouseDownEvent.button
-		for (int i = 0; i < mMenuButtons.size(); i++)
+		for (size_t i = 0; i < mMenuButtons.size(); i++)
 		{
 			if (mMenuButtons[i].IsClicked(mousePos))
 			{
@@ -376,7 +376,7 @@ void CGameManager::ExitGame()		//replace with bool return on update, instead use
 
 void CGameManager::OverrideButtonText(std::vector<std::string> texts)
 {
-	for (int i = 0; i < texts.size(); i++)
+	for (size_t i = 0; i < texts.size(); i++)
 	{
 		if (mMenuButtons.size() >= i + 1)
 			mMenuButtons[i].UpdateText(consolasFont, texts[i].c_str(), white, mRenderer);
