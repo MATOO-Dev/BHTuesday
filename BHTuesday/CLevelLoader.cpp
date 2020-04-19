@@ -18,24 +18,26 @@ Level CLevelLoader::Load(std::string levelName)
 	int currentWave = 0;
 	loadingLevel = Level();
 	EEnemyType eType = EEnemyType::Null;
+	int xPos, yPos;
 	CVector2 ePos = CVector2(0, 0);
 
-	for (std::string currentLine : fileLines)
+	for (int i = 0; i < fileLines.size(); i++)
 	{
-		ELevelLoadAction lineAction = GetLoadAction(currentLine);
+		ELevelLoadAction lineAction = GetLoadAction(fileLines[i]);
 		switch (lineAction)
 		{
 		case ELevelLoadAction::SetWaveAmount:
-			waveAmount = std::stoi(currentLine.substr(11));
+			waveAmount = std::stoi(fileLines[i].substr(11));
 			break;
 		case ELevelLoadAction::StartWave:
 			loadingLevel.mLevelWaves.push_back(Wave());
 			break;
 		case ELevelLoadAction::SpawnEnemy:
-			eType = GetEnemyType(currentLine.substr(12));
-			//int xPos = std::stoi(SeperateString(currentLine.substr(12), ','));
-			//int yPos = std::stoi(SeperateString(fileLines[3].substr(17), ')'));
-			ePos = CVector2(300, 500);
+			eType = GetEnemyType(fileLines[i].substr(12));
+			xPos = std::stoi(SeperateString(fileLines[i + 1].substr(12), ','));
+			yPos = std::stoi(SeperateString(fileLines[i + 1].substr(17), ')'));
+			i ++;
+			ePos = CVector2(xPos, yPos);
 			if (eType != EEnemyType::Null)
 				SpawnEnemy(currentWave, eType, ePos);
 			break;
@@ -49,6 +51,7 @@ Level CLevelLoader::Load(std::string levelName)
 			break;
 		}
 	}
+
 	return loadingLevel;
 }
 
