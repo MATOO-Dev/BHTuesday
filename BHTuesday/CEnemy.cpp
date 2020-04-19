@@ -63,13 +63,13 @@ void CEnemy::Damage(float damage)
 bool CEnemy::OutOfBounds()
 {
 	//if this is below window, return true, if this is left/right of window, and also in the lower half, return true
-	if (mPosition.x < 0)
+	if (mPosition.x + mRadius < 0)
 		return true; 
-	if (mPosition.x > windowWidth)
+	if (mPosition.x - mRadius > windowWidth)
 		return true;
-	if (mPosition.y < 0)
+	if (mPosition.y + mRadius < 0)
 		return true;
-	if (mPosition.y > windowHeight)
+	if (mPosition.y - mRadius > windowHeight)
 		return true;
 	return false;
 }

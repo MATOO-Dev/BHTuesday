@@ -27,10 +27,8 @@ waveAmount 2
 		enemyType Pellets
 		Position (500, 300)
 		enemyType Pellets
-		Position (100, 75)
+		Position (200, 200)
 		enemyType Pellets
-		Position (300, 75)
-		enemyType Pellets
-		Position (500, 75)
+		Position (400, 200)
 	endWave
 endLevel
