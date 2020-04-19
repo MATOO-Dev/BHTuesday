@@ -31,6 +31,7 @@ private:
 	int mTotalScore;
 	CPlayer* mPlayerRef;
 	Level mActiveLevel;
+	int mActiveWaveIndex;
 	std::vector<CEnemy*> mEnemyRef;
 	std::vector<CProjectile> mPlayerBullets;
 	std::vector<CProjectile> mEnemyBullets;
@@ -38,7 +39,7 @@ private:
 	//std::vector<Image> mMenuImages;
 	//std::vector<Text> mMenuTexts;
 	//std::vector //installed upgrades bool vector
-	int Volume; //correct data type?
+	int Volume; //correct data type? //currently unused
 	TTF_Font* consolasFont;
 	bool& mGameRunning;
 	void OverrideButtonText(std::vector<std::string> texts);
@@ -58,4 +59,6 @@ public:
 	bool LoadSettings();		//""
 	void SwitchGameState(EGameState newGameState);
 	void ExitGame();
+	void QueueWave();
+	void EndLevel();
 };

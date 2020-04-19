@@ -225,13 +225,16 @@ void CGameManager::InitializeGameState(EGameState menuType)
 			mMenuButtons.push_back(CButton(CVector2(75, 975), CVector2(150, 50), consolasFont, "Score: 0", white, mRenderer, EButtonAction::None));
 			mMenuButtons.push_back(CButton(CVector2(525, 975), CVector2(150, 50), consolasFont, "Health: 0", white, mRenderer, EButtonAction::None));
 			mPlayerRef = new CPlayer(CVector2(300, 750), mPlayerBullets, mRenderer, "PlayerTexture.png");
+			//old system (manual spawning)
 			for (int i = 0; i < 6; i++)
 				mEnemyRef.push_back(new EnemyPellets(CVector2(float(100 * i + 50), 200), CVector2(0, 200), mPlayerRef, &mEnemyBullets, mRenderer));
 			mEnemyRef.push_back(new EnemyKamikaze(CVector2(300, 400), CVector2(0, 100), mPlayerRef, &mEnemyBullets, mRenderer));
 
-			//new system
+			//new system (loading from file)
 			CLevelLoader levelLoader = CLevelLoader(mPlayerRef, mEnemyBullets, mRenderer);
 			mActiveLevel = levelLoader.Load("testFile");
+			mActiveWaveIndex = 0;
+			QueueWave();
 		}
 		//300, 250
 		//maybe hud?
@@ -385,4 +388,11 @@ void CGameManager::OverrideButtonText(std::vector<std::string> texts)
 		if (mMenuButtons.size() >= i + 1)
 			mMenuButtons[i].UpdateText(consolasFont, texts[i].c_str(), white, mRenderer);
 	}
+}
+
+void CGameManager::QueueWave()
+{
+	std::cout << "size of level in waves is " << mActiveLevel.mLevelWaves.size() << std::endl;
+	std::cout << "size of new wave is " << mActiveLevel.mLevelWaves[1].mWaveEnemys.size() << std::endl;
+	mEnemyRef = mActiveLevel.mLevelWaves[1].mWaveEnemys;
 }
