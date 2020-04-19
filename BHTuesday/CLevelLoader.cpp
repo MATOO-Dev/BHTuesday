@@ -6,7 +6,11 @@ CLevelLoader::CLevelLoader(CPlayer* playerRef, std::vector<CProjectile>& enemyBu
 	mRenderer(renderer)
 {}
 
-void CLevelLoader::Load(std::string levelName)
+CLevelLoader::~CLevelLoader()
+{
+}
+
+Level CLevelLoader::Load(std::string levelName)
 {
 	//read file contents
 	ParseFile(levelName + ".txt");
@@ -45,6 +49,7 @@ void CLevelLoader::Load(std::string levelName)
 			break;
 		}
 	}
+	return loadingLevel;
 }
 
 void CLevelLoader::ParseFile(std::string fileName)

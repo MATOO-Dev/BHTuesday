@@ -9,6 +9,7 @@ class CEnemy;
 #include "EnemySubclassIncluder.h"
 #include "CProjectile.h"
 #include "CLevelEditor.h"
+#include "CLevelLoader.h"
 #include "CButton.h"
 #include "Level.h"
 #include <SDL.h>
@@ -29,7 +30,7 @@ private:
 	int mPlayerScore;
 	int mTotalScore;
 	CPlayer* mPlayerRef;
-	Level activeLevel;
+	Level mActiveLevel;
 	std::vector<CEnemy*> mEnemyRef;
 	std::vector<CProjectile> mPlayerBullets;
 	std::vector<CProjectile> mEnemyBullets;

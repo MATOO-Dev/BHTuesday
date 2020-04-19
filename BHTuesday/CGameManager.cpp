@@ -228,6 +228,10 @@ void CGameManager::InitializeGameState(EGameState menuType)
 			for (int i = 0; i < 6; i++)
 				mEnemyRef.push_back(new EnemyPellets(CVector2(float(100 * i + 50), 200), CVector2(0, 200), mPlayerRef, &mEnemyBullets, mRenderer));
 			mEnemyRef.push_back(new EnemyKamikaze(CVector2(300, 400), CVector2(0, 100), mPlayerRef, &mEnemyBullets, mRenderer));
+
+			//new system
+			CLevelLoader levelLoader = CLevelLoader(mPlayerRef, mEnemyBullets, mRenderer);
+			mActiveLevel = levelLoader.Load("testFile");
 		}
 		//300, 250
 		//maybe hud?

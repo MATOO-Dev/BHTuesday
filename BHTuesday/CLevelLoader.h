@@ -24,5 +24,6 @@ private:
 	void SpawnEnemy(int currentWave, EEnemyType type, CVector2 pos);
 public:
 	CLevelLoader(CPlayer* playerRef, std::vector<CProjectile>& enemyBullets, SDL_Renderer* renderer);
-	void Load(std::string levelName);
+	~CLevelLoader();
+	Level Load(std::string levelName);
 };
