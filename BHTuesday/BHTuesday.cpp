@@ -30,7 +30,7 @@ int main(int argc, char* argv[])
 		GameManager.InitializeGameState(EGameState::MainMenu);
 
 	CLevelLoader test = CLevelLoader();
-	test.ParseFile("testFile.txt");
+	test.Load("testFile");
 
 
 	//game loop

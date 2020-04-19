@@ -1,5 +1,16 @@
-Levelname L1
-Waveamount 5
+waveAmount 5
 	startWave
+		enemyType Kamikaze
+		Position (0, 0)
+		enemyType Kamikaze
+		Position (0, 0)
+		enemyType Kamikaze
+		Position (0, 0)
+		enemyType Kamikaze
+		Position (0, 0)
+		enemyType Kamikaze
+		Position (0, 0)
+		enemyType Kamikaze
+		Position (0, 0)
 	endWave
 endLevel
