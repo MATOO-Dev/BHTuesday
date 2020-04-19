@@ -33,6 +33,8 @@ Level CLevelLoader::Load(std::string levelName)
 			break;
 		case ELevelLoadAction::SpawnEnemy:
 			eType = GetEnemyType(currentLine.substr(12));
+			//int xPos = std::stoi(SeperateString(currentLine.substr(12), ','));
+			//int yPos = std::stoi(SeperateString(fileLines[3].substr(17), ')'));
 			ePos = CVector2(300, 500);
 			if (eType != EEnemyType::Null)
 				SpawnEnemy(currentWave, eType, ePos);
@@ -110,3 +112,20 @@ void CLevelLoader::SpawnEnemy(int currentWave, EEnemyType type, CVector2 pos)
 	loadingLevel.mLevelWaves[currentWave].mWaveEnemys.push_back(enemyToPush);
 }
 
+std::string CLevelLoader::SeperateString(std::string input, char seperator)
+{
+	std::string output = "";
+	for (char x : input)
+	{
+		if (x == seperator)
+		{
+			std::cout << output << std::endl;
+			return output;
+		}
+		else
+		{
+			output = output + x;
+		}
+	}
+	return "error, failed to find seperator";
+}

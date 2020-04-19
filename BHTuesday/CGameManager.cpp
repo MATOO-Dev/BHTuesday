@@ -407,8 +407,6 @@ void CGameManager::OverrideButtonText(std::vector<std::string> texts)
 
 void CGameManager::QueueWave()
 {
-	std::cout << "size of level in waves is " << mActiveLevel.mLevelWaves.size() << std::endl;
-	std::cout << "size of new wave is " << mActiveLevel.mLevelWaves[mActiveWaveIndex].mWaveEnemys.size() << std::endl;
 	mEnemyRef = mActiveLevel.mLevelWaves[mActiveWaveIndex].mWaveEnemys;
 	//updating once to prevent enemy appearing in upper left corner when loading in
 	for (CEnemy* eCurrent : mEnemyRef)

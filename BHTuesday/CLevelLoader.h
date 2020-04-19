@@ -22,6 +22,7 @@ private:
 	ELevelLoadAction GetLoadAction(std::string lineContent);
 	EEnemyType GetEnemyType(std::string typeString);
 	void SpawnEnemy(int currentWave, EEnemyType type, CVector2 pos);
+	std::string SeperateString(std::string input, char seperator);
 public:
 	CLevelLoader(CPlayer* playerRef, std::vector<CProjectile>& enemyBullets, SDL_Renderer* renderer);
 	~CLevelLoader();
