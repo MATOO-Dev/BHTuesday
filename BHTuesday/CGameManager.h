@@ -60,5 +60,4 @@ public:
 	void SwitchGameState(EGameState newGameState);
 	void ExitGame();
 	void QueueWave();
-	void EndLevel();
 };

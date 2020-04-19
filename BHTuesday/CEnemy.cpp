@@ -63,8 +63,15 @@ void CEnemy::Damage(float damage)
 bool CEnemy::OutOfBounds()
 {
 	//if this is below window, return true, if this is left/right of window, and also in the lower half, return true
-	return(((mPosition.x < 0 || mPosition.x > windowWidth) && mPosition.y > windowHeight / 2) || mPosition.y > windowHeight);
-	//prevents enemys being in the lower half of the window while not being visible, used to prevent 'surprise attacks'
+	if (mPosition.x < 0)
+		return true; 
+	if (mPosition.x > windowWidth)
+		return true;
+	if (mPosition.y < 0)
+		return true;
+	if (mPosition.y > windowHeight)
+		return true;
+	return false;
 }
 
 bool CEnemy::IntersectsPlayer()

@@ -101,10 +101,10 @@ void CGameManager::Update(float timeStep)
 		break;
 	case EGameState::DeathMenu:
 		OverrideButtonText({ "You Died", "Menu" });
-		break; 
+		break;
 	case EGameState::VictoryMenu:
-			OverrideButtonText({ "You Win", "Menu" });
-			break;
+		OverrideButtonText({ "You Win", "Menu" });
+		break;
 	default:
 		break;
 	}
@@ -156,11 +156,14 @@ void CGameManager::UpdateAll(float timeStep)		//updates all gameobjects, excludi
 			}
 			else
 				it++;
+
 		//should remove enemy if it collides with player
 		if (mEnemyRef[i] != nullptr && mEnemyRef[i]->IntersectsPlayer())
 			mEnemyRef[i] = nullptr;
 		if (mEnemyRef[i] != nullptr && mEnemyRef[i]->OutOfBounds() && mEnemyRef[i]->GetState() != EEnemyState::Intro)
+		{
 			mEnemyRef[i] = nullptr;
+		}
 	}
 
 	//remove killed enemys
