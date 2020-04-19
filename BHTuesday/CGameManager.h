@@ -9,8 +9,9 @@ class CEnemy;
 #include "EnemySubclassIncluder.h"
 #include "CProjectile.h"
 #include "CLevelEditor.h"
+#include "CLevelLoader.h"
 #include "CButton.h"
-#include "Text.h"
+#include "Level.h"
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
@@ -29,6 +30,8 @@ private:
 	int mPlayerScore;
 	int mTotalScore;
 	CPlayer* mPlayerRef;
+	Level mActiveLevel;
+	int mActiveWaveIndex;
 	std::vector<CEnemy*> mEnemyRef;
 	std::vector<CProjectile> mPlayerBullets;
 	std::vector<CProjectile> mEnemyBullets;
@@ -36,7 +39,7 @@ private:
 	//std::vector<Image> mMenuImages;
 	//std::vector<Text> mMenuTexts;
 	//std::vector //installed upgrades bool vector
-	int Volume; //correct data type?
+	int Volume; //correct data type? //currently unused
 	TTF_Font* consolasFont;
 	bool& mGameRunning;
 	void OverrideButtonText(std::vector<std::string> texts);
@@ -44,7 +47,7 @@ public:
 	CGameManager(bool& running);
 	~CGameManager();
 	bool InitializeSDL();
-	void ThrowErrorMesssage(const char* errorHeader, const char* errorContent);
+	static void ThrowErrorMesssage(const char* errorHeader, const char* errorContent);
 	void Update(float timeStep);
 	void UpdateAll(float timeStep);
 	void RenderAll();
@@ -56,4 +59,5 @@ public:
 	bool LoadSettings();		//""
 	void SwitchGameState(EGameState newGameState);
 	void ExitGame();
+	void QueueWave();
 };

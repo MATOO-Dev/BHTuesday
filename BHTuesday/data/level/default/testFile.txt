@@ -1,0 +1,34 @@
+waveAmount 2
+	startWave
+		enemyType Pellets
+		Position (100, 300)
+		enemyType Pellets
+		Position (200, 300)
+		enemyType Pellets
+		Position (300, 300)
+		enemyType Pellets
+		Position (400, 300)
+		enemyType Pellets
+		Position (500, 300)
+	endWave
+	startWave
+		enemyType Kamikaze
+		Position (100, 450)
+		enemyType Kamikaze
+		Position (300, 450)
+		enemyType Kamikaze
+		Position (500, 450)
+	endWave
+	startWave
+		enemyType Pellets
+		Position (100, 300)
+		enemyType Pellets
+		Position (300, 300)
+		enemyType Pellets
+		Position (500, 300)
+		enemyType Pellets
+		Position (200, 200)
+		enemyType Pellets
+		Position (400, 200)
+	endWave
+endLevel

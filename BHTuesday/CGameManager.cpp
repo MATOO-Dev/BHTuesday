@@ -72,6 +72,16 @@ void CGameManager::Update(float timeStep)
 	case EGameState::Active:
 		UpdateAll(timeStep);
 		OverrideButtonText({ ("Score: " + std::to_string(mPlayerScore)).c_str(), ("Health: " + std::to_string(int(mPlayerRef->GetHealth()))).c_str() });
+		if (mEnemyRef.size() == 0)
+		{
+			if (mActiveWaveIndex + 1 != mActiveLevel.mLevelWaves.size())
+			{
+				mActiveWaveIndex++;
+				QueueWave();
+			}
+			else if (mActiveWaveIndex + 1 == mActiveLevel.mLevelWaves.size())
+				InitializeGameState(EGameState::VictoryMenu);
+		}
 		break;
 	case EGameState::PauseMenu:
 		//like active, but without update and with menu options
@@ -91,6 +101,9 @@ void CGameManager::Update(float timeStep)
 		break;
 	case EGameState::DeathMenu:
 		OverrideButtonText({ "You Died", "Menu" });
+		break;
+	case EGameState::VictoryMenu:
+		OverrideButtonText({ "You Win", "Menu" });
 		break;
 	default:
 		break;
@@ -143,11 +156,14 @@ void CGameManager::UpdateAll(float timeStep)		//updates all gameobjects, excludi
 			}
 			else
 				it++;
+
 		//should remove enemy if it collides with player
 		if (mEnemyRef[i] != nullptr && mEnemyRef[i]->IntersectsPlayer())
 			mEnemyRef[i] = nullptr;
 		if (mEnemyRef[i] != nullptr && mEnemyRef[i]->OutOfBounds() && mEnemyRef[i]->GetState() != EEnemyState::Intro)
+		{
 			mEnemyRef[i] = nullptr;
+		}
 	}
 
 	//remove killed enemys
@@ -225,9 +241,16 @@ void CGameManager::InitializeGameState(EGameState menuType)
 			mMenuButtons.push_back(CButton(CVector2(75, 975), CVector2(150, 50), consolasFont, "Score: 0", white, mRenderer, EButtonAction::None));
 			mMenuButtons.push_back(CButton(CVector2(525, 975), CVector2(150, 50), consolasFont, "Health: 0", white, mRenderer, EButtonAction::None));
 			mPlayerRef = new CPlayer(CVector2(300, 750), mPlayerBullets, mRenderer, "PlayerTexture.png");
+			//old system (manual spawning)
 			for (int i = 0; i < 6; i++)
 				mEnemyRef.push_back(new EnemyPellets(CVector2(float(100 * i + 50), 200), CVector2(0, 200), mPlayerRef, &mEnemyBullets, mRenderer));
 			mEnemyRef.push_back(new EnemyKamikaze(CVector2(300, 400), CVector2(0, 100), mPlayerRef, &mEnemyBullets, mRenderer));
+
+			//new system (loading from file)
+			CLevelLoader levelLoader = CLevelLoader(mPlayerRef, mEnemyBullets, mRenderer);
+			mActiveLevel = levelLoader.Load("testFile");
+			mActiveWaveIndex = 0;
+			QueueWave();
 		}
 		//300, 250
 		//maybe hud?
@@ -258,6 +281,8 @@ void CGameManager::InitializeGameState(EGameState menuType)
 		break;
 	case EGameState::VictoryMenu:
 		mTotalScore += mPlayerScore;
+		mMenuButtons.push_back(CButton(CVector2(300, 50), CVector2(300, 100), consolasFont, "You Win", white, mRenderer, EButtonAction::None));
+		mMenuButtons.push_back(CButton(CVector2(300, 880), CVector2(200, 100), consolasFont, "Menu", white, mRenderer, EButtonAction::OpenMainMenu));
 		break;
 	default:
 		break;
@@ -381,4 +406,12 @@ void CGameManager::OverrideButtonText(std::vector<std::string> texts)
 		if (mMenuButtons.size() >= i + 1)
 			mMenuButtons[i].UpdateText(consolasFont, texts[i].c_str(), white, mRenderer);
 	}
+}
+
+void CGameManager::QueueWave()
+{
+	mEnemyRef = mActiveLevel.mLevelWaves[mActiveWaveIndex].mWaveEnemys;
+	//updating once to prevent enemy appearing in upper left corner when loading in
+	for (CEnemy* eCurrent : mEnemyRef)
+		eCurrent->Update(0.016);
 }

@@ -2,12 +2,13 @@
 
 #include "Defines.h"
 #include "CEnemy.h"
+#include "EnemySubclassIncluder.h"
 #include <vector>
 
 struct Wave
 {
 	std::vector<CEnemy*> mWaveEnemys;
-	bool mWaveFinished;
+	bool mWaveFinished = false;
 	~Wave();
 	void Add(CEnemy* enemyToAdd);
 	void Remove();

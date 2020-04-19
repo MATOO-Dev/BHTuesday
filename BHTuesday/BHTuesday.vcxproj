@@ -162,6 +162,7 @@
     <ClCompile Include="BHTuesday.cpp" />
     <ClCompile Include="CAssetManager.cpp" />
     <ClCompile Include="CLevelEditor.cpp" />
+    <ClCompile Include="CLevelLoader.cpp" />
     <ClCompile Include="CProjectile.cpp" />
     <ClCompile Include="CButton.cpp" />
     <ClCompile Include="CEnemy.cpp" />
@@ -176,6 +177,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CAssetManager.h" />
+    <ClInclude Include="CLevelLoader.h" />
     <ClInclude Include="EnemyKamikaze.h" />
     <ClInclude Include="EnemyPellets.h" />
     <ClInclude Include="EnemySubclassIncluder.h" />

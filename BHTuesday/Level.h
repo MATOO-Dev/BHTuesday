@@ -7,5 +7,5 @@
 struct Level
 {
 	std::vector<Wave> mLevelWaves;
-	bool mLevelFinished;
+	bool mLevelFinished = false;
 };

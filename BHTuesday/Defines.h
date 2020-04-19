@@ -65,3 +65,12 @@ enum class EButtonAction		//defines the more explicit action of the current butt
 	StartGame,
 	QuitGame
 };
+
+enum class ELevelLoadAction		//defines the action of a specific line in a level file
+{
+	SetWaveAmount,
+	StartWave,
+	SpawnEnemy,
+	EndWave,
+	EndLevel
+};
