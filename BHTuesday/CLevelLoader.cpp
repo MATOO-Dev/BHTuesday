@@ -1,5 +1,11 @@
 #include "CLevelLoader.h"
 
+CLevelLoader::CLevelLoader(CPlayer* playerRef, std::vector<CProjectile>& enemyBullets, SDL_Renderer* renderer) : 
+	mPlayerRef(playerRef),
+	mEnemyBullets(enemyBullets),
+	mRenderer(renderer)
+{}
+
 void CLevelLoader::Load(std::string levelName)
 {
 	//read file contents
@@ -7,7 +13,8 @@ void CLevelLoader::Load(std::string levelName)
 	//set variables based on corresponding array entry
 	int currentWave = 0;
 	loadingLevel = Level();
-	CVector2 tempVector = CVector2(0, 0);
+	EEnemyType eType = EEnemyType::Null;
+	CVector2 ePos = CVector2(0, 0);
 
 	for (std::string currentLine : fileLines)
 	{
@@ -16,12 +23,16 @@ void CLevelLoader::Load(std::string levelName)
 		switch (lineAction)
 		{
 		case ELevelLoadAction::SetWaveAmount:
-			waveAmount = std::stoi(currentLine.substr(11, 1));
+			waveAmount = std::stoi(currentLine.substr(11));
 			break;
 		case ELevelLoadAction::StartWave:
 			loadingLevel.mLevelWaves.push_back(Wave());
 			break;
 		case ELevelLoadAction::SpawnEnemy:
+			eType = GetEnemyType(currentLine.substr(13));
+			ePos = CVector2(0, 0);
+			if (eType != EEnemyType::Null)
+				SpawnEnemy(currentWave, eType, ePos);
 			std::cout << currentLine.length() << std::endl;
 			break;
 		case ELevelLoadAction::EndWave:
@@ -72,7 +83,28 @@ ELevelLoadAction CLevelLoader::GetLoadAction(std::string lineContent)
 		return ELevelLoadAction::EndLevel;
 }
 
-void CLevelLoader::SpawnEnemy()
+EEnemyType CLevelLoader::GetEnemyType(std::string typeString)
 {
-
+	if (typeString.find("Pellets") != std::string::npos)
+		return EEnemyType::Pellets;
+	if (typeString.find("Kamikaze") != std::string::npos)
+		return EEnemyType::Kamikaze;
+	return EEnemyType::Null;
 }
+
+void CLevelLoader::SpawnEnemy(int currentWave, EEnemyType type, CVector2 pos)
+{
+	CEnemy* enemyToPush;
+	switch (type)
+	{
+	case EEnemyType::Pellets:
+		enemyToPush = new EnemyPellets(pos, CVector2(0, 100), mPlayerRef, &mEnemyBullets, mRenderer);
+		break;
+	case EEnemyType::Kamikaze:
+		enemyToPush = new EnemyKamikaze(pos, CVector2(0, 100), mPlayerRef, &mEnemyBullets, mRenderer);
+		break;
+	}
+	loadingLevel.mLevelWaves[currentWave].mWaveEnemys.push_back(enemyToPush);
+	std::cout << "spawned an enemy " << std::endl;
+}
+

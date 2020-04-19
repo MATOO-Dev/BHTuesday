@@ -8,7 +8,7 @@
 struct Wave
 {
 	std::vector<CEnemy*> mWaveEnemys;
-	bool mWaveFinished;
+	bool mWaveFinished = false;
 	~Wave();
 	void Add(CEnemy* enemyToAdd);
 	void Remove();

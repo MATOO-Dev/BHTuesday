@@ -29,8 +29,8 @@ int main(int argc, char* argv[])
 	if (running)
 		GameManager.InitializeGameState(EGameState::MainMenu);
 
-	CLevelLoader test = CLevelLoader();
-	test.Load("testFile");
+	//CLevelLoader test = CLevelLoader();
+	//test.Load("testFile");
 
 
 	//game loop

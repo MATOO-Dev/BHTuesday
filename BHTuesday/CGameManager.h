@@ -29,6 +29,7 @@ private:
 	int mPlayerScore;
 	int mTotalScore;
 	CPlayer* mPlayerRef;
+	Level activeLevel;
 	std::vector<CEnemy*> mEnemyRef;
 	std::vector<CProjectile> mPlayerBullets;
 	std::vector<CProjectile> mEnemyBullets;
