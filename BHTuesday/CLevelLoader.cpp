@@ -27,11 +27,9 @@ Level CLevelLoader::Load(std::string levelName)
 		{
 		case ELevelLoadAction::SetWaveAmount:
 			waveAmount = std::stoi(currentLine.substr(11));
-			std::cout << "setting waveAmount" << std::endl;
 			break;
 		case ELevelLoadAction::StartWave:
 			loadingLevel.mLevelWaves.push_back(Wave());
-			std::cout << "starting a new wave" << std::endl;
 			break;
 		case ELevelLoadAction::SpawnEnemy:
 			eType = GetEnemyType(currentLine.substr(12));
@@ -41,7 +39,6 @@ Level CLevelLoader::Load(std::string levelName)
 			break;
 		case ELevelLoadAction::EndWave:
 			currentWave++;
-			std::cout << "finishing a wave" << std::endl;
 			break;
 		case ELevelLoadAction::EndLevel:
 			std::cout << "finished loading level" << std::endl;
@@ -105,14 +102,11 @@ void CLevelLoader::SpawnEnemy(int currentWave, EEnemyType type, CVector2 pos)
 	{
 	case EEnemyType::Pellets:
 		enemyToPush = new EnemyPellets(pos, CVector2(0, 100), mPlayerRef, &mEnemyBullets, mRenderer);
-		std::cout << "spawned an enemy pellets" << std::endl;
 		break;
 	case EEnemyType::Kamikaze:
 		enemyToPush = new EnemyKamikaze(pos, CVector2(0, 100), mPlayerRef, &mEnemyBullets, mRenderer);
-		std::cout << "spawned an enemy kamikaze" << std::endl;
 		break;
 	}
 	loadingLevel.mLevelWaves[currentWave].mWaveEnemys.push_back(enemyToPush);
-	std::cout << "wave size is now" << loadingLevel.mLevelWaves[currentWave].mWaveEnemys.size() << std::endl;
 }
 

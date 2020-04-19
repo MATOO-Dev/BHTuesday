@@ -72,6 +72,16 @@ void CGameManager::Update(float timeStep)
 	case EGameState::Active:
 		UpdateAll(timeStep);
 		OverrideButtonText({ ("Score: " + std::to_string(mPlayerScore)).c_str(), ("Health: " + std::to_string(int(mPlayerRef->GetHealth()))).c_str() });
+		if (mEnemyRef.size() == 0)
+		{
+			if (mActiveWaveIndex + 1 != mActiveLevel.mLevelWaves.size())
+			{
+				mActiveWaveIndex++;
+				QueueWave();
+			}
+			else if (mActiveWaveIndex + 1 == mActiveLevel.mLevelWaves.size())
+				InitializeGameState(EGameState::VictoryMenu);
+		}
 		break;
 	case EGameState::PauseMenu:
 		//like active, but without update and with menu options
@@ -91,7 +101,10 @@ void CGameManager::Update(float timeStep)
 		break;
 	case EGameState::DeathMenu:
 		OverrideButtonText({ "You Died", "Menu" });
-		break;
+		break; 
+	case EGameState::VictoryMenu:
+			OverrideButtonText({ "You Win", "Menu" });
+			break;
 	default:
 		break;
 	}
@@ -265,6 +278,8 @@ void CGameManager::InitializeGameState(EGameState menuType)
 		break;
 	case EGameState::VictoryMenu:
 		mTotalScore += mPlayerScore;
+		mMenuButtons.push_back(CButton(CVector2(300, 50), CVector2(300, 100), consolasFont, "You Win", white, mRenderer, EButtonAction::None));
+		mMenuButtons.push_back(CButton(CVector2(300, 880), CVector2(200, 100), consolasFont, "Menu", white, mRenderer, EButtonAction::OpenMainMenu));
 		break;
 	default:
 		break;
@@ -393,6 +408,9 @@ void CGameManager::OverrideButtonText(std::vector<std::string> texts)
 void CGameManager::QueueWave()
 {
 	std::cout << "size of level in waves is " << mActiveLevel.mLevelWaves.size() << std::endl;
-	std::cout << "size of new wave is " << mActiveLevel.mLevelWaves[1].mWaveEnemys.size() << std::endl;
-	mEnemyRef = mActiveLevel.mLevelWaves[1].mWaveEnemys;
+	std::cout << "size of new wave is " << mActiveLevel.mLevelWaves[mActiveWaveIndex].mWaveEnemys.size() << std::endl;
+	mEnemyRef = mActiveLevel.mLevelWaves[mActiveWaveIndex].mWaveEnemys;
+	//updating once to prevent enemy appearing in upper left corner when loading in
+	for (CEnemy* eCurrent : mEnemyRef)
+		eCurrent->Update(0.016);
 }
