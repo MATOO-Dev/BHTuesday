@@ -58,6 +58,7 @@ void CGameManager::ThrowErrorMesssage(const char* errorHeader, const char* error
 
 void CGameManager::Update(float timeStep)
 {
+
 	switch (mActiveGameState)
 	{
 	case EGameState::MainMenu:
